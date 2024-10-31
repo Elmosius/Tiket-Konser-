@@ -1,7 +1,6 @@
 <aside class="left-sidebar">
     <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
-
             <a href="./index.html" class="text-nowrap logo-img">
                 <svg width="220" height="30" viewBox="0 0 241 39" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -40,7 +39,13 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
                         <span>
-                            <iconify-icon icon="solar:layers-minimalistic-bold-duotone" class="fs-6"></iconify-icon>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                            </svg>
                         </span>
                         <span class="hide-menu">Users</span>
                     </a>
@@ -48,7 +53,16 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
                         <span>
-                            <iconify-icon icon="solar:danger-circle-bold-duotone" class="fs-6"></iconify-icon>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-license">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11" />
+                                <path d="M9 7l4 0" />
+                                <path d="M9 11l4 0" />
+                            </svg>
                         </span>
                         <span class="hide-menu">Roles</span>
                     </a>
@@ -60,21 +74,41 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
                         <span>
-                            <iconify-icon icon="solar:file-text-bold-duotone" class="fs-6"></iconify-icon>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-ticket">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M15 5l0 2" />
+                                <path d="M15 11l0 2" />
+                                <path d="M15 17l0 2" />
+                                <path
+                                    d="M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-3a2 2 0 0 0 0 -4v-3a2 2 0 0 1 2 -2" />
+                            </svg>
                         </span>
-                        <span class="hide-menu">Forms</span>
+                        <span class="hide-menu">Acara</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
                         <span>
-                            <iconify-icon icon="solar:text-field-focus-bold-duotone" class="fs-6"></iconify-icon>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-building-store">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M3 21l18 0" />
+                                <path
+                                    d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" />
+                                <path d="M5 21l0 -10.15" />
+                                <path d="M19 21l0 -10.15" />
+                                <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" />
+                            </svg>
                         </span>
-                        <span class="hide-menu">Typography</span>
+                        <span class="hide-menu">Penjualan / Pembelian</span>
                     </a>
                 </li>
             </ul>
-
         </nav>
     </div>
 </aside>
