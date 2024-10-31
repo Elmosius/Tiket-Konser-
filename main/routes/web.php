@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 // ADMIN DASHBOARD //
 Route::get('/', function () {
     return view('adm-dashboard.index');
-})->name('dasboard');
+})->name('dashboard');
 
 
 // USERS
@@ -26,14 +26,29 @@ Route::get('/dashboard/users/edit', function () {
 })->name('users-edit');   
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// ROLES
+Route::get('/dashboard/roles', function () {
+    return view('adm-roles.index');
+})->name('roles');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+Route::get('/dashboard/roles/create', function () {
+    return view('adm-roles.create');
+})->name('roles-create');
+
+// nanti /dashboard/roles/edit/{id} untuk edit
+Route::get('/dashboard/roles/edit', function () {
+    return view('adm-roles.edit');
+})->name('roles-edit');
+
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 require __DIR__.'/auth.php';
