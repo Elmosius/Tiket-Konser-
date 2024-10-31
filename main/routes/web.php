@@ -3,9 +3,28 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+
+// Coba coba dlu buat liat viewnya
+// ADMIN DASHBOARD //
 Route::get('/', function () {
-    return view('admin-dashboard.index');
-});
+    return view('adm-dashboard.index');
+})->name('dasboard');
+
+
+// USERS
+Route::get('/dashboard/users', function () {
+    return view('adm-users.index');
+})->name('users');
+
+Route::get('/dashboard/users/create', function () {
+    return view('adm-users.create');
+})->name('users-create');   
+
+// nanti /dashboard/users/edit/{id} untuk edit
+Route::get('/dashboard/users/edit', function () {
+    return view('adm-users.edit');
+})->name('users-edit');   
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
