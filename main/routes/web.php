@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 
 // Coba coba dlu buat liat viewnya
-// ADMIN DASHBOARD //
+// ADMIN & PENJUAl DASHBOARD //
 Route::get('/', function () {
     return view('admin.dashboard.index');
 })->name('dashboard');
@@ -39,6 +39,23 @@ Route::get('/dashboard/roles/create', function () {
 Route::get('/dashboard/roles/edit', function () {
     return view('admin.roles.edit');
 })->name('roles-edit');
+
+// ACARA 
+Route::get('/dashboard/acara', function () {
+    return view('admin.acara.index');
+})->name('acara');
+
+// PENJUAL DASHBOARD
+// EVENTS
+Route::get('/dashboard/events', function () {
+    return view('penjual.events.index');
+})->name('events');
+
+// REKENING
+Route::get('/dashboard/rekening', function () {
+    return view('penjual.rekening.index');
+})->name('rekening');
+
 
 
 // Route::get('/dashboard', function () {
