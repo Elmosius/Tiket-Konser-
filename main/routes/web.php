@@ -40,10 +40,6 @@ Route::get('/dashboard/roles/edit', function () {
     return view('admin.roles.edit');
 })->name('roles-edit');
 
-// ACARA 
-Route::get('/dashboard/acara', function () {
-    return view('admin.acara.index');
-})->name('acara');
 
 // PENJUAL DASHBOARD
 // EVENTS
