@@ -7,37 +7,37 @@ use Illuminate\Support\Facades\Route;
 // Coba coba dlu buat liat viewnya
 // ADMIN DASHBOARD //
 Route::get('/', function () {
-    return view('adm-dashboard.index');
+    return view('admin.dashboard.index');
 })->name('dashboard');
 
 
 // USERS
 Route::get('/dashboard/users', function () {
-    return view('adm-users.index');
+    return view('admin.users.index');
 })->name('users');
 
 Route::get('/dashboard/users/create', function () {
-    return view('adm-users.create');
+    return view('admin.users.create');
 })->name('users-create');   
 
 // nanti /dashboard/users/edit/{id} untuk edit
 Route::get('/dashboard/users/edit', function () {
-    return view('adm-users.edit');
+    return view('admin.users.edit');
 })->name('users-edit');   
 
 
 // ROLES
 Route::get('/dashboard/roles', function () {
-    return view('adm-roles.index');
+    return view('admin.roles.index');
 })->name('roles');
 
 Route::get('/dashboard/roles/create', function () {
-    return view('adm-roles.create');
+    return view('admin.roles.create');
 })->name('roles-create');
 
 // nanti /dashboard/roles/edit/{id} untuk edit
 Route::get('/dashboard/roles/edit', function () {
-    return view('adm-roles.edit');
+    return view('admin.roles.edit');
 })->name('roles-edit');
 
 
