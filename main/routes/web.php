@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/login', [Controller::class, 'showLoginForm'])->name('login');
+Route::get('/register', [Controller::class, 'showRegisterForm'])->name('register');
 
 // Coba coba dlu buat liat viewnya
 // ADMIN & PENJUAl DASHBOARD //
@@ -18,12 +21,12 @@ Route::get('/dashboard/users', function () {
 
 Route::get('/dashboard/users/create', function () {
     return view('admin.users.create');
-})->name('users-create');   
+})->name('users-create');
 
 // nanti /dashboard/users/edit/{id} untuk edit
 Route::get('/dashboard/users/edit', function () {
     return view('admin.users.edit');
-})->name('users-edit');   
+})->name('users-edit');
 
 
 // ROLES
