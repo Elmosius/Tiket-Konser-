@@ -12,7 +12,7 @@
                             data-bs-placement="top" data-bs-custom-class="tooltip-success"
                             data-bs-title="Traffic Overview"></iconify-icon>
                     </span>
-                </h5>
+                </h5>   
                 <div id="traffic-overview">
                 </div>
             </div>

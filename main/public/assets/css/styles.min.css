@@ -9,6 +9,7 @@
 @import "../css/icons/tabler-icons/tabler-icons.css";
 :root,
 [data-bs-theme="light"] {
+    --bs-blue-primary: #007AB9;
     --bs-blue: #007ab9;
     --bs-indigo: #6610f2;
     --bs-purple: #6f42c1;
@@ -11249,6 +11250,8 @@ fieldset:disabled .btn {
     --bs-bg-opacity: 1;
     background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
 }
+
+
 
 .bg-black {
     --bs-bg-opacity: 1;
