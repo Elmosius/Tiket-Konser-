@@ -4,4 +4,5 @@
     <title>YukNonton.com</title>
     <link rel="shortcut icon" type="image/png" href="{{ asset('') }}" />
     <link rel="stylesheet" href="{{ asset('../assets/css/styles.min.css') }}" />
+    @yield('css-tambahan')
 </head>
