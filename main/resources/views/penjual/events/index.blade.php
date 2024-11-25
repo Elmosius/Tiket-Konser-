@@ -80,7 +80,7 @@
                     (ini kalau misalnya tidak ada event)
                 </div>
 
-                <div class="row d-flex justify-content-center text-center mt-5 s">
+                <div class="row d-flex justify-content-center text-center mt-5 ">
                     <div class="col-md-12">
                         <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="none"
                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
