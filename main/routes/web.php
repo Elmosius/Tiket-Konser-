@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,24 +17,21 @@ Route::get('/', function () {
 
 // USERS
 Route::get('/dashboard/users', [UserController::class, 'index'])->name('users');
-Route::get('/dashboard/users/create', [UserController::class, 'create'])->name('users-create');
+Route::get('/dashboard/users/create', [UserController::class, 'create'])->name('user-create');
+Route::post('/dashboard/users/create', [UserController::class, 'store'])->name('user-store');
 // nanti tmbhin id ->          /edit/{id} untuk edit
-Route::get('/dashboard/users/edit', [UserController::class, 'edit'])->name('users-edit');
-
+Route::get('/dashboard/users/edit', [UserController::class, 'edit'])->name('user-edit');
+Route::put('/dashboard/users/edit', [UserController::class, 'update'])->name('user-update');
+Route::delete('/dashboard/users', [UserController::class, 'destroy'])->name('user-delete');
 
 // ROLES
-Route::get('/dashboard/roles', function () {
-    return view('admin.roles.index');
-})->name('roles');
-
-Route::get('/dashboard/roles/create', function () {
-    return view('admin.roles.create');
-})->name('roles-create');
-
+Route::get('/dashboard/roles', [RoleController::class, 'index'])->name('roles');
+Route::get('/dashboard/roles/create', [RoleController::class, 'create'])->name('role-create');
+Route::post('/dashboard/roles/create', [RoleController::class, 'store'])->name('role-store');
 // nanti /dashboard/roles/edit/{id} untuk edit
-Route::get('/dashboard/roles/edit', function () {
-    return view('admin.roles.edit');
-})->name('roles-edit');
+Route::get('/dashboard/roles/edit', [RoleController::class, 'edit'])->name('role-edit');
+Route::put('/dashboard/roles/edit', [RoleController::class, 'update'])->name('role-update');
+Route::delete('/dashboard/roles', [RoleController::class, 'destroy'])->name('role-delete');
 
 
 // PENJUAL DASHBOARD
