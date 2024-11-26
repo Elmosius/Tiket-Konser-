@@ -12,7 +12,9 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        return view('penjual.events.index',[
+            // nanti isinya data event 
+        ]);
     }
 
     /**
@@ -20,7 +22,9 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        return view('penjual.events.create',[
+            // isinya
+        ]);
     }
 
     /**
@@ -44,7 +48,9 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+        return view('penjual.events.edit',[
+            // isinya
+        ]);
     }
 
     /**

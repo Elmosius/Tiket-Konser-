@@ -12,7 +12,9 @@ class RekeningController extends Controller
      */
     public function index()
     {
-        //
+        return view('penjual.rekening.index',[
+            // isinya
+        ]);
     }
 
     /**

@@ -1,16 +1,24 @@
 <?php
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RekeningController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+
+/* 
+
+    LOGIN & REGISTER
+*/
 Route::get('/login', [Controller::class, 'showLoginForm'])->name('login');
 Route::get('/register', [Controller::class, 'showRegisterForm'])->name('register');
 
-// Coba coba dlu buat liat viewnya
-// ADMIN & PENJUAl DASHBOARD //
+/* 
+    ADMIN DASHBOARD
+*/
 Route::get('/', function () {
     return view('admin.dashboard.index');
 })->name('dashboard');
@@ -34,23 +42,14 @@ Route::put('/dashboard/roles/edit/{id}', [RoleController::class, 'update'])->nam
 Route::delete('/dashboard/roles', [RoleController::class, 'destroy'])->name('role-delete');
 
 
-// PENJUAL DASHBOARD
+/* 
+    PENJUAL DASHBOARD
+*/
 // EVENTS
-Route::get('/dashboard/events', function () {
-    return view('penjual.events.index');
-})->name('events');
-
-Route::get('/dashboard/events/create', function () {
-    return view('penjual.events.index');
-})->name('events');
-
-
-
+Route::get('/dashboard/events', [EventController::class, 'index'])->name('events');
 
 // REKENING
-Route::get('/dashboard/rekening', function () {
-    return view('penjual.rekening.index');
-})->name('rekening');
+Route::get('/dashboard/rekening', [RekeningController::class, 'index'])->name('rekening');
 
 
 
