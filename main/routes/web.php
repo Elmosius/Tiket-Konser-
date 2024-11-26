@@ -1,59 +1,67 @@
 <?php
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RekeningController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+/* 
+
+    LOGIN & REGISTER
+*/
 Route::get('/login', [Controller::class, 'showLoginForm'])->name('login');
 Route::get('/register', [Controller::class, 'showRegisterForm'])->name('register');
 
-// Coba coba dlu buat liat viewnya
-// ADMIN & PENJUAl DASHBOARD //
+/* 
+    ADMIN DASHBOARD
+*/
 Route::get('/', function () {
     return view('admin.dashboard.index');
 })->name('dashboard');
 
-
 // USERS
-Route::get('/dashboard/users', function () {
-    return view('admin.users.index');
-})->name('users');
-
-Route::get('/dashboard/users/create', function () {
-    return view('admin.users.create');
-})->name('users-create');
-
-// nanti /dashboard/users/edit/{id} untuk edit
-Route::get('/dashboard/users/edit', function () {
-    return view('admin.users.edit');
-})->name('users-edit');
-
+Route::get('/dashboard/users', [UserController::class, 'index'])->name('users');
+Route::get('/dashboard/users/create', [UserController::class, 'create'])->name('user-create');
+Route::post('/dashboard/users/create', [UserController::class, 'store'])->name('user-store');
+// nanti tmbhin id ->          /edit/{id} untuk edit
+Route::get('/dashboard/users/edit', [UserController::class, 'edit'])->name('user-edit');
+Route::put('/dashboard/users/edit/{id}', [UserController::class, 'update'])->name('user-update');
+Route::delete('/dashboard/users', [UserController::class, 'destroy'])->name('user-delete');
 
 // ROLES
-Route::get('/dashboard/roles', function () {
-    return view('admin.roles.index');
-})->name('roles');
-
-Route::get('/dashboard/roles/create', function () {
-    return view('admin.roles.create');
-})->name('roles-create');
-
+Route::get('/dashboard/roles', [RoleController::class, 'index'])->name('roles');
+Route::get('/dashboard/roles/create', [RoleController::class, 'create'])->name('role-create');
+Route::post('/dashboard/roles/create', [RoleController::class, 'store'])->name('role-store');
 // nanti /dashboard/roles/edit/{id} untuk edit
-Route::get('/dashboard/roles/edit', function () {
-    return view('admin.roles.edit');
-})->name('roles-edit');
+Route::get('/dashboard/roles/edit', [RoleController::class, 'edit'])->name('role-edit');
+// nanti tmbhin id ->          /edit/{id} untuk edit
+Route::put('/dashboard/roles/edit/{id}', [RoleController::class, 'update'])->name('role-update');
+Route::delete('/dashboard/roles', [RoleController::class, 'destroy'])->name('role-delete');
 
 
-// PENJUAL DASHBOARD
+/* 
+    PENJUAL DASHBOARD
+*/
 // EVENTS
-Route::get('/dashboard/events', function () {
-    return view('penjual.events.index');
-})->name('events');
+Route::get('/dashboard/events', [EventController::class, 'index'])->name('events');
+Route::get('/dashboard/events/create', [EventController::class, 'create'])->name('event-create');
+Route::post('/dashboard/events/create', [EventController::class, 'store'])->name('event-store');
+Route::get('/dashboard/events/edit', [EventController::class, 'edit'])->name('event-edit');
+Route::put('/dashboard/events/update', [EventController::class, 'update'])->name('event-update');
+// delete kalau misalnay tidak berikatan
+Route::delete('/dashboard/events', [EventController::class, 'destroy'])->name('event-delete');
 
 // REKENING
-Route::get('/dashboard/rekening', function () {
-    return view('penjual.rekening.index');
-})->name('rekening');
+Route::get('/dashboard/rekening', [RekeningController::class, 'index'])->name('rekening');
+Route::get('/dashboard/rekening/create', [RekeningController::class, 'create'])->name('rekening-add');
+Route::post('/dashboard/rekening/create', [RekeningController::class, 'store'])->name('rekening-store');
+// nanti tmbhin id ->          /edit/{id} untuk edit
+Route::get('/dashboard/rekening/edit/{id}', [RekeningController::class, 'edit'])->name('rekening-edit');
+Route::put('/dashboard/rekening/edit/{id}', [RekeningController::class, 'update'])->name('rekening-edit');
+Route::delete('/dashboard/rekening', [RekeningController::class, 'destroy'])->name('rekening-delete');
 
 
 
