@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/login', [Controller::class, 'showLoginForm'])->name('login');
@@ -13,20 +14,11 @@ Route::get('/', function () {
     return view('admin.dashboard.index');
 })->name('dashboard');
 
-
 // USERS
-Route::get('/dashboard/users', function () {
-    return view('admin.users.index');
-})->name('users');
-
-Route::get('/dashboard/users/create', function () {
-    return view('admin.users.create');
-})->name('users-create');
-
-// nanti /dashboard/users/edit/{id} untuk edit
-Route::get('/dashboard/users/edit', function () {
-    return view('admin.users.edit');
-})->name('users-edit');
+Route::get('/dashboard/users', [UserController::class, 'index'])->name('users');
+Route::get('/dashboard/users/create', [UserController::class, 'create'])->name('users-create');
+// nanti tmbhin id ->          /edit/{id} untuk edit
+Route::get('/dashboard/users/edit', [UserController::class, 'edit'])->name('users-edit');
 
 
 // ROLES
@@ -49,6 +41,13 @@ Route::get('/dashboard/roles/edit', function () {
 Route::get('/dashboard/events', function () {
     return view('penjual.events.index');
 })->name('events');
+
+Route::get('/dashboard/events/create', function () {
+    return view('penjual.events.index');
+})->name('events');
+
+
+
 
 // REKENING
 Route::get('/dashboard/rekening', function () {
