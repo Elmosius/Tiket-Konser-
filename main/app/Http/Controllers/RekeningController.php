@@ -22,7 +22,9 @@ class RekeningController extends Controller
      */
     public function create()
     {
-        //
+        return view('penjual.rekening.create',[
+            // isinya
+        ]);
     }
 
     /**
@@ -46,7 +48,9 @@ class RekeningController extends Controller
      */
     public function edit(Rekening $rekening)
     {
-        //
+        return view('penjual.rekening.edit',[
+            // isinya
+        ]);
     }
 
     /**
