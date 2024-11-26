@@ -21,7 +21,7 @@ Route::get('/dashboard/users/create', [UserController::class, 'create'])->name('
 Route::post('/dashboard/users/create', [UserController::class, 'store'])->name('user-store');
 // nanti tmbhin id ->          /edit/{id} untuk edit
 Route::get('/dashboard/users/edit', [UserController::class, 'edit'])->name('user-edit');
-Route::put('/dashboard/users/edit', [UserController::class, 'update'])->name('user-update');
+Route::put('/dashboard/users/edit/{id}', [UserController::class, 'update'])->name('user-update');
 Route::delete('/dashboard/users', [UserController::class, 'destroy'])->name('user-delete');
 
 // ROLES
@@ -30,7 +30,7 @@ Route::get('/dashboard/roles/create', [RoleController::class, 'create'])->name('
 Route::post('/dashboard/roles/create', [RoleController::class, 'store'])->name('role-store');
 // nanti /dashboard/roles/edit/{id} untuk edit
 Route::get('/dashboard/roles/edit', [RoleController::class, 'edit'])->name('role-edit');
-Route::put('/dashboard/roles/edit', [RoleController::class, 'update'])->name('role-update');
+Route::put('/dashboard/roles/edit/{id}', [RoleController::class, 'update'])->name('role-update');
 Route::delete('/dashboard/roles', [RoleController::class, 'destroy'])->name('role-delete');
 
 
