@@ -49,18 +49,21 @@ Route::delete('/dashboard/roles', [RoleController::class, 'destroy'])->name('rol
 Route::get('/dashboard/events', [EventController::class, 'index'])->name('events');
 Route::get('/dashboard/events/create', [EventController::class, 'create'])->name('event-create');
 Route::post('/dashboard/events/create', [EventController::class, 'store'])->name('event-store');
+// nanti tmbhin id ->          /edit/{id} untuk edit
 Route::get('/dashboard/events/edit', [EventController::class, 'edit'])->name('event-edit');
-Route::put('/dashboard/events/update', [EventController::class, 'update'])->name('event-update');
+Route::put('/dashboard/events/edit/{id}', [EventController::class, 'update'])->name('event-update');
 // delete kalau misalnay tidak berikatan
 Route::delete('/dashboard/events', [EventController::class, 'destroy'])->name('event-delete');
+// nanti tmbhin id ->                   /{id} untuk detail
+Route::get('/dashboard/event/detail', [EventController::class, 'show'])->name('event-detail');
 
 // REKENING
 Route::get('/dashboard/rekening', [RekeningController::class, 'index'])->name('rekening');
 Route::get('/dashboard/rekening/create', [RekeningController::class, 'create'])->name('rekening-add');
 Route::post('/dashboard/rekening/create', [RekeningController::class, 'store'])->name('rekening-store');
 // nanti tmbhin id ->          /edit/{id} untuk edit
-Route::get('/dashboard/rekening/edit/{id}', [RekeningController::class, 'edit'])->name('rekening-edit');
-Route::put('/dashboard/rekening/edit/{id}', [RekeningController::class, 'update'])->name('rekening-edit');
+Route::get('/dashboard/rekening/edit', [RekeningController::class, 'edit'])->name('rekening-edit');
+Route::put('/dashboard/rekening/edit/{id}', [RekeningController::class, 'update'])->name('rekening-update');
 Route::delete('/dashboard/rekening', [RekeningController::class, 'destroy'])->name('rekening-delete');
 
 
