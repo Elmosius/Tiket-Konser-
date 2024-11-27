@@ -45,43 +45,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Apakah Anda yakin ingin menghapus item ini?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-danger" id="confirmDelete">Hapus</button>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
-
-
-@section('js-tambahan')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let deleteModal = document.getElementById('deleteModal');
-            deleteModal.addEventListener('show.bs.modal', function(event) {
-                let button = event.relatedTarget;
-                let itemId = button.getAttribute('data-id');
-                let confirmButton = deleteModal.querySelector('#confirmDelete');
-
-                confirmButton.onclick = function() {
-                    console.log('Item dengan ID ' + itemId + ' akan dihapus.');
-                    let modal = bootstrap.Modal.getInstance(deleteModal);
-                    modal.hide();
-                };
-            });
-        });
-    </script>
 @endsection
