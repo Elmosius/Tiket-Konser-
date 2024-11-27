@@ -28,6 +28,7 @@
                             <tr>
                                 <th scope="col">Tanggal & waktu</th>
                                 <th scope="col">Pendapatan</th>
+                                <th scope="col">Pengujung</th>
                                 <th scope="col">Tiket Terjual</th>
                             </tr>
                         </thead>
@@ -35,6 +36,7 @@
                             <tr>
                                 <td>xx - xx</td>
                                 <td>Rp. 0</td>
+                                <td>0</td>
                                 <td>0 / 20</td>
                             </tr>
                         </tbody>
