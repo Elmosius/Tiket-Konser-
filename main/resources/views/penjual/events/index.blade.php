@@ -93,7 +93,7 @@
                         Silakah buat event mu dengan menekan tombol di bawah ini.
                     </div>
                     <div class="col-md-4 mt-3">
-                        <a type="button" class="btn btn-primary p-2 rounded-1" href="">
+                        <a type="button" class="btn btn-primary p-2 rounded-1" href="{{ route('event-create') }}">
                             Buat Event!
                         </a>
                     </div>
@@ -122,7 +122,7 @@
                                 <td>3</td>
                                 <td>4</td>
                                 <td>
-                                    <a href="#" class="btn btn-warning pt-1 pb-1 px-2">
+                                    <a href="{{ route('event-edit') }}" class="btn btn-warning pt-1 pb-1 px-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"

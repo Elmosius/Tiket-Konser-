@@ -59,8 +59,8 @@ Route::get('/dashboard/rekening', [RekeningController::class, 'index'])->name('r
 Route::get('/dashboard/rekening/create', [RekeningController::class, 'create'])->name('rekening-add');
 Route::post('/dashboard/rekening/create', [RekeningController::class, 'store'])->name('rekening-store');
 // nanti tmbhin id ->          /edit/{id} untuk edit
-Route::get('/dashboard/rekening/edit/{id}', [RekeningController::class, 'edit'])->name('rekening-edit');
-Route::put('/dashboard/rekening/edit/{id}', [RekeningController::class, 'update'])->name('rekening-edit');
+Route::get('/dashboard/rekening/edit', [RekeningController::class, 'edit'])->name('rekening-edit');
+Route::put('/dashboard/rekening/edit/{id}', [RekeningController::class, 'update'])->name('rekening-update');
 Route::delete('/dashboard/rekening', [RekeningController::class, 'destroy'])->name('rekening-delete');
 
 
