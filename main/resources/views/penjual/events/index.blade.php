@@ -111,6 +111,8 @@
                                 <th scope="col">Nama Event</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Tanggal</th>
+                                <th scope="col">Publish/Unpublish</th>
+                                <th scope="col">Lihat Detail</th>
                                 <th scope="col">Edit</th>
                                 <th scope="col">Delete</th>
                             </tr>
@@ -121,6 +123,28 @@
                                 <td>2</td>
                                 <td>3</td>
                                 <td>4</td>
+                                <td>
+                                    <a href="#" class="btn btn-success pt-1 pb-1 px-2 ms-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="15"
+                                            height="15"viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                            class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                                        </svg>
+
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="#" class="btn btn-primary pt-1 pb-1 px-2 ms-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="15" height="15"
+                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                        </svg>
+                                    </a>
+                                </td>
                                 <td>
                                     <a href="{{ route('event-edit') }}" class="btn btn-warning pt-1 pb-1 px-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
