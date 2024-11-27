@@ -18,7 +18,7 @@
 @endsection
 
 @section('isi-konten-dashboard')
-    <form method="post" action="/dashboard/rekening" class="p-4">
+    <form method="put" action="{{ route('events') }}" class="p-4">
         @csrf
         <div class="col-lg-12">
             <div class="card">
@@ -316,7 +316,7 @@
 
 
 
-        <div class="row mb-5">
+        <div class="row">
             <label class="h5 mb-4 fw-bold">
                 Pengaturan Tambahan
             </label>
@@ -344,7 +344,13 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Create Event</button>
+
+
+        <div class="mt-5">
+            <button type="submit" class="btn btn-primary">Save</button>
+
+            <a href="{{ route('events') }}" class="btn btn-danger">Cancel</a>
+        </div>
     </form>
 @endsection
 

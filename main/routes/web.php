@@ -50,7 +50,7 @@ Route::get('/dashboard/events', [EventController::class, 'index'])->name('events
 Route::get('/dashboard/events/create', [EventController::class, 'create'])->name('event-create');
 Route::post('/dashboard/events/create', [EventController::class, 'store'])->name('event-store');
 Route::get('/dashboard/events/edit', [EventController::class, 'edit'])->name('event-edit');
-Route::put('/dashboard/events/update', [EventController::class, 'update'])->name('event-update');
+Route::put('/dashboard/events/edit/{id}', [EventController::class, 'update'])->name('event-update');
 // delete kalau misalnay tidak berikatan
 Route::delete('/dashboard/events', [EventController::class, 'destroy'])->name('event-delete');
 
