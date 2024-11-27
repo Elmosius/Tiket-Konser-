@@ -8,6 +8,12 @@
             background-size: cover;
             background-position: center;
         }
+
+        .switch-large .form-check-input {
+            width: 2rem;
+            height: 1rem;
+            transform: scale(1.5);
+        }
     </style>
 @endsection
 
@@ -304,18 +310,40 @@
 
         <div class="row">
             <div class="col-md">
-                <span class="h5 fw-bold">
-                    Formulir Data Pemesanan
-                </span>
-            </div>
-            <div class="col-md">
-                <span class="h5 fw-bold">
-                    Pengaturan Tambahan
-                </span>
+
             </div>
         </div>
 
 
+
+        <div class="row">
+            <label class="h5 mb-4 fw-bold">
+                Pengaturan Tambahan
+            </label>
+            <div class="col-md">
+                <label class="h6 fw-bold">
+                    Jumlah maks. tiket per transaksi
+                </label>
+                <select class="form-select" name="bank" required>
+                    <option selected>Open this select menu</option>
+                    <option value="5">5 tiket</option>
+                    <option value="4">4 tiket</option>
+                    <option value="3">3 tiket</option>
+                    <option value="2">2 tiket</option>
+                    <option value="1">1 tiket</option>
+                </select>
+            </div>
+
+            <div class="col-md">
+                <label class="h6 fw-bold">
+                    Satu email - satu transaksi (coming soon)
+                </label>
+                <div class="ms-2 form-check form-switch mt-3 switch-large">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                </div>
+            </div>
+        </div>
 
     </form>
 @endsection
