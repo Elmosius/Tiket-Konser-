@@ -18,7 +18,7 @@
 @endsection
 
 @section('isi-konten-dashboard')
-    <form method="post" action="/dashboard/rekening" class="p-4">
+    <form method="post" action="{{ route('event-create') }}" class="p-4">
         @csrf
         <div class="col-lg-12">
             <div class="card">
@@ -313,8 +313,6 @@
 
             </div>
         </div>
-
-
 
         <div class="row mb-5">
             <label class="h5 mb-4 fw-bold">
