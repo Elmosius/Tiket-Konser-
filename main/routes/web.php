@@ -55,6 +55,10 @@ Route::get('/dashboard/rekening', function () {
     return view('penjual.rekening.index');
 })->name('rekening');
 
+// Pembeli Index
+Route::get('/pembeli', function () {
+   return view('pembeli.index');
+});
 
 
 // Route::get('/dashboard', function () {
