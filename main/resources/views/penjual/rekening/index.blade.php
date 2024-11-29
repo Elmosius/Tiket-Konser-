@@ -55,8 +55,12 @@
                         <div class="card border border-black rounded">
                             <div
                                 class="fs-3 card-header border-bottom border-black d-flex justify-content-between align-items-center">
-                                <span>BCA misalnya</span>
+                                {{-- Jadi status tuh maksudnya buat kalau ada event nanti uangnya ke rekening yang aktif  --}}
+                                <span>BCA misalnya (status: Aktif)</span>
                                 <div>
+                                    <button type="button" class="btn btn-dark p-1 fs-2"
+                                        data-bs-dismiss="modal">Aktif/Nonaktif</button>
+
                                     {{-- tombol edit --}}
                                     <a href="{{ route('rekening-edit') }}" class="btn btn-warning pt-1 pb-1 px-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
