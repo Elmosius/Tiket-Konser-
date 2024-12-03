@@ -1,31 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YukNonton.com</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .btn-primary {
-            background-color: #007AB9;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #005f8c;
-        }
-    </style>
-</head>
+{{-- header --}}
+@include('layouts.pembeli-penjual-guess.header')
 
 <body class="bg-gray-100">
-
     <!-- Header -->
     <header class="bg-[#007AB9] text-white">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center max-w-7xl">
@@ -221,43 +200,8 @@
         </div>
     </section>
 
-    <<!-- Footer -->
-        <footer class="bg-[#007AB9] text-white py-10 px-24">
-            <div class="container mx-auto grid grid-cols-2 gap-8">
-                <!-- Left Side: Logo, Deskripsi, Social Media Icons -->
-                <div class="flex flex-col items-start">
-                    <h1 class="text-3xl font-bold">YukNonton.com</h1>
-                    <p class="text-xs mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    <!-- Social Media Icons -->
-                    <div class="flex space-x-6 mt-4">
-                        <a href="#" class="text-white hover:text-[#005f8c]">
-                            <i class="fab fa-facebook fa-lg"></i>
-                        </a>
-                        <a href="#" class="text-white hover:text-[#005f8c]">
-                            <i class="fab fa-twitter fa-lg"></i> <!-- Twitter Icon -->
-                        </a>
-                        <a href="#" class="text-white hover:text-[#005f8c]">
-                            <i class="fab fa-instagram fa-lg"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Right Side: Bantuan and Lorem Ipsum -->
-                <div class="text-xs">
-                    <h2 class="text-lg font-semibold">Bantuan</h2>
-                    <p class="mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-            </div>
-
-            <!-- Divider Line -->
-            <div class="border-t border-gray-400 my-4"></div>
-
-            <!-- Copyright Text -->
-            <div class="text-right px-24 text-sm">
-                <p>© 2024 YukNonton.com. All rights reserved.</p>
-            </div>
-        </footer>
+    <!-- Footer -->
+    @include('layouts.pembeli-penjual-guess.footer')
 
 </body>
 
