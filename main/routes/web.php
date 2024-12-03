@@ -66,6 +66,10 @@ Route::get('/dashboard/rekening/edit', [RekeningController::class, 'edit'])->nam
 Route::put('/dashboard/rekening/edit/{id}', [RekeningController::class, 'update'])->name('rekening-update');
 Route::delete('/dashboard/rekening', [RekeningController::class, 'destroy'])->name('rekening-delete');
 
+// Pembeli Index
+Route::get('/pembeli', function () {
+   return view('pembeli.index');
+});
 
 
 // Route::get('/dashboard', function () {
