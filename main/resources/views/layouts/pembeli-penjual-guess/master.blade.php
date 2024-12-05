@@ -4,29 +4,9 @@
 {{-- header --}}
 @include('layouts.pembeli-penjual-guess.header')
 
-<body class="bg-gray-100">
-    <!-- Header -->
-    <header class="bg-[#007AB9] text-white">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center max-w-7xl">
-            <!-- Contoh max-w-7xl untuk memberi batasan konten -->
-            <!-- Logo with Font Awesome Icon -->
-            <div class="flex items-center space-x-2"> <!-- Space between icon and text -->
-                <i class="fas fa-ticket-alt text-2xl"></i>
-                <h1 class="text-lg font-bold">YukNonton.com</h1>
-            </div>
-
-            <!-- Navbar Links -->
-            <nav class="flex space-x-6"> <!-- Hapus margin kiri, cukup space-x-6 untuk jarak antar elemen -->
-                <a href="#" class="hover:underline">Tiket</a>
-                <a href="#" class="hover:underline">Jadwal</a>
-
-                <!-- Profile Icon Only -->
-                <a href="#" class="hover:underline">
-                    <i class="fas fa-user-circle text-xl"></i>
-                </a>
-            </nav>
-        </div>
-    </header>
+<body class="bg-gray-100 ">
+    {{-- Navbar --}}
+    @include('layouts.pembeli-penjual-guess.navbar')
 
     <!-- Hero Section -->
     <section class="container mx-auto my-10 px-24"> <!-- Tambahkan px-4 untuk padding horizontal -->
