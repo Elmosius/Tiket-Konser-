@@ -27,7 +27,7 @@
     </div>
 
     <!-- Event Cards -->
-    <div class="row">
+    <div class="row mt-5">
         <!-- Event Card 1 -->
         <div class="col-sm-6 col-lg-4 mb-4">
             <div class="card">
