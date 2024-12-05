@@ -16,29 +16,8 @@
     @include('layouts.pembeli-penjual-guess.upcoming')
 
 
-    <!-- Divider Section -->
-    <section class="bg-white py-10 px-24">
-        <div class="container mx-auto text-center">
-            <!-- Heading Text -->
-            <h2 class="text-3xl font-semibold text-gray-800">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.    
-            </h2>
-
-            <!-- Subheading Text -->
-            <p class="text-gray-600 mt-4 text-lg">
-                Velit animi quas unde suscipit fugiat facilis ad quod.
-            </p>
-
-            <!-- Button below the text -->
-            <div class="mt-8">
-                <button
-                    class="btn-primary px-10 py-4 rounded-full text-white shadow-lg hover:bg-[#005f8c] focus:outline-none focus:ring-2 focus:ring-black">
-                    Lihat Selengkapnya
-                </button>
-            </div>
-        </div>
-    </section>
-
+    <!-- Iklan -->
+    @include('layouts.pembeli-penjual-guess.ads')
 
     <!-- Interesting Articles -->
     <section class="bg-white py-10 px-24">

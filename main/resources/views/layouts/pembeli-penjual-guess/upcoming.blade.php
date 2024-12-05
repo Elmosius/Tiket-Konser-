@@ -68,7 +68,7 @@
         </div>
     </div>
 
-    <div class="text-center mt-4">
+    <div class="text-center">
         <!-- Button with rounded-full -->
         <button class="btn btn-primary px-4 py-2 shadow">Lainnya</button>
     </div>
