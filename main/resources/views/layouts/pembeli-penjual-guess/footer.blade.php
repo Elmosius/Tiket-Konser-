@@ -1,5 +1,5 @@
-<footer class="warna-primary text-white py-4 px-24">
-    <div class="container mt-3">
+<footer class="warna-primary text-white py-4 ">
+    <div class="container mt-3 px-24">
         <div class="row ">
             <!-- Left Side: Logo, Deskripsi, Social Media Icons -->
             <div class="col-md-6 d-flex flex-column align-items-start">
