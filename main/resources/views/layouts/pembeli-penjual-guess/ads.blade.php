@@ -1,4 +1,4 @@
-<section class="container mb-5 px-24 ">
+<section class="container mb-5 px-24">
     <div class="row bg-white border border-black rounded-5 ">
 
         <div class="col-md-12">
