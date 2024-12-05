@@ -9,99 +9,11 @@
     @include('layouts.pembeli-penjual-guess.navbar')
 
     <!-- Hero Section -->
-    <section class="container mx-auto my-10 px-24"> <!-- Tambahkan px-4 untuk padding horizontal -->
-        <div class="bg-gray-200 h-64 rounded-lg relative">
-            <!-- Navigation Buttons -->
-            <button
-                class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button
-                class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
-    </section>
+    @include('layouts.pembeli-penjual-guess.hero')
 
 
-    <!-- Upcoming Events with Dropdown -->
-    <section class="container mx-auto my-10 px-24">
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-semibold">Acara Mendatang</h2>
-
-            <!-- Dropdowns -->
-            <div class="flex space-x-4">
-                <!-- Kategori Dropdown -->
-                <div class="relative">
-                    <select
-                        class="bg-[#007AB9] text-white border border-[#007AB9] rounded-lg py-2 px-4 text-sm
-                hover:bg-[#005f8c] hover:border-[#005f8c] focus:ring-2 focus:ring-[#005f8c] focus:outline-none">
-                        <option value="" disabled selected>Pilih Kategori</option>
-                        <option value="1">Kategori 1</option>
-                        <option value="2">Kategori 2</option>
-                        <option value="3">Kategori 3</option>
-                    </select>
-                </div>
-
-                <!-- Hari Dropdown -->
-                <div class="relative">
-                    <select
-                        class="bg-[#007AB9] text-white border border-[#007AB9] rounded-lg py-2 px-4 text-sm
-                hover:bg-[#005f8c] hover:border-[#005f8c] focus:ring-2 focus:ring-[#005f8c] focus:outline-none">
-                        <option value="" disabled selected>Pilih Hari</option>
-                        <option value="senin">Senin</option>
-                        <option value="selasa">Selasa</option>
-                        <option value="rabu">Rabu</option>
-                        <option value="kamis">Kamis</option>
-                        <option value="jumat">Jumat</option>
-                        <option value="sabtu">Sabtu</option>
-                        <option value="minggu">Minggu</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <!-- Event Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Event Card 1 -->
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <img src="https://via.placeholder.com/400x200" alt="Event Image" class="w-full h-40 object-cover">
-                <div class="p-4">
-                    <p class="text-sm text-gray-500 font-semibold">14 APR</p>
-                    <h3 class="font-semibold text-lg mt-2">Velit animi quas unde suscipit</h3>
-                    <p class="text-gray-600 mt-2 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Velit
-                        animi quas unde.</p>
-                </div>
-            </div>
-
-            <!-- Event Card 2 -->
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <img src="https://via.placeholder.com/400x200" alt="Event Image" class="w-full h-40 object-cover">
-                <div class="p-4">
-                    <p class="text-sm text-gray-500 font-semibold">16 APR</p>
-                    <h3 class="font-semibold text-lg mt-2">Quisquam mollitia repellat deserunt</h3>
-                    <p class="text-gray-600 mt-2 text-sm">Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore.</p>
-                </div>
-            </div>
-
-            <!-- Event Card 3 -->
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <img src="https://via.placeholder.com/400x200" alt="Event Image" class="w-full h-40 object-cover">
-                <div class="p-4">
-                    <p class="text-sm text-gray-500 font-semibold">20 APR</p>
-                    <h3 class="font-semibold text-lg mt-2">Excepteur sint occaecat cupidatat</h3>
-                    <p class="text-gray-600 mt-2 text-sm">Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                        accusantium doloremque.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="text-center mt-6">
-            <!-- Button with rounded-full -->
-            <button class="btn-primary px-6 py-3 rounded-full shadow hover:bg-[#005f8c]">Lainnya</button>
-        </div>
-    </section>
+    <!-- Upcoming-->
+    @include('layouts.pembeli-penjual-guess.upcoming')
 
 
     <!-- Divider Section -->
@@ -109,7 +21,7 @@
         <div class="container mx-auto text-center">
             <!-- Heading Text -->
             <h2 class="text-3xl font-semibold text-gray-800">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.    
             </h2>
 
             <!-- Subheading Text -->
@@ -183,6 +95,12 @@
     <!-- Footer -->
     @include('layouts.pembeli-penjual-guess.footer')
 
+    <!-- Extra JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    <script src="{{ asset('/assets/libs/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+    @yield('extra-js')
 </body>
 
 </html>

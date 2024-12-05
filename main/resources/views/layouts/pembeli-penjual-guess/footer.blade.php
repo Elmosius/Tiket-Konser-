@@ -1,5 +1,5 @@
 <footer class="warna-primary text-white py-4 px-24">
-    <div class="container mt-5">
+    <div class="container mt-3">
         <div class="row ">
             <!-- Left Side: Logo, Deskripsi, Social Media Icons -->
             <div class="col-md-6 d-flex flex-column align-items-start">
@@ -36,7 +36,7 @@
             <div class="col-md-2"></div>
 
             <!-- Right Side: Bantuan and Lorem Ipsum -->
-            <div class="col-md">
+            <div class="col-md mt-3">
                 <h2 class="h5 fw-bold text-light">Bantuan</h2>
                 <p class="small mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
                     incididunt ut labore et dolore magna aliqua.</p>
