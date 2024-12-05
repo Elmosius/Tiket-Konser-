@@ -1,5 +1,5 @@
 <section class="container my-5 px-24">
-    <div id="carouselExampleAutoplaying" class="carousel slide rounded" data-bs-ride="carousel">
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators mt-5">
             <button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="0" class="active"
                 aria-current="true" aria-label="Slide 1"></button>
@@ -9,18 +9,18 @@
                 aria-label="Slide 3"></button>
         </div>
         <div class="carousel-inner rounded">
-            <div class="carousel-item active">
+            <div class="carousel-item active rounded-5">
                 <a href="#">
-                    <img src="{{ asset('assets/images/backgrounds/banner.jpg') }}" class="rounded d-block w-100 py-2"
+                    <img src="{{ asset('assets/images/backgrounds/banner.jpg') }}" class="rounded-5 d-block w-100 py-2"
                         alt="contoh">
                 </a>
             </div>
-            <div class="carousel-item">
-                <img src="{{ asset('assets/images/backgrounds/banner.jpg') }}" class="rounded d-block w-100 py-2"
+            <div class="carousel-item rounded-5">
+                <img src="{{ asset('assets/images/backgrounds/banner.jpg') }}" class="rounded-5 d-block w-100 py-2"
                     alt="contoh">
             </div>
-            <div class="carousel-item">
-                <img src="{{ asset('assets/images/backgrounds/banner.jpg') }}" class="rounded d-block w-100 py-2"
+            <div class="carousel-item rounded-5">
+                <img src="{{ asset('assets/images/backgrounds/banner.jpg') }}" class="rounded-5 d-block w-100 py-2"
                     alt="contoh">
             </div>
         </div>
