@@ -36,9 +36,8 @@
     Header - ROLE PEMBELI & PENJUAL
 -->
 
-<header class="warna-primary text-white">
+<header class="warna-primary text-white ">
     <div class="container px-24 py-3 d-flex justify-content-between align-items-center ">
-
         <div class="d-flex align-items-center mt-3">
             <a href="#">
                 <svg width="225" height="45" viewBox="0 0 244 57" fill="none" xmlns="http://www.w3.org/2000/svg">
