@@ -42,7 +42,7 @@
 
         <!-- Button to load more articles -->
         <div class="text-center mb-5">
-            <button class="btn btn-primary px-4 py-2 shadow-lg">
+            <button class="btn btn-outline-primary px-4 py-2 shadow-lg">
                 Lainnya
             </button>
         </div>

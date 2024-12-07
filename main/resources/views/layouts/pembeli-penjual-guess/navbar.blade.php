@@ -74,24 +74,24 @@
                 </a>
 
                 {{-- Kalau pembeli --}}
-                {{-- <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButton">
+                <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButton">
                     <li><a class="dropdown-item" href="#">Beralih ke role Penjual ></a></li>
                     <hr>
                     <li><a class="dropdown-item mt-1" href="#">History</a></li>
                     <li><a class="dropdown-item" href="#">Tiket saya</a></li>
                     <li><a class="dropdown-item" href="#">Logout</a></li>
-                </ul> --}}
+                </ul>
 
 
                 {{-- kalau penjual --}}
-                <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButton">
+                {{-- <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButton">
                     <li><a class="dropdown-item" href="#">Beralih ke role Pembeli ></a></li>
                     <hr>
                     <li><a class="dropdown-item mt-1" href="#">Dashboard</a></li>
                     <li><a class="dropdown-item" href="#">Event saya</a></li>
                     <li><a class="dropdown-item" href="#">Rekening</a></li>
                     <li><a class="dropdown-item" href="#">Logout</a></li>
-                </ul>
+                </ul> --}}
             </div>
         </nav>
     </div>

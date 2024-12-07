@@ -70,6 +70,6 @@
 
     <div class="text-center">
         <!-- Button with rounded-full -->
-        <button class="btn btn-primary px-4 py-2 shadow">Lainnya</button>
+        <button class="btn btn-outline-primary px-4 py-2 shadow">Lainnya</button>
     </div>
 </section>
