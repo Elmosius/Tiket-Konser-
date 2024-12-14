@@ -13,11 +13,11 @@
                         Cancel
                     </a>
                 </div>
-                <form method="post" action="/dashboard/users" class="p-4">
+                <form method="post" action="{{route('role-store')}}" class="p-4">
                     @csrf
                     <div class="mb-3 input-group">
-                        <div class="col-4">
-                            <label for="id user" class="form-label fw-semibold">ID Role</label>
+                        {{-- <div class="col-4">
+                            <label for="id" class="form-label fw-semibold">ID Role</label>
                             <input type="text" class="form-control" id="id" name="id" required autofocus
                                 value="" placeholder="Not be greater than 10 Character">
 
@@ -25,11 +25,11 @@
 
                             </div>
 
-                        </div>
-                        <div class="ps-4 col-8">
-                            <label for="nama_user" class="form-label fw-semibold">Nama</label>
-                            <input type="text" class="form-control " id="nama_user" name="nama_user" autofocus
-                                value="" placeholder="Admin">
+                        </div> --}}
+                        <div class="ps-4 col-4">
+                            <label for="nama_role" class="form-label fw-semibold">Nama : </label>
+                            <input type="text" class="form-control " id="nama_role" name="nama_role" 
+                                value="" placeholder=" Contoh : Admin">
 
                             <div class=" invalid-feedback">
 

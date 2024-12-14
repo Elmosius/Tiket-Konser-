@@ -24,41 +24,43 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>
-                                    <a href="{{ route('role-edit') }}" class="btn btn-warning pt-1 pb-1 px-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-                                            <path
-                                                d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-                                            <path d="M16 5l3 3" />
-                                        </svg>
-                                    </a>
-                                </td>
-                                <td>
-                                    {{-- tombol delete --}}
-                                    <button class="btn btn-danger pt-1 pb-1 px-2" data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal" data-id="1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M4 7l16 0" />
-                                            <path d="M10 11l0 6" />
-                                            <path d="M14 11l0 6" />
-                                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
+                            @foreach($roles as $role)
+                                <tr>
+                                    <td>{{$role->id}}</td>
+                                    <td>{{$role->nama_role}}</td>
+                                    <td>
+                                        <a href="{{ route('role-edit',['role'=>$role->id]) }}" class="btn btn-warning pt-1 pb-1 px-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                                <path
+                                                    d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                                <path d="M16 5l3 3" />
+                                            </svg>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{-- tombol delete --}}
+                                        <button class="btn btn-danger pt-1 pb-1 px-2" data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal" data-id="{{ $role->id }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M4 7l16 0" />
+                                                <path d="M10 11l0 6" />
+                                                <path d="M14 11l0 6" />
+                                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                            </svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -79,7 +81,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-danger" id="confirmDelete">Hapus</button>
+                    <a href="#" type="button" class="btn btn-danger" id="confirmDelete">Hapus</a>
                 </div>
             </div>
         </div>
@@ -95,6 +97,7 @@
                 let button = event.relatedTarget;
                 let itemId = button.getAttribute('data-id');
                 let confirmButton = deleteModal.querySelector('#confirmDelete');
+                confirmButton.setAttribute('href', `/dashboard/roles/delete/${itemId}`);
 
                 confirmButton.onclick = function() {
                     console.log('Item dengan ID ' + itemId + ' akan dihapus.');

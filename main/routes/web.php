@@ -27,19 +27,19 @@ Route::get('/dashboard/users', [UserController::class, 'index'])->name('users');
 Route::get('/dashboard/users/create', [UserController::class, 'create'])->name('user-create');
 Route::post('/dashboard/users/create', [UserController::class, 'store'])->name('user-store');
 // nanti tmbhin id ->          /edit/{id} untuk edit
-Route::get('/dashboard/users/edit', [UserController::class, 'edit'])->name('user-edit');
-Route::put('/dashboard/users/edit/{id}', [UserController::class, 'update'])->name('user-update');
-Route::delete('/dashboard/users', [UserController::class, 'destroy'])->name('user-delete');
+Route::get('/dashboard/users/edit/{user}', [UserController::class, 'edit'])->name('user-edit');
+Route::post('/dashboard/users/edit/{user}', [UserController::class, 'update'])->name('user-update');
+Route::get('/dashboard/users/delete/{user}', [UserController::class, 'destroy'])->name('user-delete');
 
 // ROLES
 Route::get('/dashboard/roles', [RoleController::class, 'index'])->name('roles');
 Route::get('/dashboard/roles/create', [RoleController::class, 'create'])->name('role-create');
 Route::post('/dashboard/roles/create', [RoleController::class, 'store'])->name('role-store');
 // nanti /dashboard/roles/edit/{id} untuk edit
-Route::get('/dashboard/roles/edit', [RoleController::class, 'edit'])->name('role-edit');
+Route::get('/dashboard/roles/edit/{role}', [RoleController::class, 'edit'])->name('role-edit');
 // nanti tmbhin id ->          /edit/{id} untuk edit
-Route::put('/dashboard/roles/edit/{id}', [RoleController::class, 'update'])->name('role-update');
-Route::delete('/dashboard/roles', [RoleController::class, 'destroy'])->name('role-delete');
+Route::post('/dashboard/roles/edit/{role}', [RoleController::class, 'update'])->name('role-update');
+Route::get('/dashboard/roles/delete/{role}', [RoleController::class, 'destroy'])->name('role-delete');
 
 
 /* 

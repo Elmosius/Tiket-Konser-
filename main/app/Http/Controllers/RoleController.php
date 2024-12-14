@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class RoleController extends Controller
 {
@@ -12,8 +14,9 @@ class RoleController extends Controller
      */
     public function index()
     {
+        $data = Role::all();
         return view('admin.roles.index',[
-            // nanti isinya data role 
+            'roles'=> $data,
         ]);
     }
 
@@ -32,7 +35,22 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_role' => 'required|string|max:255|unique:role,nama_role',
+        ],[
+            'nama_role.required' => 'Nama Role tidak boleh kosong',
+            'nama_role.unique' => 'Nama Role sudah pernah ditambahkan',
+
+        ]);
+
+        $id = IdGenerator::generate(['table'=>'role','field'=>'id','length'=>'10', 'prefix'=>'ROLE-']);
+
+        $role = new Role();
+        $role->id = $id;
+        $role-> nama_role = $request['nama_role'];
+        $role->save();
+
+        return redirect()->route('roles');
     }
 
     /**
@@ -49,7 +67,7 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         return view('admin.roles.edit',[
-            // nanti isinya yang diperluin buat edit role
+            'roles'=>$role
         ]);
     }
 
@@ -58,7 +76,16 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        //
+        $validateData = validator($request->all(), [
+            'nama_role' => ['required', 'string', 'max:255', Rule::unique('role', 'nama_role')->ignore($role->id, 'id')],
+        ],[
+            'nama_role.required'=>'Nama role belum terisi',
+            'nama_role.unique'=>'Nama role sudah pernah ditambahkan '
+        ])-> validate();
+
+        $role->nama_role = $validateData['nama_role'];
+        $role->save();
+        return redirect(route('roles'));
     }
 
     /**
@@ -66,6 +93,7 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        $role->delete();
+        return redirect()->route('roles');
     }
 }

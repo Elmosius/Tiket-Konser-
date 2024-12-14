@@ -15,11 +15,22 @@ class User extends Authenticatable
 
     // sesuain aja sma database
     protected $fillable = [
-        'name',
+        'id',
+        'username',
+        'nama',
         'email',
         'password',
-        'id_role',
+        'nama',
+        'telepon',
+        'tanggal_lahir',
+        'jenis_kelamin',
+        'role',
     ];
+
+    protected $table = 'user';
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+
     protected $hidden = [
         'password',
         'remember_token',
@@ -34,6 +45,6 @@ class User extends Authenticatable
     }
 
     public function role(): BelongsTo{
-        return $this->belongsTo(Role::class, "id_role");
+        return $this->belongsTo(Role::class, "id");
     }
 }

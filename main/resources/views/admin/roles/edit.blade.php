@@ -13,13 +13,13 @@
                         Cancel
                     </a>
                 </div>
-                <form method="post" action="/dashboard/users" class="p-4">
+                <form method="post" action="{{route('role-update',['role'=>$roles->id])}}" class="p-4">
                     @csrf
                     <div class="mb-3 input-group">
                         <div class="col-4">
-                            <label for="id user" class="form-label fw-semibold">ID Role</label>
-                            <input type="text" class="form-control" id="id" name="id" required autofocus
-                                value="" placeholder="Not be greater than 10 Character">
+                            <label for="id" class="form-label fw-semibold">ID Role</label>
+                            <input type="text" class="form-control" id="id" name="id" readonly
+                                value="{{$roles->id}}" placeholder="Not be greater than 10 Character">
 
                             <div class="invalid-feedback">
 
@@ -27,9 +27,9 @@
 
                         </div>
                         <div class="ps-4 col-8">
-                            <label for="nama" class="form-label fw-semibold">Nama</label>
-                            <input type="text" class="form-control " id="nama" name="nama" autofocus
-                                value="" placeholder="Admin">
+                            <label for="nama_role" class="form-label fw-semibold">Nama</label>
+                            <input type="text" class="form-control " id="nama_role" name="nama_role" autofocus
+                                value="{{$roles->nama_role}}" placeholder="Admin">
 
                             <div class=" invalid-feedback">
 
