@@ -249,16 +249,6 @@
                             </div>
                         </div>
                     </div>
-
-                    {{-- <div class="row d-flex justify-content-center">
-                        <div class="col-md-5 mb-3">
-                            <label for="lokasi" class="form-label fw-semibold">Lokasi lengkap</label>
-                            <input type="text" class="form-control" id="lokasi" name="lokasi" required>
-                            <div class="invalid-feedback">
-                                Harap masukkan lokasi yang valid.
-                            </div>
-                        </div>
-                    </div> --}}
                 </div>
             </div>
         </div>
@@ -308,16 +298,18 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md">
-
-            </div>
-        </div>
 
         <div class="row mb-5">
             <label class="h5 mb-4 fw-bold">
                 Pengaturan Tambahan
             </label>
+
+            <div class="col-md">
+                <label class="h6 fw-bold">
+                    Gambar denah lokasi tempat duduk
+                </label>
+                <input type="file" class="form-control" id="gbr_denah" name="gbr_denah">
+            </div>
             <div class="col-md">
                 <label class="h6 fw-bold">
                     Jumlah maks. tiket per transaksi
@@ -391,8 +383,6 @@
         /* 
             buat jenis kategori tiket
         */
-        const now = new Date();
-        const nowISO = now.toISOString().slice(0, 16);
 
         // Set minimum date and time for all datetime-local inputs
         const datetimeInputs = document.querySelectorAll('input[type="datetime-local"]');
