@@ -14,13 +14,15 @@ return new class extends Migration
         Schema::create('kegiatan', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->string('id_penjual');
-            $table->foreign('id_penjual')->references('id')->on('users');
+            $table->foreign('id_penjual')->references('id')->on('user');
+            $table->string('id_kategori');
+            $table->foreign('id_kategori')->references('id')->on('kategori');
             $table->string('nama_kegiatan');
-            $table->string('keterangan');
+            $table->text('keterangan');
             $table->string('lokasi');
-            $table->dateTime('jam_mulai');
-            $table->dateTime('jam_akhir');
-            $table->string('status');
+            $table->dateTime('mulai');
+            $table->dateTime('akhir');
+            $table->binary('status');
             $table->timestamps();
         });
     }

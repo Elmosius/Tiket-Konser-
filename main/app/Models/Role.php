@@ -11,11 +11,11 @@ class Role extends Model
     // nanti sesuain aja sama database
     use HasFactory;
     protected $table = 'role';
-    protected $primaryKey = 'id_role';
+    protected $primaryKey = 'id';
     public $incrementing = false;
     protected $fillable = [
       'id',
-      'nama',
+      'nama_role',
     ];
 
     public function user(): HasMany{
