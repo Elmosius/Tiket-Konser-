@@ -15,9 +15,9 @@ return new class extends Migration
             $table->string('id')->primary();
             $table->string('id_user');
             $table->foreign('id_user')->references('id')->on('users');
-            $table->string('id_tiket');
-            $table->foreign('id_tiket')->references('id')->on('tiket');
-            $table->integer('jumlah');
+            $table->integer('total');
+            $table->string('tipe_pembayaran');
+            $table->string('kode_pembayaran');
             $table->string('status');
             $table->timestamps();
         });

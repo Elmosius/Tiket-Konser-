@@ -37,8 +37,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validateData = validator($request->all(),[
-            'username'=>'required|string|unique:user',
-            'email'=>'required|string|unique:user',
+            'username'=>'required|string|unique:users',
+            'email'=>'required|string|unique:users',
             'password'=>'required|string',
             'password_confirmation'=>'required|string',
             'nama'=>'required|string',
@@ -64,7 +64,7 @@ class UserController extends Controller
             return redirect()->back()->withInput()->withErrors('Password tidak sama');
         }
 
-        $id = IdGenerator::generate(['table' => 'user','field'=>'id', 'length' => 10, 'prefix' =>'USR-']);
+        $id = IdGenerator::generate(['table' => 'users','field'=>'id', 'length' => 10, 'prefix' =>'USR-']);
 
         $user=new User($validateData);
         $user->id=$id;

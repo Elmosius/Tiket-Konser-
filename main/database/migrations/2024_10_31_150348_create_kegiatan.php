@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('kegiatan', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->string('id_penjual');
-            $table->foreign('id_penjual')->references('id')->on('user');
+            $table->foreign('id_penjual')->references('id')->on('users');
             $table->string('id_kategori');
             $table->foreign('id_kategori')->references('id')->on('kategori');
             $table->string('nama_kegiatan');

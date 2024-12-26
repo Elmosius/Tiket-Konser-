@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('detail_pembelian', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->string('id_user');
-            $table->foreign('id_user')->references('id')->on('user');
+            $table->string('id_pembelian');
+            $table->foreign('id_pembelian')->references('id')->on('pembelian');
             $table->string('id_tiket');
             $table->foreign('id_tiket')->references('id')->on('tiket');
             $table->integer('jumlah');
-            $table->string('status');
             $table->timestamps();
         });
     }

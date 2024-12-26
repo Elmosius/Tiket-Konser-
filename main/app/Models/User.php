@@ -27,7 +27,7 @@ class User extends Authenticatable
         'role',
     ];
 
-    protected $table = 'user';
+    protected $table = 'users';
     protected $primaryKey = 'id';
     public $incrementing = false;
 
