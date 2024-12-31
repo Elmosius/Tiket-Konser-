@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tiket', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->string('id_kegiatan');
-            $table->foreign('id_kegiatan')->references('id')->on('kegiatan');
+            $table->string('id_event');
+            $table->foreign('id_event')->references('id')->on('event');
             $table->string('tipe');
             $table->integer('harga');
             $table->integer('jumlah_tiket');

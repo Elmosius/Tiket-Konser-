@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\User;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -15,6 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        // dd(Auth::id());
         $data = User::all();
         return view('admin.users.index',[
             'users'=>$data,
@@ -98,8 +100,8 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validateData = validator($request->all(),[
-            'username'=>['required','string',Rule::unique('user')->ignore($user->id),],
-            'email'=>['required','string',Rule::unique('user')->ignore($user->id),],
+            'username'=>['required','string',Rule::unique('users')->ignore($user->id),],
+            'email'=>['required','string',Rule::unique('users')->ignore($user->id),],
             'password'=>'required|string',
             'password_confirmation'=>'nullable|string',
             'nama'=>'required|string',

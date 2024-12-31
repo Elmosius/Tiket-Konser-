@@ -11,18 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kegiatan', function (Blueprint $table) {
+        Schema::create('event', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->string('id_penjual');
             $table->foreign('id_penjual')->references('id')->on('users');
-            $table->string('id_kategori');
-            $table->foreign('id_kategori')->references('id')->on('kategori');
-            $table->string('nama_kegiatan');
-            $table->text('keterangan');
-            $table->string('lokasi');
-            $table->dateTime('mulai');
-            $table->dateTime('akhir');
-            $table->binary('status');
+            $table->string('banner')->nullable();
+            $table->string('nama_event');
+            $table->boolean('jenis_event');
+            $table->dateTime('tanggal_mulai');
+            $table->dateTime('tanggal_akhir');
+            $table->string('lokasi'); 
+            $table->string("deskripsi")->nullable();
+            $table->string("syarat_ketentuan")->nullable();
+            $table->string("nama_kontak");
+            $table->string("email_kontak");
+            $table->string("tlp_kontak");
+            $table->string("denah")->nullable();
+            $table->integer("pembelian_maksimum")->nullable();
+            $table->boolean('status');
             $table->timestamps();
         });
     }
@@ -32,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kegiatan');
+        Schema::dropIfExists('event');
     }
 };

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
@@ -12,7 +13,8 @@ use Illuminate\Support\Facades\Route;
 
     LOGIN & REGISTER
 */
-Route::get('/login', [Controller::class, 'showLoginForm'])->name('login');
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::post('login', [AuthenticatedSessionController::class, 'store']);
 Route::get('/register', [Controller::class, 'showRegisterForm'])->name('register');
 
 /* 
@@ -23,6 +25,7 @@ Route::get('/', function () {
 })->name('dashboard');
 
 // USERS
+Route::middleware('auth')->group(function () {
 Route::get('/dashboard/users', [UserController::class, 'index'])->name('users');
 Route::get('/dashboard/users/create', [UserController::class, 'create'])->name('user-create');
 Route::post('/dashboard/users/create', [UserController::class, 'store'])->name('user-store');
@@ -30,7 +33,7 @@ Route::post('/dashboard/users/create', [UserController::class, 'store'])->name('
 Route::get('/dashboard/users/edit/{user}', [UserController::class, 'edit'])->name('user-edit');
 Route::post('/dashboard/users/edit/{user}', [UserController::class, 'update'])->name('user-update');
 Route::get('/dashboard/users/delete/{user}', [UserController::class, 'destroy'])->name('user-delete');
-
+});
 // ROLES
 Route::get('/dashboard/roles', [RoleController::class, 'index'])->name('roles');
 Route::get('/dashboard/roles/create', [RoleController::class, 'create'])->name('role-create');
@@ -50,12 +53,13 @@ Route::get('/dashboard/events', [EventController::class, 'index'])->name('events
 Route::get('/dashboard/events/create', [EventController::class, 'create'])->name('event-create');
 Route::post('/dashboard/events/create', [EventController::class, 'store'])->name('event-store');
 // nanti tmbhin id ->          /edit/{id} untuk edit
-Route::get('/dashboard/events/edit', [EventController::class, 'edit'])->name('event-edit');
-Route::put('/dashboard/events/edit/{id}', [EventController::class, 'update'])->name('event-update');
+Route::get('/dashboard/events/edit/{event}', [EventController::class, 'edit'])->name('event-edit');
+Route::post('/dashboard/events/edit/{event}', [EventController::class, 'update'])->name('event-update');
 // delete kalau misalnay tidak berikatan
-Route::delete('/dashboard/events', [EventController::class, 'destroy'])->name('event-delete');
+Route::get('/dashboard/events/{event}', [EventController::class, 'destroy'])->name('event-delete');
 // nanti tmbhin id ->                   /{id} untuk detail
 Route::get('/dashboard/event/detail', [EventController::class, 'show'])->name('event-detail');
+Route::get('/dashboard/events/{id}/status/update',[EventController::class,'statusUpdated'])->name('event-status-update');
 
 // REKENING
 Route::get('/dashboard/rekening', [RekeningController::class, 'index'])->name('rekening');

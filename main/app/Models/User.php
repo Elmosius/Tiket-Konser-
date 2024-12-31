@@ -44,7 +44,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function role(): BelongsTo{
-        return $this->belongsTo(Role::class, "id");
+    public function cariRole(): BelongsTo{
+        return $this->belongsTo(Role::class, "role");
     }
 }

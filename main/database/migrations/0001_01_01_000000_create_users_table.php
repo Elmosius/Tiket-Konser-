@@ -1,7 +1,10 @@
 <?php
 
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -21,6 +24,34 @@ return new class extends Migration
         //     $table->timestamps();
         // });
 
+        Schema::create('users', function (Blueprint $table) {
+            $table->string('id')->primary();
+            $table->string('username')->unique();
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('nama');
+            $table->string('telepon');
+            $table->date('tanggal_lahir');
+            $table->boolean('jenis_kelamin');
+            $table->string('role');
+            $table->foreign('role')->references('id')->on('role');
+            $table->rememberToken();
+            $table->timestamps();
+        });
+
+        $id = IdGenerator::generate(['table' => 'users','field'=>'id', 'length' => 10, 'prefix' =>'USR-']);
+        DB::table('users')->insert([
+            ['id' => $id,
+            'username'=>'admin',
+            'email'=>'admin@gmail.com',
+            'password'=>Hash::make('admin'),
+            'nama'=>'Joseph',
+            'telepon'=>'08112345678',
+            'tanggal_lahir'=>'2004:07:06',
+            'jenis_kelamin'=>0,
+            'role'=>DB::table('role')->where('nama_role', 'Admin')->value('id')],
+        ]);
+
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
@@ -29,7 +60,7 @@ return new class extends Migration
 
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
+            $table->string('user_id')->nullable()->index();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload');

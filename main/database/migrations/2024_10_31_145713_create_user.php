@@ -11,20 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->string('username')->unique();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('nama');
-            $table->string('telepon');
-            $table->date('tanggal_lahir');
-            $table->binary('jenis_kelamin');
-            $table->string('role');
-            $table->foreign('role')->references('id')->on('role');
-            $table->rememberToken();
-            $table->timestamps();
-        });
+        // Schema::create('users', function (Blueprint $table) {
+        //     $table->string('id')->primary();
+        //     $table->string('username')->unique();
+        //     $table->string('email')->unique();
+        //     $table->string('password');
+        //     $table->string('nama');
+        //     $table->string('telepon');
+        //     $table->date('tanggal_lahir');
+        //     $table->boolean('jenis_kelamin');
+        //     $table->string('role');
+        //     $table->foreign('role')->references('id')->on('role');
+        //     $table->rememberToken();
+        //     $table->timestamps();
+        // });
     }
 
     /**

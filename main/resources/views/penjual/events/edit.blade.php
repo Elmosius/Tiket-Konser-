@@ -18,7 +18,16 @@
 @endsection
 
 @section('isi-konten-dashboard')
-    <form method="put" action="{{ route('events') }}" class="p-4">
+    @if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+    <form method="post" action="{{ route('event-update',['event'=>$events->id]) }}" class="p-4" enctype="multipart/form-data">
         @csrf
         <div class="col-lg-12">
             <div class="card">
@@ -33,7 +42,7 @@
                                         d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                 </svg>
                             </a>
-                            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                            <input type="file" id="fileInput" accept="image/*"  name="banner">
                         </div>
                         <div class="col-md-12">
                             <h5 class="text-white">
@@ -42,23 +51,31 @@
                         </div>
                     </div>
                 </div>
+                <div>
+                    <p class="text-secondart"> Banner yang tersimpan : 
+                        <a href="{{$events->banner}}"
+                            class="text-decoration-none text-primary" target="_blank">
+                            Banner
+                        </a>
+                    </p>
+                </div>
                 <div class="card-body">
 
                     <div class="row mb-3 input-group d-flex justify-content-center">
                         <div class="col-md-5 mb-3">
-                            <label for="nama" class="form-label fw-semibold">Nama Event</label>
-                            <input type="text" class="form-control " id="nama" name="nama" autofocus required
-                                value="" placeholder="Masukkan nama eventmu!">
+                            <label for="nama_event" class="form-label fw-semibold">Nama Event</label>
+                            <input type="text" class="form-control " id="nama_event" name="nama_event" autofocus required
+                                value="{{$events->nama_event}}" placeholder="Masukkan nama eventmu!">
                             <div class=" invalid-feedback">
                             </div>
                         </div>
 
                         <div class="col-md-5">
-                            <label for="bank" class="form-label fw-semibold">Jenis Event</label>
-                            <select class="form-select" name="bank" required>
+                            <label for="jenis_event" class="form-label fw-semibold">Jenis Event</label>
+                            <select class="form-select" name="jenis_event" required>
                                 <option selected>Open this select menu</option>
-                                <option value="1">Public: Event kamu akan tampil di halaman Cari Event</option>
-                                <option value="2">Private: Event kamu hanya diakses oleh orang tertentu</option>
+                                <option value="1" {{$events->jenis_event == 1 ? 'selected':''}}>Public: Event kamu akan tampil di halaman Cari Event</option>
+                                <option value="0" {{$events->jenis_event == 0 ? 'selected':''}}>Private: Event kamu hanya diakses oleh orang tertentu</option>
                             </select>
                         </div>
                     </div>
@@ -75,17 +92,17 @@
                                 <div class="col-md">
                                     <label for="tanggal_mulai" class="form-label fw-semibold">Tanggal & Waktu Mulai</label>
                                     <input type="datetime-local" class="form-control " id="tanggal_mulai"
-                                        name="tanggal_mulai" required>
+                                        name="tanggal_mulai" required value="{{$events->tanggal_mulai}}">
                                     <div class="invalid-feedback">
                                         Harap masukkan tanggal dan waktu mulai yang valid.
                                     </div>
                                 </div>
 
                                 <div class="col-md">
-                                    <label for="tanggal_selesai" class="form-label fw-semibold">Tanggal & Waktu
+                                    <label for="tanggal_akhir" class="form-label fw-semibold">Tanggal & Waktu
                                         Selesai</label>
-                                    <input type="datetime-local" class="form-control" id="tanggal_selesai"
-                                        name="tanggal_selesai" required>
+                                    <input type="datetime-local" class="form-control" id="tanggal_akhir"
+                                        name="tanggal_akhir" required value="{{$events->tanggal_akhir}}">
                                     <div class="invalid-feedback">
                                         Harap masukkan tanggal dan waktu selesai yang valid.
                                     </div>
@@ -97,7 +114,7 @@
                             <div class="row">
                                 <div class="col-md mt-md-2">
                                     <label for="lokasi" class="form-label fw-semibold">Lokasi lengkap</label>
-                                    <input type="text" class="form-control" id="lokasi" name="lokasi" required>
+                                    <input type="text" class="form-control" id="lokasi" name="lokasi" required value="{{$events->lokasi}}">
                                     <div class="invalid-feedback">
                                         Harap masukkan lokasi yang valid.
                                     </div>
@@ -127,7 +144,7 @@
                     </div>
 
                     <!-- Modal untuk tiket berbayar -->
-                    <div class="modal fade" id="modalTiketBerbayar" tabindex="-1" aria-labelledby="modalTiketBerbayarLabel"
+                    {{-- <div class="modal fade" id="modalTiketBerbayar" tabindex="-1" aria-labelledby="modalTiketBerbayarLabel"
                         aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -228,13 +245,13 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-11 mt-md-2">
                             <label for="deskripsi" class="form-label fw-semibold">Deskripsi Event</label>
                             <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5" required
-                                placeholder="Deskripsikan eventmu!"></textarea>
+                                placeholder="Deskripsikan eventmu!">{{$events->deskripsi}}</textarea>
                             <div class="invalid-feedback">
                                 Harap masukkan deskripsi yang valid.
                             </div>
@@ -243,7 +260,7 @@
                         <div class="col-md-11 mt-md-2">
                             <label for="syarat_ketentuan" class="form-label fw-semibold">Syarat & Ketentuan</label>
                             <textarea class="form-control" id="syarat_ketentuan" name="syarat_ketentuan" rows="5" required
-                                placeholder="Tuliskan syarat dan ketentuan eventmu!"></textarea>
+                                placeholder="Tuliskan syarat dan ketentuan eventmu!">{{$events->syarat_ketentuan}}</textarea>
                             <div class="invalid-feedback">
                                 Harap masukkan deskripsi yang valid.
                             </div>
@@ -278,27 +295,27 @@
                 <div class="card-body">
                     <div class="row d-flex justify-content-center ">
                         <div class="col-md-5 mt-md-2">
-                            <label for="nama_narahubung" class="form-label fw-semibold">Nama Narahubung</label>
-                            <input type="text" class="form-control" id="nama_narahubung" name="nama_narahubung"
-                                placeholder="Cth. Budi" required>
+                            <label for="nama_kontak" class="form-label fw-semibold">Nama Kontak</label>
+                            <input type="text" class="form-control" id="nama_kontak" name="nama_kontak"
+                                placeholder="Cth. Budi" required value="{{$events->nama_kontak}}">
                             <div class="invalid-feedback">
                                 Harap masukkan nama yang valid.
                             </div>
                         </div>
 
                         <div class="col-md-5 mt-md-2">
-                            <label for="email" class="form-label fw-semibold">Email</label>
-                            <input type="email" class="form-control" id="email" name="email"
-                                placeholder="xx@gmail.com" required>
+                            <label for="email_kontak" class="form-label fw-semibold">Email</label>
+                            <input type="email" class="form-control" id="email_kontak" name="email_kontak"
+                                placeholder="xx@gmail.com" required value="{{$events->email_kontak}}">
                             <div class="invalid-feedback">
                                 Harap masukkan email yang valid.
                             </div>
                         </div>
 
                         <div class="col-md-10 mt-md-2">
-                            <label for="no_telp" class="form-label fw-semibold">Nomor Telepon</label>
-                            <input type="text" class="form-control" id="no_telp" name="no_telp  "
-                                placeholder="Cth. 08123123123" required>
+                            <label for="tlp_kontak" class="form-label fw-semibold">Nomor Telepon</label>
+                            <input type="text" class="form-control" id="tlp_kontak" name="tlp_kontak"
+                                placeholder="Cth. 08123123123" required value="{{$events->tlp_kontak}}">
                             <div class="invalid-feedback">
                                 Harap masukkan no Telepon yang valid.
                             </div>
@@ -322,15 +339,27 @@
             </label>
             <div class="col-md">
                 <label class="h6 fw-bold">
+                    Gambar denah lokasi tempat duduk
+                </label>
+                <input type="file" class="form-control" id="denah" name="denah">
+                <p class="text-secondart"> Denah yang tersimpan : 
+                    <a href="{{$events->denah}}"
+                        class="text-decoration-none text-primary" target="_blank">
+                        Denah
+                    </a>
+                </p>
+            </div>
+            <div class="col-md">
+                <label class="h6 fw-bold">
                     Jumlah maks. tiket per transaksi
                 </label>
-                <select class="form-select" name="bank" required>
+                <select class="form-select" name="pembelian_maksimum" required>
                     <option selected>Open this select menu</option>
-                    <option value="5">5 tiket</option>
-                    <option value="4">4 tiket</option>
-                    <option value="3">3 tiket</option>
-                    <option value="2">2 tiket</option>
-                    <option value="1">1 tiket</option>
+                    <option value="5" {{$events->pembelian_maksimum == 5 ? 'selected':''}}>5 tiket</option>
+                    <option value="4" {{$events->pembelian_maksimum == 4 ? 'selected':''}}>4 tiket</option>
+                    <option value="3" {{$events->pembelian_maksimum == 3 ? 'selected':''}}>3 tiket</option>
+                    <option value="2" {{$events->pembelian_maksimum == 2 ? 'selected':''}}>2 tiket</option>
+                    <option value="1" {{$events->pembelian_maksimum == 1 ? 'selected':''}}>1 tiket</option>
                 </select>
             </div>
 
@@ -370,8 +399,9 @@
                     gambarUnggah.style.backgroundImage = `url(${e.target.result})`;
                 }
                 reader.readAsDataURL(file);
-            }
+            } 
         });
+
 
         /* 
             buat validasi tanggal_mulai dan tanggal_selesai
