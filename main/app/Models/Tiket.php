@@ -11,7 +11,13 @@ class Tiket extends Model
     public $incrementing = false;
     protected $fillable = [
       'id',
-      'nama_role',
+      'id_event',
+      'nama_tiket',
+      'jumlah_tiket',
+      'harga',
+      'deskripsi',
+      'tanggal_mulai',
+      'tanggal_selesai',
     ];
 
 }

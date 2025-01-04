@@ -6,6 +6,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekeningController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TiketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +45,8 @@ Route::get('/dashboard/roles/edit/{role}', [RoleController::class, 'edit'])->nam
 Route::post('/dashboard/roles/edit/{role}', [RoleController::class, 'update'])->name('role-update');
 Route::get('/dashboard/roles/delete/{role}', [RoleController::class, 'destroy'])->name('role-delete');
 
+// Route::post('/dashboard/tickets/create',[TiketController::class,'storeToArray'])->name('tiket-storeArray');
+
 
 /* 
     PENJUAL DASHBOARD
@@ -51,7 +54,7 @@ Route::get('/dashboard/roles/delete/{role}', [RoleController::class, 'destroy'])
 // EVENTS
 Route::get('/dashboard/events', [EventController::class, 'index'])->name('events');
 Route::get('/dashboard/events/create', [EventController::class, 'create'])->name('event-create');
-Route::post('/dashboard/events/create', [EventController::class, 'store'])->name('event-store');
+Route::post('/dashboard/events/store', [EventController::class, 'store'])->name('event-store');
 // nanti tmbhin id ->          /edit/{id} untuk edit
 Route::get('/dashboard/events/edit/{event}', [EventController::class, 'edit'])->name('event-edit');
 Route::post('/dashboard/events/edit/{event}', [EventController::class, 'update'])->name('event-update');

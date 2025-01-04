@@ -15,9 +15,12 @@ return new class extends Migration
             $table->string('id')->primary();
             $table->string('id_event');
             $table->foreign('id_event')->references('id')->on('event');
-            $table->string('tipe');
-            $table->integer('harga');
+            $table->string('nama_tiket');
             $table->integer('jumlah_tiket');
+            $table->integer('harga');
+            $table->string('deskripsi');
+            $table->dateTime('tanggal_mulai');
+            $table->dateTime('tanggal_selesai');
             $table->timestamps();
         });
     }

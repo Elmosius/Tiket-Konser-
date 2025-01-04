@@ -51,14 +51,16 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <p class="text-secondart"> Banner yang tersimpan : 
-                        <a href="{{$events->banner}}"
-                            class="text-decoration-none text-primary" target="_blank">
-                            Banner
-                        </a>
-                    </p>
-                </div>
+                @if($events->banner)
+                    <div>
+                        <p class="text-secondart"> Banner yang tersimpan : 
+                            <a href="{{$events->banner}}"
+                                class="text-decoration-none text-primary" target="_blank">
+                                Banner
+                            </a>
+                        </p>
+                    </div>
+                @endif
                 <div class="card-body">
 
                     <div class="row mb-3 input-group d-flex justify-content-center">
@@ -123,23 +125,27 @@
                         </div>
 
                         <div class="col-md-5">
-                            <label for="lokasi" class="form-label fw-semibold">Kategori Tiket</label>
+                            <label for="tiket" class="form-label fw-semibold">Kategori Tiket</label>
                             <div class="row mb-3">
-                                <a href="#" class="ms-md-3 rounded btn btn-outline-primary text-start"
-                                    data-bs-toggle="modal" data-bs-target="#modalTiketBerbayar">
+                                <button type="button" class="ms-md-3 rounded btn btn-outline-primary text-start"
+                                    id="buatTiket">
                                     <span>
-                                        Buat tiket: Berbayar
+                                        Buat tiket
                                     </span>
-                                </a>
+                                </button>
                             </div>
-                            <div class="row">
-                                <a href="#" class="ms-md-3 rounded btn btn-outline-primary text-start"
-                                    data-bs-toggle="modal" data-bs-target="#modalTiketGratis">
-                                    <span>
-                                        Buat tiket: Gratis
-                                    </span>
-                                </a>
-                            </div>
+                            @forEach($tickets as $tiket)
+                                <div class="row mb-3">
+                                    <a href="#" class="ms-md-3 rounded btn 
+                                    btn-outline-primary text-start" data-bs-toggle="modal" 
+                                    data-bs-target="#{{$tiket->id}}" id="modalButton_{{$tiket->id}}">
+                                        <span id="nama_tiket_child">
+                                            Tiket {{$tiket->nama_tiket}}
+                                        </span>
+                                    </a>
+                                </div>
+                            @endforeach
+                            <div id="tiketContainer" class="row"></div>
                         </div>
                     </div>
 
@@ -247,6 +253,53 @@
                         </div>
                     </div> --}}
 
+                    <div id="childTiket">
+                        @forEach($tickets as $ticket)
+                            <div class="modal fade" id="{{$ticket->id}}" tabindex="-1" aria-labelledby="{{$ticket->id}}Label" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="{{$ticket->id}}Label">Detail Tiket</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="mb-3 d-none">
+                                                <label for="id[]" class="form-label">ID</label>
+                                                <input type="text" class="form-control" id="id" name="id[]" readonly required value="{{$ticket->id}}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="nama_tiket[]" class="form-label">Nama Tiket</label>
+                                                <input type="text" class="form-control" id="nama_tiket" name="nama_tiket[]" required value="{{$ticket->nama_tiket}}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="jumlah_tiket[]" class="form-label">Jumlah Tiket</label>
+                                                <input type="number" class="form-control" id="jumlah_tiket" name="jumlah_tiket[]" min="1" required value="{{$ticket->jumlah_tiket}}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="harga_tiket[]" class="form-label">Harga</label>
+                                                <input type="number" class="form-control" id="harga_tiket" name="harga_tiket[]"required value="{{$ticket->harga}}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="deskripsi_tiket[]" class="form-label">Deskripsi Tiket</label>
+                                                <textarea class="form-control" id="deskripsi_tiket" name="deskripsi_tiket[]" rows="3" required>{{$ticket->deskripsi}}</textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="tanggal_mulai_tiket[]" class="form-label">Tanggal & Waktu Mulai Penjualan</label>
+                                                <input type="datetime-local" class="form-control" id="tanggal_mulai_tiket" name="tanggal_mulai_tiket[]" required value="{{$ticket->tanggal_mulai}}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="tanggal_selesai_tiket[]" class="form-label">Tanggal & Waktu Selesai Penjualan</label>
+                                                <input type="datetime-local" class="form-control" id="tanggal_selesai_tiket" name="tanggal_selesai_tiket[]" required value="{{$ticket->tanggal_selesai}}">
+                                            </div>
+                                            <button type="button" class="btn btn-primary edit-button">Simpan</button>
+                                            <button type="button" class="btn btn-danger delete-button">Hapus</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-11 mt-md-2">
                             <label for="deskripsi" class="form-label fw-semibold">Deskripsi Event</label>
@@ -342,12 +395,14 @@
                     Gambar denah lokasi tempat duduk
                 </label>
                 <input type="file" class="form-control" id="denah" name="denah">
-                <p class="text-secondart"> Denah yang tersimpan : 
-                    <a href="{{$events->denah}}"
-                        class="text-decoration-none text-primary" target="_blank">
-                        Denah
-                    </a>
-                </p>
+                @if($events->denah)
+                    <p class="text-secondart"> Denah yang tersimpan : 
+                        <a href="{{$events->denah}}"
+                            class="text-decoration-none text-primary" target="_blank">
+                            Denah
+                        </a>
+                    </p>
+                @endif
             </div>
             <div class="col-md">
                 <label class="h6 fw-bold">
@@ -385,6 +440,7 @@
 
 
 @section('js-tambahan')
+    <script src="{{ asset('assets/js/tiket.js') }}"></script>
     <script>
         document.getElementById('uploadButton').addEventListener('click', function() {
             document.getElementById('fileInput').click();

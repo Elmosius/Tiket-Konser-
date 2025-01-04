@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Tiket;
 use Carbon\Carbon;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
@@ -12,6 +13,8 @@ use Illuminate\Support\Str;
 
 class EventController extends Controller
 {
+    protected $ticketController;
+    
     /**
      * Display a listing of the resource.
      */
@@ -44,24 +47,39 @@ class EventController extends Controller
             'banner'=>'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'nama_event' =>'required|string',
             'jenis_event' =>'required|integer',
-            'tanggal_mulai' =>'required|date',
-            'tanggal_akhir' =>'required|date|after:tanggal_mulai',
+            'tanggal_mulai' =>'required|date|before_or_equal:tanggal_akhir',
+            'tanggal_akhir' =>'required|date|after_or_equal:tanggal_mulai',
             'lokasi' =>'required|string',
             'deskripsi' =>'nullable|string',
             'syarat_ketentuan' =>'required|string',
             'nama_kontak' =>'required|string',
-            'email_kontak' =>'required|string',
+            'email_kontak' =>'required|email',
             'tlp_kontak' =>'required|string',
             'denah' =>'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'pembelian_maksimum' =>'nullable|integer|between:1,5',
+
+            'nama_tiket'=>'required',
+            'nama_tiket.*' => 'required|string',
+            'jumlah_tiket'=>'required',
+            'jumlah_tiket.*'=>'required|integer',
+            'harga_tiket'=>'required',
+            'harga_tiket.*'=>'required|integer',
+            'deskripsi_tiket'=>'required',
+            'deskripsi_tiket.*'=>'required|string',
+            'tanggal_mulai_tiket'=>'required',
+            'tanggal_mulai_tiket.*'=>'required|date|before_or_equal:tanggal_akhir',
+            'tanggal_selesai_tiket'=>'required',
+            'tanggal_selesai_tiket.*'=>'required|date|after_or_equal:tanggal_mulai',
         ])->validate();
+
+        // dd($validateData);
 
         $id = IdGenerator::generate(['table' => 'event','field'=>'id', 'length' => 10, 'prefix' =>'EVT-']);
         $validateData['tanggal_mulai'] = Carbon::parse($validateData['tanggal_mulai'])->format('Y-m-d H:i:s');
         $validateData['tanggal_akhir'] = Carbon::parse($validateData['tanggal_akhir'])->format('Y-m-d H:i:s');
         $validateData['pembelian_maksimum']= intval($validateData['pembelian_maksimum']);
 
-        $event= new Event($validateData);
+        $event= new Event($validateData); 
         $event->id = $id;
         $event->id_penjual = Auth::id();
         $event->status = 1;
@@ -88,6 +106,22 @@ class EventController extends Controller
 
         $event->save();
 
+        $tickets = [];
+        foreach ($validateData['nama_tiket'] as $index => $nama) {
+            $tickets[] = [
+                'id_event'=>$id,
+                'nama_tiket' => $nama,
+                'jumlah_tiket' => intval($validateData['jumlah_tiket'][$index]),
+                'harga' => intval($validateData['harga_tiket'][$index]),
+                'deskripsi' => $validateData['deskripsi_tiket'][$index],
+                'tanggal_mulai' => Carbon::parse($validateData['tanggal_mulai_tiket'][$index])->format('Y-m-d H:i:s'),
+                'tanggal_selesai' => Carbon::parse($validateData['tanggal_selesai_tiket'][$index])->format('Y-m-d H:i:s'),
+            ];
+        }
+
+        $ticketController = new TiketController();
+        $ticketController->store($tickets);
+
         return redirect(route('events'));
     }
 
@@ -107,8 +141,11 @@ class EventController extends Controller
     public function edit(Event $event)
     {
         // dd($event);
+        $tiket= Tiket::where('id_event',$event->id)->get();
+        // dd($tiket);
         return view('penjual.events.edit',[
-            'events'=>$event
+            'events'=>$event,
+            'tickets'=>$tiket,
         ]);
     }
 
@@ -133,6 +170,21 @@ class EventController extends Controller
             'tlp_kontak' =>'required|string',
             'denah' =>'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'pembelian_maksimum' =>'nullable|integer|between:1,5',
+
+            'id'=>'nullable',
+            'id.*'=>'nullable|string',
+            'nama_tiket'=>'required',
+            'nama_tiket.*' => 'required|string',
+            'jumlah_tiket'=>'required',
+            'jumlah_tiket.*'=>'required|integer',
+            'harga_tiket'=>'required',
+            'harga_tiket.*'=>'required|integer',
+            'deskripsi_tiket'=>'required',
+            'deskripsi_tiket.*'=>'required|string',
+            'tanggal_mulai_tiket'=>'required',
+            'tanggal_mulai_tiket.*'=>'required|date|before_or_equal:tanggal_akhir',
+            'tanggal_selesai_tiket'=>'required',
+            'tanggal_selesai_tiket.*'=>'required|date|after_or_equal:tanggal_mulai',
         ])->validate();
 
         $validateData['tanggal_mulai'] = Carbon::parse($validateData['tanggal_mulai'])->format('Y-m-d H:i:s');
@@ -179,6 +231,25 @@ class EventController extends Controller
         } 
         $event->save();
 
+        $tickets = [];
+        foreach ($validateData['nama_tiket'] as $index => $nama) {
+            $tickets[] = [
+                'id' => isset($validateData['id'][$index]) ? $validateData['id'][$index] : null,  // jika tidak ada id, set null
+                'id_event'=>$event->id,
+                'nama_tiket' => $nama,
+                'jumlah_tiket' => intval($validateData['jumlah_tiket'][$index]),
+                'harga' => intval($validateData['harga_tiket'][$index]),
+                'deskripsi' => $validateData['deskripsi_tiket'][$index],
+                'tanggal_mulai' => Carbon::parse($validateData['tanggal_mulai_tiket'][$index])->format('Y-m-d H:i:s'),
+                'tanggal_selesai' => Carbon::parse($validateData['tanggal_selesai_tiket'][$index])->format('Y-m-d H:i:s'),
+            ];
+        }
+
+        // dd($tickets);
+
+        $ticketController = new TiketController();
+        $ticketController->update($tickets,$event->id);
+
         return redirect(route('events'));
     }
 
@@ -198,11 +269,19 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        unlink(public_path($event->banner));
-        unlink(public_path($event->denah));
-
+        if($event->banner){
+            unlink(public_path($event->banner));
+        }
+        if($event->denah){
+            unlink(public_path($event->denah));
+        }
+    
+        $storedTickets= Tiket::where('id_event',$event->id)->get();
+        $ticketController = new TiketController();
+        foreach ($storedTickets as $ticket) {
+            $ticketController->destroy($ticket);
+        }
         $event->delete();
-
         return redirect(route('events'));
     }
 }
