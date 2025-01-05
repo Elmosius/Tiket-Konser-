@@ -41,7 +41,7 @@ class TiketController extends Controller
                 'tanggal_mulai'=> 'required|date',
                 'tanggal_selesai' => 'required|date',
             ])->validate();
-            dd($validateData);
+            // dd($validateData);
 
             $id = IdGenerator::generate(['table' => 'tiket','field'=>'id', 'length' => 10, 'prefix' =>'TKT-']); 
 

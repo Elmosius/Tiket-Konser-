@@ -1,10 +1,9 @@
+// localStorage.clear()
+var tikets = JSON.parse(localStorage.getItem("allTikets")) || [];
 let modalCounter = 1;
-// var listTiket = []
+console.log("Data Tiket : ", tikets)
 
-function createModal(){
-    // Membuat ID untuk modal baru (modal_1, modal_2, dst)
-    const modalId = "modal_" + modalCounter;
-
+function createModal(modalId){
     // Membuat konten modal baru dengan nilai yang diambil dari form
     const modalContent = `
         <div class="modal fade" id="${modalId}" tabindex="-1" aria-labelledby="${modalId}Label" aria-hidden="true">
@@ -55,7 +54,8 @@ function createModal(){
         <div class="row mb-3">
             <a href="#" class="ms-md-3 rounded btn 
             btn-outline-primary text-start" data-bs-toggle="modal" 
-            data-bs-target="#${modalId}" id="modalButton_${modalCounter}">
+            data-bs-target="#${modalId}" id="modalButton_${modalCounter}"
+            data-modal-id="${modalId}">
                 <span id="nama_tiket_child">
                     Tiket ${modalCounter}
                 </span>
@@ -69,21 +69,68 @@ function createModal(){
     modalCounter++;
 }
 
+function saveData(modalId) {
+    const modalElement = document.getElementById(modalId);
+    const namaTiket = modalElement.querySelector("input[name='nama_tiket[]']").value;
+    const jumlahTiket = modalElement.querySelector("input[name='jumlah_tiket[]']").value;
+    const hargaTiket = modalElement.querySelector("input[name='harga_tiket[]']").value;
+    const deskripsiTiket = modalElement.querySelector("textarea[name='deskripsi_tiket[]']").value;
+    const tanggalMulaiTiket = modalElement.querySelector("input[name='tanggal_mulai_tiket[]']").value;
+    const tanggalSelesaiTiket = modalElement.querySelector("input[name='tanggal_selesai_tiket[]']").value;
+
+    const tiketData = {
+        modalId,
+        namaTiket,
+        jumlahTiket,
+        hargaTiket,
+        deskripsiTiket,
+        tanggalMulaiTiket,
+        tanggalSelesaiTiket
+    };
+    const data = tikets.findIndex(tiket => tiket.modalId === modalId);
+
+    if(data !== -1) {
+        tikets[data] = tiketData;
+    }else{
+        tikets.push(tiketData);
+        
+    }
+    localStorage.setItem("allTikets", JSON.stringify(tikets));
+    console.log(tikets)
+}
+
+function loadData(modalId) {
+    const data = tikets.find(tiket => tiket.modalId === modalId);
+    if (data) {
+        // console.log("terdapat data")
+        const modalElement = document.getElementById(modalId);
+        modalElement.querySelector("input[name='nama_tiket[]']").value = data.namaTiket;
+        modalElement.querySelector("input[name='jumlah_tiket[]']").value = data.jumlahTiket;
+        modalElement.querySelector("input[name='harga_tiket[]']").value = data.hargaTiket;
+        modalElement.querySelector("textarea[name='deskripsi_tiket[]']").value = data.deskripsiTiket;
+        modalElement.querySelector("input[name='tanggal_mulai_tiket[]']").value = data.tanggalMulaiTiket;
+        modalElement.querySelector("input[name='tanggal_selesai_tiket[]']").value = data.tanggalSelesaiTiket;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById("buatTiket").addEventListener("click",function(){
-        // inputHarga.value = 0;
-        //     // Tambahkan atribut readonly
-        //     inputHarga.setAttribute('readonly', true);
-        createModal()
+        // Membuat ID untuk modal baru (modal_1, modal_2, dst)
+        const modalId = "modal_" + modalCounter + "_" + Date.now();
+        createModal(modalId)
     })
 
     document.body.addEventListener('click', function(e) {
-        var modalId = e.target.closest('.modal').id;
-        var modalElement = document.getElementById(modalId);
-        var modalInstance = bootstrap.Modal.getInstance(modalElement);
-
-        if (e.target.classList.contains('edit-button')) {
-            modalInstance.hide();
+        const modal = e.target.closest('.modal');
+        const modalId = modal.id;
+        var modalGet = document.getElementById(modalId);
+        var modalInstance = bootstrap.Modal.getInstance(modalGet);
+    
+        if (e.target.classList.contains('edit-button')) { // Memastikan bahwa targetButton adalah tombol Simpan
+            if (modal) {
+                saveData(modalId)
+                modalInstance.hide();
+            }
         }
 
         if (e.target.classList.contains('delete-button')) {
@@ -91,53 +138,38 @@ document.addEventListener('DOMContentLoaded', function() {
     
             // Mendapatkan tombol yang berkaitan dengan modal ini
             var modalButtonId = "modalButton_" + modalId.replace(/modal_?/, '');
-            var modalButton = document.getElementById(modalButtonId);
+            console.log(modalButtonId)
+            var modalButton = document.querySelector(`[data-modal-id="${modalId}"]`);
+            console.log(modalButton)
     
             // Mendengarkan event 'hidden.bs.modal' untuk menghapus modal dan tombol setelah benar-benar tertutup
-            modalElement.addEventListener('hidden.bs.modal', function () {
-                modalElement.remove(); // Menghapus modal
+            modal.addEventListener('hidden.bs.modal', function () {
                 if (modalButton) {
+                    console.log("model penghapusan")
+                    modal.remove(); // Menghapus modal
                     modalButton.closest('.row.mb-3').remove(); // Menghapus baris yang mengandung tombol
+
+                    tikets = tikets.filter(tiket => tiket.modalId !== modalId);
+                    localStorage.setItem("allTikets", JSON.stringify(tikets));
+                    console.log("tiket setelah dihapus",tikets)
                 }
             }, { once: true });
         }
-    });
-    
-});
 
-// Menangani klik tombol "Simpan"
-document.getElementById("simpanTiket").addEventListener("click", function () {
-    // Ambil nilai dari form
-    const namaTiket = document.getElementsByName("nama_tiket[]")[0].value; // Ambil nilai pertama (karena array)
-    const jumlahTiket = document.getElementsByName("jumlah_tiket[]")[0].value;
-    const hargaTiket = document.getElementsByName("harga_tiket[]")[0].value;
-    const deskripsiTiket = document.getElementsByName("deskripsi_tiket[]")[0].value;
-    const tanggalMulai = document.getElementsByName("tanggal_mulai_tiket[]")[0].value;
-    const tanggalSelesai = document.getElementsByName("tanggal_selesai_tiket[]")[0].value;
+    })
 
-    // let dataTiket = {
-    //     nama : namaTiket,
-    //     jumlah : jumlahTiket,
-    //     harga : hargaTiket,
-    //     deskripsi : deskripsiTiket,
-    //     tanggal_mulai : tanggalMulai,
-    //     tanggal_Selesai : tanggalSelesai
-    // }
+})
 
-    // listTiket.push(dataTiket)
-    // console.log(listTiket)
+// tikets.forEach(tiket => {
+//     console.log("print for",tiket.modalId)
+//     createModal(tiket.modalId)
+//     loadData(tiket.modalId)
+// });
 
-    // Menutup modal pertama setelah data disimpan
-    const modalTiketElement = document.getElementById('modalTiket');
-    const modalTiketInstance = bootstrap.Modal.getInstance(modalTiketElement);  // Mendapatkan instance modal
-    modalTiketInstance.hide();  // Menyembunyikan modal pertama
+for(let i=tikets.length-1; i> -1; i--) {
+    console.log("tiket",tikets[i])
+    createModal(tikets[i].modalId)
+    loadData(tikets[i].modalId)
+}
 
-    document.getElementById('nama_tiket').value = '';
-    document.getElementById('jumlah_tiket').value = '';
-    document.getElementById('harga_tiket').value = '0';
-    document.getElementById('deskripsi_tiket').value = '';
-    document.getElementById('tanggal_mulai_tiket').value = '';
-    document.getElementById('tanggal_selesai_tiket').value = '';
-});
-
-console.log(listTiket)
+console.log(Date.now)

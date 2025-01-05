@@ -138,7 +138,8 @@
                                 <div class="row mb-3">
                                     <a href="#" class="ms-md-3 rounded btn 
                                     btn-outline-primary text-start" data-bs-toggle="modal" 
-                                    data-bs-target="#{{$tiket->id}}" id="modalButton_{{$tiket->id}}">
+                                    data-bs-target="#{{$tiket->id}}" id="modalButton_{{$tiket->id}}"
+                                    data-modal-id="{{$tiket->id}}">
                                         <span id="nama_tiket_child">
                                             Tiket {{$tiket->nama_tiket}}
                                         </span>
@@ -291,7 +292,7 @@
                                                 <label for="tanggal_selesai_tiket[]" class="form-label">Tanggal & Waktu Selesai Penjualan</label>
                                                 <input type="datetime-local" class="form-control" id="tanggal_selesai_tiket" name="tanggal_selesai_tiket[]" required value="{{$ticket->tanggal_selesai}}">
                                             </div>
-                                            <button type="button" class="btn btn-primary edit-button">Simpan</button>
+                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Simpan</button>
                                             <button type="button" class="btn btn-danger delete-button">Hapus</button>
                                         </div>
                                     </div>

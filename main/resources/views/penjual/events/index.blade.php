@@ -222,6 +222,7 @@
 
 @section('js-tambahan')
     <script>
+        localStorage.removeItem("allTikets");
         document.addEventListener('DOMContentLoaded', function() {
             const links = document.querySelectorAll('.event-link');
             links.forEach(link => {

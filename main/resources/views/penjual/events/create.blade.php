@@ -134,24 +134,6 @@
                             </div> --}}
 
                             <div id="tiketContainer" class="row">
-                                <div class="row mb-3">
-                                    <a href="#" class="ms-md-3 rounded btn 
-                                    btn-outline-primary text-start" data-bs-toggle="modal" 
-                                    data-bs-target="#modal1" id="modalButton_modal1">
-                                        <span id="nama_tiket_child">
-                                            Tiket 1X
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="row mb-3">
-                                    <a href="#" class="ms-md-3 rounded btn 
-                                    btn-outline-primary text-start" data-bs-toggle="modal" 
-                                    data-bs-target="#modal2" id="modalButton_modal2">
-                                        <span id="nama_tiket_child">
-                                            Tiket 2X
-                                        </span>
-                                    </a>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -210,83 +192,6 @@
                     </div> --}}
 
                     <div id="childTiket">
-                        <!-- Modal untuk tiket gratis -->
-                        <div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="modal1Label" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="${modalId}Label">Detail Tiket</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="mb-3">
-                                            <label for="nama_tiket[]" class="form-label">Nama Tiket</label>
-                                            <input type="text" class="form-control" id="nama_tiket" name="nama_tiket[]" required value="{{old('nama_tiket[]')}}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="jumlah_tiket[]" class="form-label">Jumlah Tiket</label>
-                                            <input type="number" class="form-control" id="jumlah_tiket" name="jumlah_tiket[]" min="1" required value="{{old("jumlah_tiket[]")}}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="harga_tiket[]" class="form-label">Harga</label>
-                                            <input type="number" class="form-control" id="harga_tiket" name="harga_tiket[]"required value="{{old('harga_tiket[]')}}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="deskripsi_tiket[]" class="form-label">Deskripsi Tiket</label>
-                                            <textarea class="form-control" id="deskripsi_tiket" name="deskripsi_tiket[]" rows="3" required>{{old('deskripsi_tiket[]')}}</textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="tanggal_mulai_tiket[]" class="form-label">Tanggal & Waktu Mulai Penjualan</label>
-                                            <input type="datetime-local" class="form-control" id="tanggal_mulai_tiket" name="tanggal_mulai_tiket[]" required value="{{old('tanggal_mulai_tiket[]')}}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="tanggal_selesai_tiket[]" class="form-label">Tanggal & Waktu Selesai Penjualan</label>
-                                            <input type="datetime-local" class="form-control" id="tanggal_selesai_tiket" name="tanggal_selesai_tiket[]" required value="{{old("tanggal_selesai_tiket[]")}}">
-                                        </div>
-                                        {{-- <button type="button" class="btn btn-primary edit-button">Simpan</button>
-                                        <button type="button" class="btn btn-danger delete-button">Hapus</button> --}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="${modalId}Label">Detail Tiket</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="mb-3">
-                                            <label for="nama_tiket[]" class="form-label">Nama Tiket</label>
-                                            <input type="text" class="form-control" id="nama_tiket" name="nama_tiket[]" required value="{{old('nama_tiket[]')}}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="jumlah_tiket[]" class="form-label">Jumlah Tiket</label>
-                                            <input type="number" class="form-control" id="jumlah_tiket" name="jumlah_tiket[]" min="1" required value="{{old('jumlah_tiket[]')}}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="harga_tiket[]" class="form-label">Harga</label>
-                                            <input type="number" class="form-control" id="harga_tiket" name="harga_tiket[]"required value="{{old('harga_tiket[]')}}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="deskripsi_tiket[]" class="form-label">Deskripsi Tiket</label>
-                                            <textarea class="form-control" id="deskripsi_tiket" name="deskripsi_tiket[]" rows="3" required>{{old('deskripsi_tiket[]')}}</textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="tanggal_mulai_tiket[]" class="form-label">Tanggal & Waktu Mulai Penjualan</label>
-                                            <input type="datetime-local" class="form-control" id="tanggal_mulai_tiket" name="tanggal_mulai_tiket[]" required value="{{old('tanggal_mulai_tiket[]')}}">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="tanggal_selesai_tiket[]" class="form-label">Tanggal & Waktu Selesai Penjualan</label>
-                                            <input type="datetime-local" class="form-control" id="tanggal_selesai_tiket" name="tanggal_selesai_tiket[]" required value="{{old('tanggal_selesai_tiket[]')}}">
-                                        </div>
-                                        {{-- <button type="button" class="btn btn-primary edit-button">Simpan</button>
-                                        <button type="button" class="btn btn-danger delete-button">Hapus</button> --}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="row d-flex justify-content-center">
