@@ -121,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
     document.body.addEventListener('click', function(e) {
+        // melakukan pemeriksaan model
         const modal = e.target.closest('.modal');
         const modalId = modal.id;
         var modalGet = document.getElementById(modalId);
