@@ -10,7 +10,7 @@ use App\Http\Controllers\TiketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-/* 
+/*
 
     LOGIN & REGISTER
 */
@@ -18,7 +18,7 @@ Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('l
 Route::post('login', [AuthenticatedSessionController::class, 'store']);
 Route::get('/register', [Controller::class, 'showRegisterForm'])->name('register');
 
-/* 
+/*
     ADMIN DASHBOARD
 */
 Route::get('/', function () {
@@ -48,7 +48,7 @@ Route::get('/dashboard/roles/delete/{role}', [RoleController::class, 'destroy'])
 // Route::post('/dashboard/tickets/create',[TiketController::class,'storeToArray'])->name('tiket-storeArray');
 
 
-/* 
+/*
     PENJUAL DASHBOARD
 */
 // EVENTS
@@ -74,12 +74,20 @@ Route::post('/dashboard/rekening/edit/{rekening}', [RekeningController::class, '
 Route::get('/dashboard/rekening/{rekening}', [RekeningController::class, 'destroy'])->name('rekening-delete');
 Route::get('/dashboard/rekening/{id}/status/update',[RekeningController::class,'statusUpdated'])->name('rekening-status-update');
 
-/* 
+/*
     PEMBELI
 */
 Route::get('/pembeli', function () {
    return view('pembeli.index');
 });
+
+Route::get('/pembeli/upcoming/detail', function () {
+    return view('pembeli.upcoming.detail');
+})->name('upcoming.detail');
+
+Route::get('/pembeli/upcoming/beli-tiket', function () {
+    return view('pembeli.upcoming.beli-tiket');
+})->name('upcoming.beli-tiket');
 
 
 // Route::get('/dashboard', function () {

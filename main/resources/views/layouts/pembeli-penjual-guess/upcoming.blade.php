@@ -31,12 +31,13 @@
         <!-- Event Card 1 -->
         <div class="col-sm-6 col-lg-4 mb-4">
             <div class="card">
-                <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Event Image">
+                <a href="{{ route('upcoming.detail') }}">
+                    <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Event Image">
+                </a>
                 <div class="card-body">
                     <p class="text-muted font-weight-bold mb-1">14 APR</p>
                     <h5 class="card-title">Velit animi quas unde suscipit</h5>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Velit animi quas unde.
-                    </p>
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Velit animi quas unde.</p>
                 </div>
             </div>
         </div>
