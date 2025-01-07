@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        $datas = ['Admin'];
+        $datas = ['Admin','User'];
 
         foreach ($datas as $data) {
             DB::table('role')->insert([

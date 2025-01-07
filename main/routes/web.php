@@ -45,9 +45,6 @@ Route::get('/dashboard/roles/edit/{role}', [RoleController::class, 'edit'])->nam
 Route::post('/dashboard/roles/edit/{role}', [RoleController::class, 'update'])->name('role-update');
 Route::get('/dashboard/roles/delete/{role}', [RoleController::class, 'destroy'])->name('role-delete');
 
-// Route::post('/dashboard/tickets/create',[TiketController::class,'storeToArray'])->name('tiket-storeArray');
-
-
 /*
     PENJUAL DASHBOARD
 */
