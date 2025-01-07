@@ -74,7 +74,6 @@ Route::get('/dashboard/rekening/{id}/status/update',[RekeningController::class,'
 /*
     PEMBELI
 */
-
 Route::get('/pembeli', function () {
    return view('pembeli.index');
 });
