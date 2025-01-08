@@ -9,6 +9,7 @@
     @include('layouts.pembeli-penjual-guess.navbar')
 
     <!-- Hero Section -->
+    {{-- Carousel tiket --}}
     @include('layouts.pembeli-penjual-guess.hero')
 
 
@@ -31,6 +32,7 @@
     <script src="{{ asset('/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
     @yield('extra-js')
+    @yield('filter-js')
 </body>
 
 </html>

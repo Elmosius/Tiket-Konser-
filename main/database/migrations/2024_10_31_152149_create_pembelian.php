@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('id_user');
             $table->foreign('id_user')->references('id')->on('users');
             $table->integer('total');
-            $table->string('tipe_pembayaran');
-            $table->string('kode_pembayaran');
+            $table->string('tipe_pembayaran')->nullable();
+            $table->string('kode_pembayaran')->nullable();
             $table->string('status');
             $table->timestamps();
         });

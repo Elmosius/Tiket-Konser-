@@ -19,27 +19,39 @@
                 <div class="rounded shadow-sm p-4 bg-white mb-4 d-flex">
                     <!-- Gambar -->
                     <div class="me-4" style="flex: 1;">
-                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
-                            <span>(Gambar Event)</span>
-                        </div>
+                        @if($event->banner)
+                            <img src="{{$event->banner}}" class="card-img-top" alt="Event Image">
+                        @else
+                            <div class="bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
+                                <span>(Gambar Event)</span>
+                            </div>
+                        @endif
                     </div>
                     <!-- Tanggal, Waktu, dan Lokasi -->
                     <div style="flex: 2;">
-                        <p class="mb-3"><i class="fa fa-calendar-alt"></i> 02 Nov - 03 Nov 2024</p>
-                        <p class="mb-3"><i class="fa fa-clock"></i> 07:00 - selesai</p>
-                        <p class="mb-3"><i class="fa fa-map-marker-alt"></i> Lokasinya</p>
+                        <p class="mb-3"><i class="fa fa-calendar-alt"></i>
+                            {{\Carbon\Carbon::parse($event->tanggal_mulai)->locale('id')->format('d F')}} - 
+                            {{\Carbon\Carbon::parse($event->tanggal_selesai)->locale('id')->format('d F Y')}}
+                        </p>
+                        <p class="mb-3"><i class="fa fa-clock"></i> {{\Carbon\Carbon::parse($event->tanggal_mulai)->locale('id')->format('h:m')}} - {{\Carbon\Carbon::parse($event->tanggal_selesai)->locale('id')->format('h:m')}}</p>
+                        <p class="mb-3"><i class="fa fa-map-marker-alt"></i> {{$event->lokasi}}</p>
                     </div>
                 </div>
 
                 <!-- Jenis Tiket -->
                 <h6 class="fw-bold mt-4">Jenis Tiket</h6>
-                <p class="text-muted">Lorem ipsum dolor sit amet</p>
+                @foreach ($tiketDetails as $detail)
+                    <p>{{ $detail['id'] }} - {{ $detail['nama'] }} - Jumlah: {{ $detail['jumlah'] }}</p>
+                    <span>Rp. {{ number_format($detail['harga'], 0, ',', '.') }}</span>
+                    <br>
+                    <span>Total : {{ number_format($detail['total'], 0, ',', '.') }}</span>
+                @endforeach
 
                 <!-- Metode Pembayaran -->
                 <h5 class="fw-bold mb-3 mt-5">Metode Pembayaran</h5>
                 <div class="accordion" id="paymentMethods">
                     <!-- E-Wallet -->
-                    <div class="accordion-item">
+                    {{-- <div class="accordion-item">
                         <h2 class="accordion-header" id="eWalletHeading">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEWallet" aria-expanded="true" aria-controls="collapseEWallet">
                                 E-Wallet
@@ -118,7 +130,87 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
+
+                    <div>
+                        <!-- E-Wallet -->
+                        <div class="payment-method mb-3">
+                            <h3>E-Wallet</h3>
+                            <div class="d-flex mt-2">
+                                <input type="radio" name="paymentMethod" value="DANA" class="form-check-input">
+                                <label class="form-check-label d-flex">
+                                    <img src="{{ asset('assets/icons/dana.svg') }}" alt="DANA" style="width: 50px;" class="ms-3">
+                                    <span class="ms-3">DANA</span>
+                                </label>
+                            </div>
+                            <div class="d-flex mt-2">
+                                <input type="radio" name="paymentMethod" value="GoPay" class="form-check-input">
+                                <label class="form-check-label d-flex">
+                                    <img src="{{ asset('assets/icons/gopay.png') }}" alt="GoPay" style="width: 50px;" class="ms-3">
+                                    <span class="ms-3">GoPay</span>
+                                </label>
+                            </div>
+                            <div class="d-flex mt-2">
+                                <input type="radio" name="paymentMethod" value="OVO" class="form-check-input">
+                                <label class="form-check-label d-flex">
+                                    <img src="{{ asset('assets/icons/ovo.svg') }}" alt="OVO" style="width: 50px;" class="ms-3">
+                                    <span class="ms-3">OVO</span>
+                                </label>
+                            </div>
+                            <div class="d-flex mt-2">
+                                <input type="radio" name="paymentMethod" value="PayPal" class="form-check-input">
+                                <label class="form-check-label d-flex">
+                                    <img src="{{ asset('assets/icons/paypal.png') }}" alt="PayPal" style="width: 20px;" class="ms-3">
+                                    <span class="ms-3">PayPal</span>
+                                </label>
+                            </div>
+                        </div>
+                    
+                        <!-- Virtual Account -->
+                        <div class="payment-method mb-3">
+                            <h3>Virtual Account</h3>
+                            <div class="d-flex mt-3">
+                                <input type="radio" name="paymentMethod" value="BCA VA" class="form-check-input">
+                                <label class="form-check-label d-flex">
+                                    <img src="{{ asset('assets/icons/bca.png') }}" alt="BCA" style="width: 50px;" class="ms-3">
+                                    <span class="ms-3">BCA VA</span>
+                                </label>
+                            </div>
+                            <div class="d-flex mt-2">
+                                <input type="radio" name="paymentMethod" value="Mandiri VA" class="form-check-input">
+                                <label class="form-check-label d-flex">
+                                    <img src="{{ asset('assets/icons/mandiri.svg') }}" alt="Mandiri" style="width: 50px;" class="ms-3">
+                                    <span class="ms-3">Mandiri VA</span>
+                                </label>
+                            </div>
+                            <div class="d-flex mt-2">
+                                <input type="radio" name="paymentMethod" value="BNI VA" class="form-check-input">
+                                <label class="form-check-label d-flex">
+                                    <img src="{{ asset('assets/icons/bni.svg') }}" alt="BNI" style="width: 50px;" class="ms-3">
+                                    <span class="ms-3">BNI VA</span>
+                                </label>
+                            </div>
+                        </div>
+                    
+                        <!-- Credit Card -->
+                        <div class="payment-method mb-3">
+                            <h3>Credit Card</h3>
+                            <div class="d-flex mt-2">
+                                <input type="radio" name="paymentMethod" value="VISA" class="form-check-input">
+                                <label class="form-check-label d-flex">
+                                    <img src="{{ asset('assets/icons/visa.png') }}" alt="VISA" style="width: 50px;" class="ms-3">
+                                    <span class="ms-3">VISA</span>
+                                </label>
+                            </div>
+                            <div class="d-flex mt-2">
+                                <input type="radio" name="paymentMethod" value="MasterCard" class="form-check-input">
+                                <label class="form-check-label d-flex">
+                                    <img src="{{ asset('assets/icons/mastercard.svg') }}" alt="MasterCard" style="width: 50px;" class="ms-3">
+                                    <span class="ms-3">MasterCard</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>     
                 </div>
             </div>
 

@@ -3,6 +3,8 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\PembelianController;
+use App\Http\Controllers\PembeliController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekeningController;
 use App\Http\Controllers\RoleController;
@@ -74,17 +76,15 @@ Route::get('/dashboard/rekening/{id}/status/update',[RekeningController::class,'
 /*
     PEMBELI
 */
-Route::get('/pembeli', function () {
-   return view('pembeli.index');
-});
+// Route::get('/pembeli', function () {
+//    return view('pembeli.index');
+// });
+Route::get('/pembeli', [PembelianController::class, 'index'])->name('pembeli-index');
+// Master 2
+Route::get('/pembeli/upcoming/detail/{event}',[PembelianController::class, 'create'])->name('upcoming.detail');
 
-Route::get('/pembeli/upcoming/detail', function () {
-    return view('pembeli.upcoming.detail');
-})->name('upcoming.detail');
-
-Route::get('/pembeli/upcoming/beli-tiket', function () {
-    return view('pembeli.upcoming.beli-tiket');
-})->name('upcoming.beli-tiket');
+// master 3
+Route::post('/pembeli/upcoming/detail/{event}/store',[PembelianController::class, 'store'])->name('simpan-pembelian');
 
 
 // Route::get('/dashboard', function () {

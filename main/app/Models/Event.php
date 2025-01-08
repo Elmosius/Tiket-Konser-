@@ -23,6 +23,7 @@ class Event extends Model
       'email_kontak',
       'tlp_kontak',
       'denah',
+      'banner',
       'pembelian_maksimum',
       'status',
     ];
