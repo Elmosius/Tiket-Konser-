@@ -15,4 +15,14 @@ class DetailPembelian extends Model
         'id_tiket',
         'jumlah',
     ];
+
+    public function pembelian()
+    {
+        return $this->belongsTo(Pembelian::class, 'id_pembelian');
+    }
+
+    public function tiket()
+    {
+        return $this->belongsTo(Tiket::class, 'id_tiket');
+    }
 }

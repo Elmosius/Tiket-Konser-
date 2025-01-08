@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailPembelian;
 use App\Models\Event;
 use App\Models\Tiket;
 use Carbon\Carbon;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -130,8 +132,40 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
+        // dd($event->id);
+        $detailPembelians = DB::table('detail_pembelian')
+        ->join('tiket', 'detail_pembelian.id_tiket', '=', 'tiket.id')
+        ->join('event', 'tiket.id_event', '=', 'event.id')
+        ->join('pembelian','detail_pembelian.id_pembelian','=','pembelian.id')
+        ->where('event.id', '=', $event->id) // ID event milik pengguna
+        ->where('event.id_penjual','=',Auth::id())
+        ->select('pembelian.*', 'event.id_penjual', 'detail_pembelian.*')
+        ->distinct()
+        ->orderByDesc('pembelian.updated_at')->get();
+
+        $tikets = Tiket::where('id_event', $event->id)
+        ->with(['detailPembelians' => function($query) {
+            $query->whereHas('pembelian', function($q) {
+                $q->where('status', 1);
+            });
+        }])
+        ->get()->map(function ($tiket) {
+            $jumlahTerjual = $tiket->detailPembelians->sum('jumlah');
+            return [
+                'idTiket' => $tiket->id,
+                'namaTiket' => $tiket->nama_tiket,
+                'jumlahTerjual' => $jumlahTerjual
+            ];
+        });
+
+        // dd($tikets);
+
+        // dd($bayarTiket,$belumBayarTiket);
         return view('penjual.events.detail',[
-            // isinya
+            'event'=>$event,
+            'detailPembelians'=>$detailPembelians,
+            'tikets'=> $tikets,
+            // 'belmus'=>$belumBayarTiket,
         ]);
     }
 

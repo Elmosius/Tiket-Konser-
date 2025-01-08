@@ -27,4 +27,9 @@ class Event extends Model
       'pembelian_maksimum',
       'status',
     ];
+
+    public function tikets()
+    {
+        return $this->hasMany(Tiket::class,'id_event');
+    }
 }

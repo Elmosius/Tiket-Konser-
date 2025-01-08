@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PembeliController;
 use App\Http\Controllers\ProfileController;
@@ -60,7 +61,7 @@ Route::post('/dashboard/events/edit/{event}', [EventController::class, 'update']
 // delete kalau misalnay tidak berikatan
 Route::get('/dashboard/events/{event}', [EventController::class, 'destroy'])->name('event-delete');
 // nanti tmbhin id ->                   /{id} untuk detail
-Route::get('/dashboard/event/detail', [EventController::class, 'show'])->name('event-detail');
+Route::get('/dashboard/event/{event}/detail', [EventController::class, 'show'])->name('event-detail');
 Route::get('/dashboard/events/{id}/status/update',[EventController::class,'statusUpdated'])->name('event-status-update');
 
 // REKENING
@@ -84,8 +85,11 @@ Route::get('/pembeli', [PembelianController::class, 'index'])->name('pembeli-ind
 Route::get('/pembeli/upcoming/detail/{event}',[PembelianController::class, 'create'])->name('upcoming.detail');
 
 // master 3
-Route::post('/pembeli/upcoming/detail/{event}/store',[PembelianController::class, 'store'])->name('simpan-pembelian');
+Route::post('/pembeli/upcoming/detail/store',[PembelianController::class, 'store'])->name('simpan-pembelian');
 
+Route::get('pembeli/pemesanan',[PembayaranController::class, 'index'])->name('pemesanan-index');
+Route::get('/pembeli/pemesanan/{pembelian}',[PembayaranController::class, 'create'])->name('pemesanan-create');
+Route::post('/pembeli/pemesanan/{pembelian}',[PembayaranController::class, 'update'])->name('pemesanan-update');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');

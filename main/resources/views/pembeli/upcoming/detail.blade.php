@@ -6,8 +6,8 @@
         <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{route('pembeli-index')}}">Home</a></li>
-                <li class="breadcrumb-item"><a href="">Pertunjukan Konser</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{$event->id}}</li>
+                <li class="breadcrumb-item"><a href="{{route('upcoming.detail',['event'=>$event->id])}}">Pertunjukan Konser</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{$event->nama_event}}</li>
             </ol>
         </nav>
         @if($errors->any())
@@ -51,6 +51,19 @@
                     <p><strong><i class="fa-solid fa-envelope"></i> {{$event->email_kontak}}</strong></p>
                     <p><strong><i class="fa-solid fa-phone"></i> {{$event->tlp_kontak}}</strong></p>
                 </div>
+                <div class="rounded shadow-sm p-4 bg-white">
+                    <div id="pilih-tiket" class="text-center">
+                        <p class="text-muted mb-2">Kamu belum memilih tiket. Silahkan pilih terlebih dahulu.</p>
+                        <p class="fw-bold">Harga mulai dari</p>
+                        <h4 class="fw-bold text-primary">Rp. xxx.xxx,xx</h4>
+                    </div>
+                    <h2 class="text-center mt-2 font-weight-bold">Setiap Pembeli hanya dapat membeli 
+                        <span class="text-danger mx-2">{{$event->pembelian_maksimum}}</span> Tiket
+                    </h2>
+                    <button type="button" id="beli-tiket-btn" 
+                    class="btn btn-primary w-100 py-2 mt-3" onclick="submitForm()" disabled>Beli Tiket</button>
+
+                </div>
             </div>
         </div>
 
@@ -75,7 +88,7 @@
 
                 <!-- Tiket -->
                 <div id="tiket" class="tab-pane fade">
-                    <form action="{{ route('simpan-pembelian') }}" method="post">
+                    <form action="{{ route('simpan-pembelian') }}" method="post" id="ticketForm">
                         @csrf
                         @foreach ($tikets as $index=>$tiket)
                             <h6 class="fw-bold my-3">
@@ -113,18 +126,6 @@
                                 </div>                            
                             </div>
                         @endforeach
-                            
-                            {{-- @foreach ($tikets as $index => $tiket)
-                                <!-- Input untuk jumlah tiket -->
-                                
-                            @endforeach --}}
-                        <div id="pilih-tiket" class="text-center">
-                            <p class="text-muted mb-2">Kamu belum memilih tiket. Silahkan pilih terlebih dahulu.</p>
-                            <p class="fw-bold">Harga mulai dari</p>
-                            <h4 class="fw-bold text-primary">Rp. xxx.xxx,xx</h4>
-                        </div>
-                        <button type="submit" id="beli-tiket-btn" class="btn btn-primary w-100 py-2 mt-3"
-                        disabled>Beli Tiket</button>
                     </form>                    
                 </div>
             </div>
@@ -132,6 +133,10 @@
     </section>
 
     <script>
+        function submitForm() {
+            document.getElementById('ticketForm').submit();
+        }
+
         function showTab(tabId) {
             document.querySelectorAll('.tab-pane').forEach(tab => tab.classList.remove('show', 'active'));
             document.getElementById(tabId).classList.add('show', 'active');

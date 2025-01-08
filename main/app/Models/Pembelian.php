@@ -17,4 +17,9 @@ class Pembelian extends Model
       'kode_pembayaran',
       'status',
     ];
+
+    public function details()
+    {
+        return $this->hasMany(DetailPembelian::class,'id_pembelian');
+    }
 }

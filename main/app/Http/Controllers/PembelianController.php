@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+use function Laravel\Prompts\error;
+
 class PembelianController extends Controller
 {
     /**
@@ -41,7 +43,7 @@ class PembelianController extends Controller
 
         $data= $data->distinct()->select('event.*')
             ->orderBy('event.tanggal_mulai', 'desc')
-            ->where('event.tanggal_mulai', '>=', now())
+            ->where('event.tanggal_akhir', '>=', now())
             ->take(3) 
             ->get();
         // dd($data);
@@ -58,33 +60,6 @@ class PembelianController extends Controller
         ]);
     }
 
-    public function pembayaran(Request $request, Event $event){
-        dd($request);
-        $data = $request->tickets;
-
-        $ticketIDs = array_keys($data); // Ambil semua ticketID dari array $data
-
-        // Mengambil semua tiket berdasarkan ID yang ada dalam array ticketIDs
-        $tikets = Tiket::whereIn('id', $ticketIDs)->get();
-
-        // Menyiapkan array untuk menggabungkan informasi tiket dengan jumlahnya
-        $tiketDetails = [];
-        foreach ($tikets as $tiket) {
-            $tiketID = $tiket->id;
-            $tiketDetails[] = [
-                'id' => $tiketID,
-                'nama' => $tiket->nama_tiket,
-                'jumlah' => $data[$tiketID] ?? 0, // Gunakan operator null coalesce untuk menangani kasus jika tidak ada jumlah tiket
-                'harga' => $tiket->harga,
-                'total' => intval($data[$tiketID] ?? 0)* intval($tiket->harga),
-            ];
-        }
-
-        return view('pembeli.upcoming.beli-tiket', [
-            'event' => $event,
-            'tiketDetails' => $tiketDetails
-        ]);
-    }
     public function store(Request $request){
         $total=0;
         // dd($request);
@@ -93,12 +68,16 @@ class PembelianController extends Controller
             'tickets.*'=>'required|integer'
         ])->validate();
         
-        // dd($validateData['tickets']);
+        // dd(array_sum($validateData['tickets']));
 
         date_default_timezone_set('Asia/Jakarta');
 
         // Gabungkan prefix dengan timestamp
         $prefix = 'TKT' . date('dmYHis');
+
+        if(array_sum($validateData['tickets'])>2){
+            return back()->withErrors(['Tiket melebihi batas']);
+        }
 
         $idPembelian=IdGenerator::generate(['table' => 'pembelian','field'=>'id', 'length'=>20,'prefix' =>$prefix,'reset_on_prefix_change' => true]);
         
@@ -132,5 +111,33 @@ class PembelianController extends Controller
         }
 
         return redirect(route('pembeli-index'));
+    }
+
+    public function pembayaran(Request $request, Event $event){
+        dd($request);
+        $data = $request->tickets;
+
+        $ticketIDs = array_keys($data); // Ambil semua ticketID dari array $data
+
+        // Mengambil semua tiket berdasarkan ID yang ada dalam array ticketIDs
+        $tikets = Tiket::whereIn('id', $ticketIDs)->get();
+
+        // Menyiapkan array untuk menggabungkan informasi tiket dengan jumlahnya
+        $tiketDetails = [];
+        foreach ($tikets as $tiket) {
+            $tiketID = $tiket->id;
+            $tiketDetails[] = [
+                'id' => $tiketID,
+                'nama' => $tiket->nama_tiket,
+                'jumlah' => $data[$tiketID] ?? 0, // Gunakan operator null coalesce untuk menangani kasus jika tidak ada jumlah tiket
+                'harga' => $tiket->harga,
+                'total' => intval($data[$tiketID] ?? 0)* intval($tiket->harga),
+            ];
+        }
+
+        return view('pembeli.upcoming.beli-tiket', [
+            'event' => $event,
+            'tiketDetails' => $tiketDetails
+        ]);
     }
 }
