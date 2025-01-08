@@ -75,7 +75,7 @@
 
                 <!-- Tiket -->
                 <div id="tiket" class="tab-pane fade">
-                    <form action="{{ route('simpan-pembelian',['event'=>$event->id]) }}" method="post">
+                    <form action="{{ route('simpan-pembelian') }}" method="post">
                         @csrf
                         @foreach ($tikets as $index=>$tiket)
                             <h6 class="fw-bold my-3">
