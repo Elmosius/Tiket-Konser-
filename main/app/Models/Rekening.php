@@ -29,4 +29,6 @@ class Rekening extends Model
 
         return $jsonBank[$data]['name'];
     }
+
+    
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('no_rekening');
             $table->string('nama_rekening');
             $table->string('nama_bank');
+            $table->string('saldo');
             $table->string('kantor');
             $table->boolean('status');
             $table->timestamps();

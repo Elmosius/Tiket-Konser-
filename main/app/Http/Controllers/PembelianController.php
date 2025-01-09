@@ -28,12 +28,11 @@ class PembelianController extends Controller
             ->join('tiket', 'event.id', '=', 'tiket.id_event');
 
         if ($kategori && $kategori !== 'all') {
-            if ($kategori == 'bayar') {
+            if($kategori == 'bayar') {
                 $data = $data->where('tiket.harga', '>', '0');
             } elseif ($kategori == 'gratis') {
                 $data = $data->where('tiket.harga', '=', '0');
             }
-            
         }
 
         // dd($data->get());
@@ -54,35 +53,38 @@ class PembelianController extends Controller
 
     public function show(Request $request)
     {
-        $kategori = $request->query('kategori'); // atau $request->input('filter')
+        $kategori = $request->query('kategori');
         $hari = intval($request->query('hari'));
-        // dd($request);
+        
         $data = DB::table('event')
             ->join('tiket', 'event.id', '=', 'tiket.id_event');
-
+    
         if ($kategori && $kategori !== 'all') {
             if ($kategori == 'bayar') {
                 $data = $data->where('tiket.harga', '>', '0');
             } elseif ($kategori == 'gratis') {
                 $data = $data->where('tiket.harga', '=', '0');
             }
-            
         }
-
-        // dd($data->get());
-        if ($hari){
-            $data =$data->whereRaw('DAYOFWEEK(event.tanggal_mulai) = ?', [$hari]);
+    
+        if ($hari) {
+            $data = $data->whereRaw('DAYOFWEEK(event.tanggal_mulai) = ?', [$hari]);
         }
-
-        $data= $data->distinct()->select('event.*')
+    
+        $data = $data->distinct()->select('event.*')
             ->orderBy('event.tanggal_mulai', 'desc')
             ->where('event.tanggal_akhir', '>=', now())
             ->get();
-        // dd($data);
+    
+        if ($request->ajax()) {
+            return view('partials.event-cards', ['events' => $data])->render();
+        }
+    
         return view('pembeli.element.listTiket', [
             'events' => $data,
         ]);
     }
+    
 
     public function create (Event $event){
         $tiket = Tiket::where('id_event', $event->id)->get();
@@ -149,19 +151,17 @@ class PembelianController extends Controller
         dd($request);
         $data = $request->tickets;
 
-        $ticketIDs = array_keys($data); // Ambil semua ticketID dari array $data
+        $ticketIDs = array_keys($data); 
 
-        // Mengambil semua tiket berdasarkan ID yang ada dalam array ticketIDs
         $tikets = Tiket::whereIn('id', $ticketIDs)->get();
 
-        // Menyiapkan array untuk menggabungkan informasi tiket dengan jumlahnya
         $tiketDetails = [];
         foreach ($tikets as $tiket) {
             $tiketID = $tiket->id;
             $tiketDetails[] = [
                 'id' => $tiketID,
                 'nama' => $tiket->nama_tiket,
-                'jumlah' => $data[$tiketID] ?? 0, // Gunakan operator null coalesce untuk menangani kasus jika tidak ada jumlah tiket
+                'jumlah' => $data[$tiketID] ?? 0, 
                 'harga' => $tiket->harga,
                 'total' => intval($data[$tiketID] ?? 0)* intval($tiket->harga),
             ];
@@ -172,4 +172,7 @@ class PembelianController extends Controller
             'tiketDetails' => $tiketDetails
         ]);
     }
+
+
+    
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PembelianController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\TiketController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 
@@ -28,13 +30,11 @@ Route::post('/dashboard/register/users/create', [UserController::class, 'storeUs
 /*
     ADMIN DASHBOARD
 */
-Route::get('dashboard', function () {
-    return view('admin.dashboard.index');
-})->name('dashboard');
 
 // USERS
 
 Route::middleware(['auth',IsAdmin::class])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/users', [UserController::class, 'index'])->name('users');
     Route::get('/dashboard/users/create', [UserController::class, 'create'])->name('user-create');
     Route::post('/dashboard/users/create', [UserController::class, 'store'])->name('user-store');
@@ -42,7 +42,7 @@ Route::middleware(['auth',IsAdmin::class])->group(function () {
     Route::get('/dashboard/users/edit/{user}', [UserController::class, 'edit'])->name('user-edit');
     Route::post('/dashboard/users/edit/{user}', [UserController::class, 'update'])->name('user-update');
     Route::get('/dashboard/users/delete/{user}', [UserController::class, 'destroy'])->name('user-delete');
-
+    
     // ROLES
     Route::get('/dashboard/roles', [RoleController::class, 'index'])->name('roles');
     Route::get('/dashboard/roles/create', [RoleController::class, 'create'])->name('role-create');
@@ -52,17 +52,18 @@ Route::middleware(['auth',IsAdmin::class])->group(function () {
     // nanti tmbhin id ->          /edit/{id} untuk edit
     Route::post('/dashboard/roles/edit/{role}', [RoleController::class, 'update'])->name('role-update');
     Route::get('/dashboard/roles/delete/{role}', [RoleController::class, 'destroy'])->name('role-delete');
-
+    
 });
 
 Route::middleware('auth')->group(function () {
-/*
+    /*
     PENJUAL DASHBOARD
-*/
-// EVENTS
-Route::get('/dashboard/events', [EventController::class, 'index'])->name('events');
-Route::get('/dashboard/events/create', [EventController::class, 'create'])->name('event-create');
-Route::post('/dashboard/events/store', [EventController::class, 'store'])->name('event-store');
+    */
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // EVENTS
+    Route::get('/dashboard/events', [EventController::class, 'index'])->name('events');
+    Route::get('/dashboard/events/create', [EventController::class, 'create'])->name('event-create');
+    Route::post('/dashboard/events/store', [EventController::class, 'store'])->name('event-store');
 // nanti tmbhin id ->          /edit/{id} untuk edit
 Route::get('/dashboard/events/edit/{event}', [EventController::class, 'edit'])->name('event-edit');
 Route::post('/dashboard/events/edit/{event}', [EventController::class, 'update'])->name('event-update');

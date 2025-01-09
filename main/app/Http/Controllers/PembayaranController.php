@@ -15,15 +15,15 @@ class PembayaranController extends Controller
 {
     public function index()
     {
-        // Fetching Pembelian with nested DetailPembelian and Tiket data
-        $data = Pembelian::with(['details.tiket'])->where('id_user',Auth::id())->get();
-        
-        // dd($data);
-        // Returning the data to the view
+        $data = Pembelian::with([
+            'details.tiket.event' 
+        ])->where('id_user', Auth::id())->get();
+
         return view('pembeli.element.pembayaran', [
             'pembelians' => $data,
         ]);
     }
+
 
     public function create(Pembelian $pembelian){
         $dataDetail = DetailPembelian::where('id_pembelian', $pembelian->id)->get();

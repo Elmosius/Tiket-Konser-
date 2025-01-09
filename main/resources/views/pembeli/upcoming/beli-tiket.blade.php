@@ -1,22 +1,24 @@
 @extends('layouts.pembeli-penjual-guess.master3')
 
 @section('beli-tiket')
-    <section class="container my-5">
+    <section class="container my-5 px-32">
         <!-- Breadcrumb -->
         <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{route('pembeli-index')}}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{{route('pemesanan-index')}}">Pemesanan Tiket</a></li>
-                <li class="breadcrumb-item"><a href="{{route('pemesanan-create',['pembelian'=>$pembelian->id])}}">{{$event->nama_event}}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('pembeli-index') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('pemesanan-index') }}">Pemesanan Tiket</a></li>
+                <li class="breadcrumb-item"><a
+                        href="{{ route('pemesanan-create', ['pembelian' => $pembelian->id]) }}">{{ $event->nama_event }}</a>
+                </li>
                 <li class="breadcrumb-item active" aria-current="page">Pembayaran</li>
             </ol>
         </nav>
-        
+
         <div class="row">
             <!-- Detail Pemesanan -->
             <div class="col-lg-8">
                 <h5 class="fw-bold mb-3">Detail Pemesanan</h5>
-                @if($errors->any())
+                @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
                             @foreach ($errors->all() as $error)
@@ -28,8 +30,8 @@
                 <div class="rounded shadow-sm p-4 bg-white mb-4 d-flex">
                     <!-- Gambar -->
                     <div class="me-4" style="flex: 1;">
-                        @if($event->banner)
-                            <img src="{{$event->banner}}" class="card-img-top" alt="Event Image">
+                        @if ($event->banner)
+                            <img src="{{ $event->banner }}" class="card-img-top" alt="Event Image">
                         @else
                             <div class="bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
                                 <span>(Gambar Event)</span>
@@ -39,13 +41,13 @@
                     <!-- Tanggal, Waktu, dan Lokasi -->
                     <div style="flex: 2;">
                         <p class="mb-3"><i class="fa fa-calendar-alt"></i>
-                            {{\Carbon\Carbon::parse($event->tanggal_mulai)->locale('id')->format('d F')}} - 
-                            {{\Carbon\Carbon::parse($event->tanggal_selesai)->locale('id')->format('d F Y')}}
+                            {{ \Carbon\Carbon::parse($event->tanggal_mulai)->locale('id')->format('d F') }} -
+                            {{ \Carbon\Carbon::parse($event->tanggal_selesai)->locale('id')->format('d F Y') }}
                         </p>
-                        <p class="mb-3"><i class="fa fa-clock"></i> 
-                            {{\Carbon\Carbon::parse($event->tanggal_mulai)->locale('id')->format('h:m')}} 
-                            - {{\Carbon\Carbon::parse($event->tanggal_selesai)->locale('id')->format('h:m')}}</p>
-                         <p class="mb-3"><i class="fa fa-map-marker-alt"></i> {{$event->lokasi}}</p>
+                        <p class="mb-3"><i class="fa fa-clock"></i>
+                            {{ \Carbon\Carbon::parse($event->tanggal_mulai)->locale('id')->format('h:m') }}
+                            - {{ \Carbon\Carbon::parse($event->tanggal_selesai)->locale('id')->format('h:m') }}</p>
+                        <p class="mb-3"><i class="fa fa-map-marker-alt"></i> {{ $event->lokasi }}</p>
                     </div>
                 </div>
 
@@ -133,11 +135,12 @@
                         </div>
                     </div>
                 </div> --}}
-                
+
                 <!-- Metode Pembayaran -->
                 <h5 class="fw-bold mb-3 mt-5">Metode Pembayaran</h5>
                 <div class="accordion" id="paymentMethods">
-                    <form action="{{ route('pemesanan-update',['pembelian'=>$pembelian->id]) }}" method="post" id="ticketForm">
+                    <form action="{{ route('pemesanan-update', ['pembelian' => $pembelian->id]) }}" method="post"
+                        id="ticketForm">
                         @csrf
                         <!-- E-Wallet -->
                         <div class="payment-method mb-3">
@@ -145,78 +148,91 @@
                             <div class="d-flex mt-2">
                                 <input type="radio" name="paymentMethod" value="DANA" class="form-check-input" required>
                                 <label class="form-check-label d-flex">
-                                    <img src="{{ asset('assets/icons/dana.svg') }}" alt="DANA" style="width: 50px;" class="ms-3">
+                                    <img src="{{ asset('assets/icons/dana.svg') }}" alt="DANA" style="width: 50px;"
+                                        class="ms-3">
                                     <span class="ms-3">DANA</span>
                                 </label>
                             </div>
                             <div class="d-flex mt-2">
                                 <input type="radio" name="paymentMethod" value="GoPay" class="form-check-input" required>
                                 <label class="form-check-label d-flex">
-                                    <img src="{{ asset('assets/icons/gopay.png') }}" alt="GoPay" style="width: 50px;" class="ms-3">
+                                    <img src="{{ asset('assets/icons/gopay.png') }}" alt="GoPay" style="width: 50px;"
+                                        class="ms-3">
                                     <span class="ms-3">GoPay</span>
                                 </label>
                             </div>
                             <div class="d-flex mt-2">
                                 <input type="radio" name="paymentMethod" value="OVO" class="form-check-input" required>
                                 <label class="form-check-label d-flex">
-                                    <img src="{{ asset('assets/icons/ovo.svg') }}" alt="OVO" style="width: 50px;" class="ms-3">
+                                    <img src="{{ asset('assets/icons/ovo.svg') }}" alt="OVO" style="width: 50px;"
+                                        class="ms-3">
                                     <span class="ms-3">OVO</span>
                                 </label>
                             </div>
                             <div class="d-flex mt-2">
                                 <input type="radio" name="paymentMethod" value="PayPal" class="form-check-input" required>
                                 <label class="form-check-label d-flex">
-                                    <img src="{{ asset('assets/icons/paypal.png') }}" alt="PayPal" style="width: 20px;" class="ms-3">
+                                    <img src="{{ asset('assets/icons/paypal.png') }}" alt="PayPal" style="width: 20px;"
+                                        class="ms-3">
                                     <span class="ms-3">PayPal</span>
                                 </label>
                             </div>
                         </div>
-                    
+
                         <!-- Virtual Account -->
                         <div class="payment-method mb-3">
                             <h3>Virtual Account</h3>
                             <div class="d-flex mt-3">
                                 <input type="radio" name="paymentMethod" value="BCA VA" class="form-check-input" required>
                                 <label class="form-check-label d-flex">
-                                    <img src="{{ asset('assets/icons/bca.png') }}" alt="BCA" style="width: 50px;" class="ms-3">
+                                    <img src="{{ asset('assets/icons/bca.png') }}" alt="BCA" style="width: 50px;"
+                                        class="ms-3">
                                     <span class="ms-3">BCA VA</span>
                                 </label>
                             </div>
                             <div class="d-flex mt-2">
-                                <input type="radio" name="paymentMethod" value="Mandiri VA" class="form-check-input" required>
+                                <input type="radio" name="paymentMethod" value="Mandiri VA" class="form-check-input"
+                                    required>
                                 <label class="form-check-label d-flex">
-                                    <img src="{{ asset('assets/icons/mandiri.svg') }}" alt="Mandiri" style="width: 50px;" class="ms-3">
+                                    <img src="{{ asset('assets/icons/mandiri.svg') }}" alt="Mandiri"
+                                        style="width: 50px;" class="ms-3">
                                     <span class="ms-3">Mandiri VA</span>
                                 </label>
                             </div>
                             <div class="d-flex mt-2">
-                                <input type="radio" name="paymentMethod" value="BNI VA" class="form-check-input" required>
+                                <input type="radio" name="paymentMethod" value="BNI VA" class="form-check-input"
+                                    required>
                                 <label class="form-check-label d-flex">
-                                    <img src="{{ asset('assets/icons/bni.svg') }}" alt="BNI" style="width: 50px;" class="ms-3">
+                                    <img src="{{ asset('assets/icons/bni.svg') }}" alt="BNI" style="width: 50px;"
+                                        class="ms-3">
                                     <span class="ms-3">BNI VA</span>
                                 </label>
                             </div>
                         </div>
-                    
+
                         <!-- Credit Card -->
                         <div class="payment-method mb-3">
                             <h3>Credit Card</h3>
                             <div class="d-flex mt-2">
-                                <input type="radio" name="paymentMethod" value="VISA" class="form-check-input" required>
+                                <input type="radio" name="paymentMethod" value="VISA" class="form-check-input"
+                                    required>
                                 <label class="form-check-label d-flex">
-                                    <img src="{{ asset('assets/icons/visa.png') }}" alt="VISA" style="width: 50px;" class="ms-3">
+                                    <img src="{{ asset('assets/icons/visa.png') }}" alt="VISA" style="width: 50px;"
+                                        class="ms-3">
                                     <span class="ms-3">VISA</span>
                                 </label>
                             </div>
                             <div class="d-flex mt-2">
-                                <input type="radio" name="paymentMethod" value="MasterCard" class="form-check-input" required>
+                                <input type="radio" name="paymentMethod" value="MasterCard" class="form-check-input"
+                                    required>
                                 <label class="form-check-label d-flex">
-                                    <img src="{{ asset('assets/icons/mastercard.svg') }}" alt="MasterCard" style="width: 50px;" class="ms-3">
+                                    <img src="{{ asset('assets/icons/mastercard.svg') }}" alt="MasterCard"
+                                        style="width: 50px;" class="ms-3">
                                     <span class="ms-3">MasterCard</span>
                                 </label>
                             </div>
                         </div>
-                    </form>     
+                    </form>
                 </div>
             </div>
 
@@ -227,44 +243,50 @@
                     @foreach ($detailPembelian as $detail)
                         <div class="mb-4 p-4 border-b border-gray-200">
                             <p class="text-sm font-bold text-gray-700">ID: {{ $detail->id }}</p>
-                            <p class="text-md text-blue-800">{{ $detail->tiket->nama_tiket }} - Jumlah: {{ $detail->jumlah }}</p>
-                            <span class="text-sm text-gray-600">Rp. {{ number_format($detail->tiket->harga, 0, ',', '.') }}</span>
+                            <p class="text-md text-blue-800">{{ $detail->tiket->nama_tiket }} - Jumlah:
+                                {{ $detail->jumlah }}</p>
+                            <span class="text-sm text-gray-600">Rp.
+                                {{ number_format($detail->tiket->harga, 0, ',', '.') }}</span>
                             <br>
-                            <span class="font-semibold text-green-700">Total : Rp. {{ number_format($detail->jumlah * $detail->tiket->harga, 0, ',', '.') }}</span>
+                            <span class="font-semibold text-green-700">Total : Rp.
+                                {{ number_format($detail->jumlah * $detail->tiket->harga, 0, ',', '.') }}</span>
                         </div>
-                    @endforeach 
+                    @endforeach
 
                     <div class="flex justify-between items-center mt-2">
                         <span>Total Bayar</span>
-                        <span class="font-bold text-blue-600">Rp. {{number_format($pembelian->total, 0, ',', '.')}}</span>
+                        <span class="font-bold text-blue-600">Rp.
+                            {{ number_format($pembelian->total, 0, ',', '.') }}</span>
                     </div>
                     <hr class="my-4">
                     <div class="form-check mb-3">
                         <input class="form-check-input" type="checkbox" id="agreeTerms">
                         <label class="form-check-label text-sm" for="agreeTerms">
-                            Saya setuju dengan <a href="#" class="text-blue-600 hover:text-blue-800">Syarat & Ketentuan</a> yang berlaku di YukNonton.com
+                            Saya setuju dengan <a href="#" class="text-blue-600 hover:text-blue-800">Syarat &
+                                Ketentuan</a> yang berlaku di YukNonton.com
                         </label>
                     </div>
-                    <button class="btn btn-primary w-full" disabled id="payButton" onclick="submitForm()">Beli Sekarang</button>
+                    <button class="btn btn-primary w-full" disabled id="payButton" onclick="submitForm()">Beli
+                        Sekarang</button>
                 </div>
-            </div>            
+            </div>
         </div>
     </section>
 
     <!-- SweetAlert2 Library -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const agreeTerms = document.getElementById('agreeTerms');
             const payButton = document.getElementById('payButton');
 
             // Aktifkan tombol jika checkbox dicentang
-            agreeTerms.addEventListener('change', function () {
+            agreeTerms.addEventListener('change', function() {
                 payButton.disabled = !this.checked;
             });
 
             // Tambahkan event listener untuk tombol "Beli Sekarang"
-            payButton.addEventListener('click', function () {
+            payButton.addEventListener('click', function() {
                 Swal.fire({
                     title: 'Konfirmasi Pembayaran',
                     text: 'Apakah Anda yakin ingin melanjutkan pembayaran?',
@@ -281,7 +303,8 @@
                             confirmButtonText: 'OK'
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                document.getElementById('ticketForm').submit(); // Pastikan ini benar ID formnya
+                                document.getElementById('ticketForm')
+                                    .submit(); // Pastikan ini benar ID formnya
                             }
                         });
                     }

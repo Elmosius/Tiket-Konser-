@@ -53,11 +53,11 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="mb-3">
-                        @if(count($events) > 0)
-                        <a type="button" class="btn btn-primary p-2 rounded-1" href="{{ route('event-create') }}">
+                    <div class="mb-3 d-flex justify-content-end">
+                        @if (count($events) > 0)
+                            <a type="button" class="btn btn-primary p-2 rounded-1 " href="{{ route('event-create') }}">
                                 Buat Event!
-                            </a> 
+                            </a>
                         @endif
                     </div>
                     <div class="col-lg">
@@ -82,8 +82,7 @@
                     </div>
                 </div>
 
-                @if($events->isEmpty())
-                
+                @if ($events->isEmpty())
                     <div class="row d-flex justify-content-center text-center mt-5 ">
                         <div class="col-md-12">
                             <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="none"
@@ -103,11 +102,7 @@
                         </div>
                     </div>
                 @elseif($events->isNotEmpty())
-                    {{-- kalau ada table biasa --}}
-                    <div class="h-5 mt-3">
-                        (ini kalau misalnya ada event tabel biasa)
-                    </div>
-                    <div class="table-responsive small ">
+                    <div class="table-responsive small mt-3">
                         <table class="table table-striped table-sm">
                             <thead>
                                 <tr>
@@ -122,24 +117,25 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($events as $event)
+                                @foreach ($events as $event)
                                     <tr>
-                                        <td>{{$event->id}}</td>
-                                        <td>{{$event->nama_event}}</td>
-                                        @if($event->status== 1)
+                                        <td>{{ $event->id }}</td>
+                                        <td>{{ $event->nama_event }}</td>
+                                        @if ($event->status == 1)
                                             <td>Publish</td>
-                                        @elseif($event->status== 0)
+                                        @elseif($event->status == 0)
                                             <td>Unpublish</td>
                                         @else
-                                            <td>{{$event->status}}</td>
+                                            <td>{{ $event->status }}</td>
                                         @endif
-                                        <td>{{$event->tanggal_mulai}}</td>
+                                        <td>{{ $event->tanggal_mulai }}</td>
                                         <td>
                                             {{-- Merubah Status Aktif(Publish)/Tidak(Unpublish) --}}
-                                            <a href="{{ route('event-status-update',['id' =>$event->id]) }}" class="btn btn-success pt-1 pb-1 px-2 ms-4">
+                                            <a href="{{ route('event-status-update', ['id' => $event->id]) }}"
+                                                class="btn btn-success pt-1 pb-1 px-2 ms-4">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="15"
-                                                    height="15"viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                    class="size-6">
+                                                    height="15"viewBox="0 0 24 24" stroke-width="1.5"
+                                                    stroke="currentColor" class="size-6">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
                                                 </svg>
@@ -147,9 +143,11 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="{{ route('event-detail',['event' =>$event->id]) }}" class="btn btn-primary pt-1 pb-1 px-2 ms-3">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="15" height="15"
-                                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            <a href="{{ route('event-detail', ['event' => $event->id]) }}"
+                                                class="btn btn-primary pt-1 pb-1 px-2 ms-3">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="15"
+                                                    height="15" viewBox="0 0 24 24" stroke-width="1.5"
+                                                    stroke="currentColor" class="size-6">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -158,10 +156,11 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="{{ route('event-edit',['event'=>$event->id]) }}" class="btn btn-warning pt-1 pb-1 px-2">
+                                            <a href="{{ route('event-edit', ['event' => $event->id]) }}"
+                                                class="btn btn-warning pt-1 pb-1 px-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                                     class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                     <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
@@ -174,10 +173,11 @@
                                         <td>
                                             {{-- tombol deelete --}}
                                             <button class="btn btn-danger pt-1 pb-1 px-2" data-bs-toggle="modal"
-                                                data-bs-target="#deleteModal" data-id="{{$event->id}}" data-url="{{ route('event-delete', ['event' => $event->id]) }}">
+                                                data-bs-target="#deleteModal" data-id="{{ $event->id }}"
+                                                data-url="{{ route('event-delete', ['event' => $event->id]) }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                                     class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                     <path d="M4 7l16 0" />
