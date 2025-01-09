@@ -23,6 +23,7 @@ Route::post('login', [AuthenticatedSessionController::class, 'store']);
 Route::get('/register', [Controller::class, 'showRegisterForm'])->name('register');
 Route::get('/', [PembelianController::class, 'index'])->name('pembeli-index');
 Route::get('/pembeli/list',[PembelianController::class, 'show'])->name('pembeli-listTiket');
+Route::post('/dashboard/register/users/create', [UserController::class, 'storeUser'])->name('user-store-register');
 
 /*
     ADMIN DASHBOARD
@@ -37,7 +38,6 @@ Route::middleware(['auth',IsAdmin::class])->group(function () {
     Route::get('/dashboard/users', [UserController::class, 'index'])->name('users');
     Route::get('/dashboard/users/create', [UserController::class, 'create'])->name('user-create');
     Route::post('/dashboard/users/create', [UserController::class, 'store'])->name('user-store');
-    Route::post('/dashboard/register/users/create', [UserController::class, 'storeUser'])->name('user-store-register');
     // nanti tmbhin id ->          /edit/{id} untuk edit
     Route::get('/dashboard/users/edit/{user}', [UserController::class, 'edit'])->name('user-edit');
     Route::post('/dashboard/users/edit/{user}', [UserController::class, 'update'])->name('user-update');

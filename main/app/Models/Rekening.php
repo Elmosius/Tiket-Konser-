@@ -17,6 +17,7 @@ class Rekening extends Model
         'nama_rekening',
         'nama_bank',
         'kantor',
+        'saldo',
         'status',
     ];
 

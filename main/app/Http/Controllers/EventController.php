@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DetailPembelian;
 use App\Models\Event;
+use App\Models\Rekening;
 use App\Models\Tiket;
 use Carbon\Carbon;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
@@ -34,9 +35,15 @@ class EventController extends Controller
      */
     public function create()
     {
-        return view('penjual.events.create',[
-            // isinya
-        ]);
+        $rekening = Rekening::where('id_user', Auth::id())->first();
+        // dd($rekening);
+        if(!$rekening){
+            return redirect(route('rekening'))->with('error', 'Rekening tidak ada');
+        }else{
+           return view('penjual.events.create',[
+        ]); 
+        }
+        
     }
 
     /**
@@ -241,7 +248,8 @@ class EventController extends Controller
 
         if ($request->hasFile('banner')) {
             $image_path = public_path($event->banner);
-            unlink($image_path);
+            if($event->banner)
+                unlink($image_path);
 
             $file = $request->file('banner');
             $fileName = time().'_'.$event->id.'_'.$file->getClientOriginalName();
@@ -254,7 +262,8 @@ class EventController extends Controller
         
         if ($request->hasFile('denah')) {
             $image_path = public_path($event->denah);
-            unlink($image_path);
+            if($event->denah)
+               unlink($image_path);
 
             $file = $request->file('denah');
             $fileName = time().'_'.$event->id.'_'.$file->getClientOriginalName();

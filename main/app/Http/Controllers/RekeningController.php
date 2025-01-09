@@ -56,7 +56,8 @@ class RekeningController extends Controller
 
         $rekening = new Rekening($validateData);
         $rekening->id_user = Auth::id();
-        $status = Rekening::where('id_user', Auth::id())->where(['status' => 1]);
+        $rekening->saldo = 0;
+        $status = Rekening::where('id_user', Auth::id())->where(['status' => 1])->first();
         if($status){
             $rekening->status = 0;
         }else{
@@ -134,9 +135,10 @@ class RekeningController extends Controller
     {
         $rekening->delete();
 
-        $status = Rekening::where('id_user', Auth::id())->where(['status' => 1]);
+        $status = Rekening::where('id_user', Auth::id())->where(['status' => 1])->first();
+
         // dd($status);
-        if($status){
+        if(!$status){
             Rekening::where('id_user', Auth::id())->first()->update(['status' => 1]);
         }
         return redirect(route('rekening'));

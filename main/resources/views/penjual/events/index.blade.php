@@ -54,10 +54,10 @@
             <div class="card-body">
                 <div class="row">
                     <div class="mb-3">
-                        @if($events)
-                       <a type="button" class="btn btn-primary p-2 rounded-1" href="{{ route('event-create') }}">
-                            Buat Event!
-                        </a> 
+                        @if(count($events) > 0)
+                        <a type="button" class="btn btn-primary p-2 rounded-1" href="{{ route('event-create') }}">
+                                Buat Event!
+                            </a> 
                         @endif
                     </div>
                     <div class="col-lg">

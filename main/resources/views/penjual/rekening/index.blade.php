@@ -9,6 +9,11 @@
                         Rekening Kamu
                     </h5>
                 </div>
+                @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <hr>
             </div>
         </div>

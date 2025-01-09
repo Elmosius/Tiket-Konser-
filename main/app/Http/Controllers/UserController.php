@@ -103,6 +103,7 @@ class UserController extends Controller
         if($validateData['password'] != $validateData['password_confirmation']){
             return redirect()->back()->withInput()->withErrors('Password tidak sama');
         }
+        // dd($validateData);
 
         $id = IdGenerator::generate(['table' => 'users','field'=>'id', 'length' => 10, 'prefix' =>'USR-']);
         $role= DB::table('role')
