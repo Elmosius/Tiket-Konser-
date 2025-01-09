@@ -31,7 +31,7 @@
                                 <th scope="col">Pengujung</th>
                                 <th scope="col">Tiket</th>
                                 <th scope="col">Tiket Terjual</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">Status Penjualan</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,11 +42,10 @@
                                 <td>{{$bayar->id_user}}</td>
                                 <td>{{$bayar->id_tiket}}</td>
                                 <td>{{$bayar->jumlah}}</td>
-                                @if($bayar->status == 1){
+                                @if($bayar->status == 1)
                                     <td>Terjual</td>
-                                }@else{
+                                @else
                                     <td>Belum</td>
-                                }
                                 @endif
                             </tr> 
                             @endforeach

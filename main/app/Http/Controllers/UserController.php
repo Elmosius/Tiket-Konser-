@@ -7,6 +7,7 @@ use App\Models\User;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -73,6 +74,52 @@ class UserController extends Controller
         $user->save();
 
         return redirect(route('users'));
+    }
+
+    public function storeUser(Request $request)
+    {
+        $validateData = validator($request->all(),[
+            'username'=>'required|string|unique:users',
+            'email'=>'required|string|unique:users',
+            'password'=>'required|string',
+            'password_confirmation'=>'required|string',
+            'nama'=>'required|string',
+            'telepon'=>'required|string|max:11',
+            'tanggal_lahir'=>'required|date',
+            'jenis_kelamin'=>'required|max:1',
+        ],[
+            'username.required'=> 'Nama harus diisi',
+            'username.unique'=> 'Nama sudah pernah didaftarkan',
+            'password.required'=> 'Password harus diisi',
+            'password_confirmation.required'=> 'Konfirmasi Password harus diisi',
+            'email.required'=> 'Email harus diisi',
+            'email.unique'=> 'Email sudag pernah diisi',
+            'nama.required'=> 'Nama harus diisi',
+            'telepon.required'=> 'Telepon harus diisi',
+            'tanggal_lahir.required'=> 'Tanggal Lahir harus diisi',
+            'jenis_kelamin.required'=>'Jenis Kelamin harus diisi',
+        ])->validate();
+
+        if($validateData['password'] != $validateData['password_confirmation']){
+            return redirect()->back()->withInput()->withErrors('Password tidak sama');
+        }
+
+        $id = IdGenerator::generate(['table' => 'users','field'=>'id', 'length' => 10, 'prefix' =>'USR-']);
+        $role= DB::table('role')
+                ->whereRaw('UPPER(nama_role) = ?', [strtoupper('user')])
+                ->value('id');
+        // dd($role);
+
+        if(!$role){
+            return back()->withErrors(['Terdapat Kesalahan+']);
+        }
+
+        $user=new User($validateData);
+        $user->id=$id;
+        $user->role=$role;
+        $user->save();
+
+        return redirect(route('login'));
     }
 
     /**

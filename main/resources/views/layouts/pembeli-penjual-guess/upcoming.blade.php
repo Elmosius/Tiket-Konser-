@@ -32,27 +32,27 @@
     <!-- Event Cards -->
     <div class="row mt-5">
         <!-- Event Card 1 -->
-        <div class="col-sm-6 col-lg-4 mb-4">
-            @foreach ($events as $event)
-                <a href="{{ route('upcoming.detail',['event'=>$event->id]) }}">
-                    <div class="card">
-                        @if($event->banner)
-                            <img src="{{$event->banner}}" class="card-img-top" alt="Event Image" width="400" height="200">
-                        @else
-                            <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Event Image">
-                        @endif
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <p class="text-muted font-weight-bold mb-1">{{\Carbon\Carbon::parse($event->tanggal_mulai)->format('d-m-Y')}}</p>
-                                <p class="text-muted font-weight-bold mb-1">{{\Carbon\Carbon::parse($event->tanggal_mulai)->diffForHumans()}}</p>
-                            </div>
-                            <h5 class="card-title">{{$event->nama_event}}</h5>
-                            <p class="card-text">{{$event->deskripsi}}</p>
+        @foreach ($events as $event)
+            <div class="col-sm-6 col-lg-4 mb-4">
+                    <a href="{{ route('upcoming.detail',['event'=>$event->id]) }}">
+                        <div class="card">
+                            @if($event->banner)
+                                <img src="{{$event->banner}}" class="card-img-top" alt="Event Image" width="400" height="200">
+                            @else
+                                <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Event Image">
+                            @endif
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <p class="text-muted font-weight-bold mb-1">{{\Carbon\Carbon::parse($event->tanggal_mulai)->format('d-m-Y')}}</p>
+                                    <p class="text-muted font-weight-bold mb-1">{{\Carbon\Carbon::parse($event->tanggal_mulai)->diffForHumans()}}</p>
+                                </div>
+                                <h5 class="card-title">{{$event->nama_event}}</h5>
+                                <p class="card-text">{{$event->deskripsi}}</p>
+                             </div>
                         </div>
-                    </div>
-                </a>
-            @endforeach
-        </div>
+                    </a>
+            </div>
+        @endforeach
 
         {{-- <!-- Event Card 2 -->
         <div class="col-sm-6 col-lg-4 mb-4">

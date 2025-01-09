@@ -52,6 +52,38 @@ class PembelianController extends Controller
         ]);
     }
 
+    public function show(Request $request)
+    {
+        $kategori = $request->query('kategori'); // atau $request->input('filter')
+        $hari = intval($request->query('hari'));
+        // dd($request);
+        $data = DB::table('event')
+            ->join('tiket', 'event.id', '=', 'tiket.id_event');
+
+        if ($kategori && $kategori !== 'all') {
+            if ($kategori == 'bayar') {
+                $data = $data->where('tiket.harga', '>', '0');
+            } elseif ($kategori == 'gratis') {
+                $data = $data->where('tiket.harga', '=', '0');
+            }
+            
+        }
+
+        // dd($data->get());
+        if ($hari){
+            $data =$data->whereRaw('DAYOFWEEK(event.tanggal_mulai) = ?', [$hari]);
+        }
+
+        $data= $data->distinct()->select('event.*')
+            ->orderBy('event.tanggal_mulai', 'desc')
+            ->where('event.tanggal_akhir', '>=', now())
+            ->get();
+        // dd($data);
+        return view('pembeli.element.listTiket', [
+            'events' => $data,
+        ]);
+    }
+
     public function create (Event $event){
         $tiket = Tiket::where('id_event', $event->id)->get();
         return view('pembeli.upcoming.detail', [

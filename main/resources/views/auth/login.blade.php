@@ -35,7 +35,7 @@
             </div>
         @endif
         <h2 class="text-xl font-semibold text-center">Hai selamat datang kembali!</h2>
-        <p class="text-center text-gray-600 mb-8">Belum punya akun? <a href="register.html"
+        <p class="text-center text-gray-600 mb-8">Belum punya akun? <a href="{{route('register')}}"
                 class="text-blue-500 font-semibold">Daftar di sini</a></p>
 
         <div class="flex flex-col md:flex-row">

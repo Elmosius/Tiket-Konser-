@@ -54,9 +54,11 @@
             <div class="card-body">
                 <div class="row">
                     <div class="mb-3">
+                        @if($events)
                        <a type="button" class="btn btn-primary p-2 rounded-1" href="{{ route('event-create') }}">
                             Buat Event!
                         </a> 
+                        @endif
                     </div>
                     <div class="col-lg">
                         <a href="#" class="event-link" data-event="aktif">
@@ -81,10 +83,7 @@
                 </div>
 
                 @if($events->isEmpty())
-                    <div class="h-5 mt-3">
-                        (ini kalau misalnya tidak ada event)
-                    </div>
-
+                
                     <div class="row d-flex justify-content-center text-center mt-5 ">
                         <div class="col-md-12">
                             <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" fill="none"

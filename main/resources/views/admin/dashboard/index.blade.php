@@ -3,7 +3,7 @@
 
 @section('isi-konten-dashboard')
     @auth
-    <p>Anda sudah login</p>
+    <p>Selamat Datang, {{Auth::user()-> nama}}</p>
     @endauth
 
     @guest

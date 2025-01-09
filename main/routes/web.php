@@ -11,6 +11,7 @@ use App\Http\Controllers\RekeningController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TiketController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,34 +21,41 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('login', [AuthenticatedSessionController::class, 'store']);
 Route::get('/register', [Controller::class, 'showRegisterForm'])->name('register');
+Route::get('/', [PembelianController::class, 'index'])->name('pembeli-index');
+Route::get('/pembeli/list',[PembelianController::class, 'show'])->name('pembeli-listTiket');
 
 /*
     ADMIN DASHBOARD
 */
-Route::get('/', function () {
+Route::get('dashboard', function () {
     return view('admin.dashboard.index');
 })->name('dashboard');
 
 // USERS
-Route::middleware('auth')->group(function () {
-Route::get('/dashboard/users', [UserController::class, 'index'])->name('users');
-Route::get('/dashboard/users/create', [UserController::class, 'create'])->name('user-create');
-Route::post('/dashboard/users/create', [UserController::class, 'store'])->name('user-store');
-// nanti tmbhin id ->          /edit/{id} untuk edit
-Route::get('/dashboard/users/edit/{user}', [UserController::class, 'edit'])->name('user-edit');
-Route::post('/dashboard/users/edit/{user}', [UserController::class, 'update'])->name('user-update');
-Route::get('/dashboard/users/delete/{user}', [UserController::class, 'destroy'])->name('user-delete');
-});
-// ROLES
-Route::get('/dashboard/roles', [RoleController::class, 'index'])->name('roles');
-Route::get('/dashboard/roles/create', [RoleController::class, 'create'])->name('role-create');
-Route::post('/dashboard/roles/create', [RoleController::class, 'store'])->name('role-store');
-// nanti /dashboard/roles/edit/{id} untuk edit
-Route::get('/dashboard/roles/edit/{role}', [RoleController::class, 'edit'])->name('role-edit');
-// nanti tmbhin id ->          /edit/{id} untuk edit
-Route::post('/dashboard/roles/edit/{role}', [RoleController::class, 'update'])->name('role-update');
-Route::get('/dashboard/roles/delete/{role}', [RoleController::class, 'destroy'])->name('role-delete');
 
+Route::middleware(['auth',IsAdmin::class])->group(function () {
+    Route::get('/dashboard/users', [UserController::class, 'index'])->name('users');
+    Route::get('/dashboard/users/create', [UserController::class, 'create'])->name('user-create');
+    Route::post('/dashboard/users/create', [UserController::class, 'store'])->name('user-store');
+    Route::post('/dashboard/register/users/create', [UserController::class, 'storeUser'])->name('user-store-register');
+    // nanti tmbhin id ->          /edit/{id} untuk edit
+    Route::get('/dashboard/users/edit/{user}', [UserController::class, 'edit'])->name('user-edit');
+    Route::post('/dashboard/users/edit/{user}', [UserController::class, 'update'])->name('user-update');
+    Route::get('/dashboard/users/delete/{user}', [UserController::class, 'destroy'])->name('user-delete');
+
+    // ROLES
+    Route::get('/dashboard/roles', [RoleController::class, 'index'])->name('roles');
+    Route::get('/dashboard/roles/create', [RoleController::class, 'create'])->name('role-create');
+    Route::post('/dashboard/roles/create', [RoleController::class, 'store'])->name('role-store');
+    // nanti /dashboard/roles/edit/{id} untuk edit
+    Route::get('/dashboard/roles/edit/{role}', [RoleController::class, 'edit'])->name('role-edit');
+    // nanti tmbhin id ->          /edit/{id} untuk edit
+    Route::post('/dashboard/roles/edit/{role}', [RoleController::class, 'update'])->name('role-update');
+    Route::get('/dashboard/roles/delete/{role}', [RoleController::class, 'destroy'])->name('role-delete');
+
+});
+
+Route::middleware('auth')->group(function () {
 /*
     PENJUAL DASHBOARD
 */
@@ -73,23 +81,18 @@ Route::get('/dashboard/rekening/edit/{rekening}', [RekeningController::class, 'e
 Route::post('/dashboard/rekening/edit/{rekening}', [RekeningController::class, 'update'])->name('rekening-update');
 Route::get('/dashboard/rekening/{rekening}', [RekeningController::class, 'destroy'])->name('rekening-delete');
 Route::get('/dashboard/rekening/{id}/status/update',[RekeningController::class,'statusUpdated'])->name('rekening-status-update');
-
 /*
     PEMBELI
 */
-// Route::get('/pembeli', function () {
-//    return view('pembeli.index');
-// });
-Route::get('/pembeli', [PembelianController::class, 'index'])->name('pembeli-index');
 // Master 2
 Route::get('/pembeli/upcoming/detail/{event}',[PembelianController::class, 'create'])->name('upcoming.detail');
-
 // master 3
 Route::post('/pembeli/upcoming/detail/store',[PembelianController::class, 'store'])->name('simpan-pembelian');
 
 Route::get('pembeli/pemesanan',[PembayaranController::class, 'index'])->name('pemesanan-index');
 Route::get('/pembeli/pemesanan/{pembelian}',[PembayaranController::class, 'create'])->name('pemesanan-create');
 Route::post('/pembeli/pemesanan/{pembelian}',[PembayaranController::class, 'update'])->name('pemesanan-update');
+});
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');

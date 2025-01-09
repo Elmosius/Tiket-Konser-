@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\Pembelian;
 use App\Models\Tiket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class PembayaranController extends Controller
@@ -14,10 +15,11 @@ class PembayaranController extends Controller
     public function index()
     {
         // Fetching Pembelian with nested DetailPembelian and Tiket data
-        $data = Pembelian::with(['details.tiket'])->get();
-    
+        $data = Pembelian::with(['details.tiket'])->where('id_user',Auth::id())->get();
+        
+        // dd($data);
         // Returning the data to the view
-        return view('pembeli.pembayaran', [
+        return view('pembeli.element.pembayaran', [
             'pembelians' => $data,
         ]);
     }

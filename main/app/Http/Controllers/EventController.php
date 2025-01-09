@@ -22,7 +22,8 @@ class EventController extends Controller
      */
     public function index()
     {
-        $data = Event::all();
+        // dd(Auth::id());
+        $data = Event::where('id_penjual',Auth::id())->get();
         return view('penjual.events.index',[
             'events'=> $data,
         ]);
@@ -160,7 +161,7 @@ class EventController extends Controller
 
         // dd($tikets);
 
-        // dd($bayarTiket,$belumBayarTiket);
+        // dd($detailPembelians,$tikets);
         return view('penjual.events.detail',[
             'event'=>$event,
             'detailPembelians'=>$detailPembelians,

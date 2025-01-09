@@ -17,11 +17,8 @@
     <div class="col-lg">
         <div class="card">
             <div class="card-body ">
-                {{-- Ini kalau misalnya belum buat rekening --}}
                 @if($rekenings->isEmpty())
-                    <div class="h-5 mt-3">
-                        (ini kalau misalnya tidak ada event)
-                    </div>
+                    
                     <div class="row d-flex justify-content-center text-center">
                         <div class="col-md-12">
                             <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 24 24"
@@ -47,10 +44,7 @@
                         </div>
                     </div>
                 @else
-                {{-- Ini kalau misalnya belum buat rekening --}}
-                <div class="h-5 mt-5">
-                    (ini kalau misalnya rekeningnya sudah ada)
-                </div>
+                
                 {{-- {$data = array_search($rekening->nama_bank, array_column($banks, 'code')),$banks[$data]['name']}}  --}}
                 <div class="row d-flex justify-content-center mt-3">
                     <div class="col-md-6">
