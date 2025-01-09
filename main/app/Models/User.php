@@ -27,7 +27,7 @@ class User extends Authenticatable
         'role',
     ];
 
-    protected $table = 'user';
+    protected $table = 'users';
     protected $primaryKey = 'id';
     public $incrementing = false;
 
@@ -44,7 +44,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function role(): BelongsTo{
-        return $this->belongsTo(Role::class, "id");
+    public function cariRole(): BelongsTo{
+        return $this->belongsTo(Role::class, "role");
     }
 }

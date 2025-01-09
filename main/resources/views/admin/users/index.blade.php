@@ -14,6 +14,10 @@
                     </a>
                 </div>
                 <div class="table-responsive small px-3">
+                    @auth
+                        <p>Welcome, {{ auth()->user()->nama }}</p>
+                    @endauth
+
                     <table class="table table-striped table-sm">
                         <thead>
                             <tr>
@@ -31,7 +35,7 @@
                                     <td>{{$user->id}}</td>
                                     <td>{{$user->nama}}</td>
                                     <td>{{$user->email}}</td>
-                                    <td>{{$user->role}}</td>
+                                    <td>{{$user->cariRole->nama_role}}</td>
                                     <td>
                                         <a href="{{ route('user-edit',['user' =>$user->id]) }}" class="btn btn-warning pt-1 pb-1 px-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"

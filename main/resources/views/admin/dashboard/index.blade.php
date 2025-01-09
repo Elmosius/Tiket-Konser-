@@ -2,6 +2,13 @@
 
 
 @section('isi-konten-dashboard')
+    @auth
+    <p>Selamat Datang, {{Auth::user()-> nama}}</p>
+    @endauth
+
+    @guest
+    <p>Anda belum login</p>
+    @endguest
     {{-- Role Admin --}}
     <div class="col-lg-12">
         <div class="card">

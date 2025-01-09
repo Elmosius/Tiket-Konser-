@@ -7,11 +7,11 @@
                 <div class="row d-flex justify-content-end mb-4">
                     <div class="col-md-10">
                         <h5 class="card-title d-flex align-items-center  ">
-                            (Nama Eventnya)
+                            {{$event->nama_event}}
                         </h5>
                     </div>
-                    <div class="col-md ">
-                        <a type="button" class="btn btn-warning p-2 rounded-1 " href="{{ route('event-edit') }}">
+                    <div class="col-md d-flex">
+                        <a type="button" class="btn btn-warning p-2 rounded-1 " href="{{ route('event-edit',['event'=>$event->id]) }}">
                             Edit Event
                         </a>
 
@@ -29,16 +29,26 @@
                                 <th scope="col">Tanggal & waktu</th>
                                 <th scope="col">Pendapatan</th>
                                 <th scope="col">Pengujung</th>
+                                <th scope="col">Tiket</th>
                                 <th scope="col">Tiket Terjual</th>
+                                <th scope="col">Status Penjualan</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($detailPembelians as $bayar)
                             <tr>
-                                <td>xx - xx</td>
-                                <td>Rp. 0</td>
-                                <td>0</td>
-                                <td>0 / 20</td>
-                            </tr>
+                                <td>{{$bayar->updated_at}}</td>
+                                <td>Rp. {{$bayar->total}}</td>
+                                <td>{{$bayar->id_user}}</td>
+                                <td>{{$bayar->id_tiket}}</td>
+                                <td>{{$bayar->jumlah}}</td>
+                                @if($bayar->status == 1)
+                                    <td>Terjual</td>
+                                @else
+                                    <td>Belum</td>
+                                @endif
+                            </tr> 
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

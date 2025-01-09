@@ -18,7 +18,16 @@
 @endsection
 
 @section('isi-konten-dashboard')
-    <form method="post" action="{{ route('event-create') }}" class="p-4">
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    <form method="post" action="{{ route('event-store') }}" class="p-4" id="event_form" enctype="multipart/form-data">
         @csrf
         <div class="col-lg-12">
             <div class="card">
@@ -33,7 +42,7 @@
                                         d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                 </svg>
                             </a>
-                            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                            <input type="file" id="fileInput" accept="image/*" style="display: none;" name="banner">
                         </div>
                         <div class="col-md-12">
                             <h5 class="text-white">
@@ -46,19 +55,19 @@
 
                     <div class="row mb-3 input-group d-flex justify-content-center">
                         <div class="col-md-5 mb-3">
-                            <label for="nama" class="form-label fw-semibold">Nama Event</label>
-                            <input type="text" class="form-control " id="nama" name="nama" autofocus required
-                                value="" placeholder="Masukkan nama eventmu!">
+                            <label for="nama_event" class="form-label fw-semibold">Nama Event</label>
+                            <input type="text" class="form-control " id="nama_event" name="nama_event" autofocus required
+                                value="{{old('nama_event')}}" placeholder="Masukkan nama eventmu!">
                             <div class=" invalid-feedback">
                             </div>
                         </div>
 
                         <div class="col-md-5">
-                            <label for="bank" class="form-label fw-semibold">Jenis Event</label>
-                            <select class="form-select" name="bank" required>
+                            <label for="jenis_event" class="form-label fw-semibold">Jenis Event</label>
+                            <select class="form-select" name="jenis_event" required>
                                 <option selected>Open this select menu</option>
-                                <option value="1">Public: Event kamu akan tampil di halaman Cari Event</option>
-                                <option value="2">Private: Event kamu hanya diakses oleh orang tertentu</option>
+                                <option value="1" {{ old('jenis_event') == 1 ? 'selected' : '' }}>Public: Event kamu akan tampil di halaman Cari Event</option>
+                                <option value="0" {{ old('jenis_event') == 0 ? 'selected' : '' }}>Private: Event kamu hanya diakses oleh orang tertentu</option>
                             </select>
                         </div>
                     </div>
@@ -75,17 +84,17 @@
                                 <div class="col-md">
                                     <label for="tanggal_mulai" class="form-label fw-semibold">Tanggal & Waktu Mulai</label>
                                     <input type="datetime-local" class="form-control " id="tanggal_mulai"
-                                        name="tanggal_mulai" required>
+                                        name="tanggal_mulai" required value="{{old('tanggal_mulai')}}">
                                     <div class="invalid-feedback">
                                         Harap masukkan tanggal dan waktu mulai yang valid.
                                     </div>
                                 </div>
 
                                 <div class="col-md">
-                                    <label for="tanggal_selesai" class="form-label fw-semibold">Tanggal & Waktu
+                                    <label for="tanggal_akhir" class="form-label fw-semibold">Tanggal & Waktu
                                         Selesai</label>
-                                    <input type="datetime-local" class="form-control" id="tanggal_selesai"
-                                        name="tanggal_selesai" required>
+                                    <input type="datetime-local" class="form-control" id="tanggal_akhir"
+                                        name="tanggal_akhir" required value="{{old('tanggal_akhir')}}">
                                     <div class="invalid-feedback">
                                         Harap masukkan tanggal dan waktu selesai yang valid.
                                     </div>
@@ -97,7 +106,7 @@
                             <div class="row">
                                 <div class="col-md mt-md-2">
                                     <label for="lokasi" class="form-label fw-semibold">Lokasi lengkap</label>
-                                    <input type="text" class="form-control" id="lokasi" name="lokasi" required>
+                                    <input type="text" class="form-control" id="lokasi" name="lokasi" required value="{{old('lokasi')}}">
                                     <div class="invalid-feedback">
                                         Harap masukkan lokasi yang valid.
                                     </div>
@@ -106,135 +115,90 @@
                         </div>
 
                         <div class="col-md-5">
-                            <label for="lokasi" class="form-label fw-semibold">Kategori Tiket</label>
+                            <label for="tiket" class="form-label fw-semibold">Kategori Tiket</label>
                             <div class="row mb-3">
-                                <a href="#" class="ms-md-3 rounded btn btn-outline-primary text-start"
-                                    data-bs-toggle="modal" data-bs-target="#modalTiketBerbayar">
+                                <button type="button" class="ms-md-3 rounded btn btn-outline-primary text-start"
+                                    id="buatTiket">
                                     <span>
-                                        Buat tiket: Berbayar
+                                        Buat tiket
                                     </span>
-                                </a>
+                                </button>
                             </div>
-                            <div class="row">
-                                <a href="#" class="ms-md-3 rounded btn btn-outline-primary text-start"
-                                    data-bs-toggle="modal" data-bs-target="#modalTiketGratis">
+                            {{-- <div class="row mb-3">
+                                <button type="button" class="ms-md-3 rounded btn btn-outline-primary text-start tombolClick"
+                                    id="gratis">
                                     <span>
                                         Buat tiket: Gratis
                                     </span>
-                                </a>
+                                </button>
+                            </div> --}}
+
+                            <div id="tiketContainer" class="row">
                             </div>
                         </div>
                     </div>
 
-                    <!-- Modal untuk tiket berbayar -->
-                    <div class="modal fade" id="modalTiketBerbayar" tabindex="-1" aria-labelledby="modalTiketBerbayarLabel"
+                    <!-- Modal untuk tiket -->
+                    {{-- <div class="modal fade" id="modalTiket" tabindex="-1" aria-labelledby="modalTiketLabel"
                         aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="modalTiketBerbayarLabel">Detail Tiket Berbayar</h5>
+                                    <h5 class="modal-title" id="modalTiketBerbayarLabel">Detail Tiket</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="mb-3">
-                                        <label for="nama_tiket_berbayar" class="form-label">Nama Tiket</label>
-                                        <input type="text" class="form-control" id="nama_tiket_berbayar"
-                                            name="nama_tiket_berbayar" required autofocus>
+                                        <label for="nama_tiket[]" class="form-label">Nama Tiket</label>
+                                        <input type="text" class="form-control" id="nama_tiket"
+                                            name="nama_tiket[]" value="{{old("nama_tiket")}}">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="jumlah_tiket_berbayar" class="form-label">Jumlah Tiket</label>
-                                        <input type="number" class="form-control" id="jumlah_tiket_berbayar"
-                                            name="jumlah_tiket_berbayar" min="1" required autofocus>
+                                        <label for="jumlah_tiket" class="form-label">Jumlah Tiket</label>
+                                        <input type="number" class="form-control" id="jumlah_tiket"
+                                            name="jumlah_tiket" min="1" value="{{old("jumlah_tiket")}}">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="harga_tiket_berbayar" class="form-label">Harga</label>
-                                        <input type="number" class="form-control" id="harga_tiket_berbayar"
-                                            name="harga_tiket_berbayar" value="0" required autofocus>
+                                        <label for="harga_tiket" class="form-label">Harga</label>
+                                        <input type="number" class="form-control" id="harga_tiket"
+                                            name="harga_tiket" value="0">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="deskripsi_tiket_berbayar" class="form-label">Deskripsi
+                                        <label for="deskripsi_tiket" class="form-label">Deskripsi
                                             Tiket</label>
-                                        <textarea class="form-control" id="deskripsi_tiket_berbayar" name="deskripsi_tiket_berbayar" rows="3" required
+                                        <textarea class="form-control" id="deskripsi_tiket" name="deskripsi_tiket" rows="3"
                                             autofocus></textarea>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="tanggal_mulai_tiket_berbayar" class="form-label">Tanggal & Waktu
+                                        <label for="tanggal_mulai_tiket" class="form-label">Tanggal & Waktu
                                             Mulai
                                             Penjualan</label>
                                         <input type="datetime-local" class="form-control"
-                                            id="tanggal_mulai_tiket_berbayar" name="tanggal_mulai_tiket_berbayar"
-                                            required>
+                                            id="tanggal_mulai_tiket" name="tanggal_mulai_tiket"
+                                           >
                                     </div>
                                     <div class="mb-3">
-                                        <label for="tanggal_selesai_tiket_berbayar" class="form-label">Tanggal & Waktu
+                                        <label for="tanggal_selesai_tiket" class="form-label">Tanggal & Waktu
                                             Selesai Penjualan</label>
                                         <input type="datetime-local" class="form-control"
-                                            id="tanggal_selesai_tiket_berbayar" name="tanggal_selesai_tiket_berbayar"
-                                            required>
+                                            id="tanggal_selesai_tiket" name="tanggal_selesai_tiket"
+                                           >
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <button type="button" class="btn btn-primary" id="simpanTiket">Simpan</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
-                    <!-- Modal untuk tiket gratis -->
-                    <div class="modal fade" id="modalTiketGratis" tabindex="-1" aria-labelledby="modalTiketGratisLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="modalTiketGratisLabel">Detail Tiket Gratis</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="mb-3">
-                                        <label for="nama_tiket_gratis" class="form-label">Nama Tiket</label>
-                                        <input type="text" class="form-control" id="nama_tiket_gratis"
-                                            name="nama_tiket_gratis" required autofocus>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="jumlah_tiket_gratis" class="form-label">Jumlah Tiket</label>
-                                        <input type="number" class="form-control" id="jumlah_tiket_gratis"
-                                            name="jumlah_tiket_gratis" min="1" required autofocus>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="harga_tiket_gratis" class="form-label">Harga</label>
-                                        <input type="number" class="form-control" id="harga_tiket_gratis"
-                                            name="harga_tiket_gratis" value="0" readonly autofocus>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="deskripsi_tiket_gratis" class="form-label">Deskripsi Tiket</label>
-                                        <textarea class="form-control" id="deskripsi_tiket_gratis" name="deskripsi_tiket_gratis" rows="3" required
-                                            autofocus></textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="tanggal_mulai_tiket_gratis" class="form-label">Tanggal & Waktu
-                                            Mulai
-                                            Penjualan</label>
-                                        <input type="datetime-local" class="form-control" id="tanggal_mulai_tiket_gratis"
-                                            name="tanggal_mulai_tiket_gratis" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="tanggal_selesai_tiket_gratis" class="form-label">Tanggal & Waktu
-                                            Selesai Penjualan</label>
-                                        <input type="datetime-local" class="form-control"
-                                            id="tanggal_selesai_tiket_gratis" name="tanggal_selesai_tiket_gratis"
-                                            required>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
-                                </div>
-                            </div>
-                        </div>
+                    <div id="childTiket">
                     </div>
 
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-11 mt-md-2">
                             <label for="deskripsi" class="form-label fw-semibold">Deskripsi Event</label>
                             <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5" required
-                                placeholder="Deskripsikan eventmu!"></textarea>
+                                placeholder="Deskripsikan eventmu!">{{ old('deskripsi') }}</textarea>
                             <div class="invalid-feedback">
                                 Harap masukkan deskripsi yang valid.
                             </div>
@@ -243,7 +207,7 @@
                         <div class="col-md-11 mt-md-2">
                             <label for="syarat_ketentuan" class="form-label fw-semibold">Syarat & Ketentuan</label>
                             <textarea class="form-control" id="syarat_ketentuan" name="syarat_ketentuan" rows="5" required
-                                placeholder="Tuliskan syarat dan ketentuan eventmu!"></textarea>
+                                placeholder="Tuliskan syarat dan ketentuan eventmu!">{{ old('syarat_ketentuan') }}</textarea>
                             <div class="invalid-feedback">
                                 Harap masukkan deskripsi yang valid.
                             </div>
@@ -268,27 +232,27 @@
                 <div class="card-body">
                     <div class="row d-flex justify-content-center ">
                         <div class="col-md-5 mt-md-2">
-                            <label for="nama_narahubung" class="form-label fw-semibold">Nama Narahubung</label>
-                            <input type="text" class="form-control" id="nama_narahubung" name="nama_narahubung"
-                                placeholder="Cth. Budi" required>
+                            <label for="nama_kontak" class="form-label fw-semibold">Nama kontak</label>
+                            <input type="text" class="form-control" id="nama_kontak" name="nama_kontak"
+                                placeholder="Cth. Budi" required value="{{ old('nama_kontak') }}">
                             <div class="invalid-feedback">
                                 Harap masukkan nama yang valid.
                             </div>
                         </div>
 
                         <div class="col-md-5 mt-md-2">
-                            <label for="email" class="form-label fw-semibold">Email</label>
-                            <input type="email" class="form-control" id="email" name="email"
-                                placeholder="xx@gmail.com" required>
+                            <label for="email_kontak" class="form-label fw-semibold">Email</label>
+                            <input type="email" class="form-control" id="email_kontak" name="email_kontak"
+                                placeholder="xx@gmail.com" required value="{{ old('email_kontak') }}">
                             <div class="invalid-feedback">
                                 Harap masukkan email yang valid.
                             </div>
                         </div>
 
                         <div class="col-md-10 mt-md-2">
-                            <label for="no_telp" class="form-label fw-semibold">Nomor Telepon</label>
-                            <input type="text" class="form-control" id="no_telp" name="no_telp  "
-                                placeholder="Cth. 08123123123" required>
+                            <label for="tlp_kontak" class="form-label fw-semibold">Nomor Telepon</label>
+                            <input type="text" class="form-control" id="tlp_kontak" name="tlp_kontak"
+                                placeholder="Cth. 08123123123" required value="{{ old('tlp_kontak') }}">
                             <div class="invalid-feedback">
                                 Harap masukkan no Telepon yang valid.
                             </div>
@@ -308,19 +272,19 @@
                 <label class="h6 fw-bold">
                     Gambar denah lokasi tempat duduk
                 </label>
-                <input type="file" class="form-control" id="gbr_denah" name="gbr_denah">
+                <input type="file" class="form-control" id="denah" name="denah">
             </div>
             <div class="col-md">
                 <label class="h6 fw-bold">
                     Jumlah maks. tiket per transaksi
                 </label>
-                <select class="form-select" name="bank" required>
-                    <option selected>Open this select menu</option>
-                    <option value="5">5 tiket</option>
-                    <option value="4">4 tiket</option>
-                    <option value="3">3 tiket</option>
-                    <option value="2">2 tiket</option>
-                    <option value="1">1 tiket</option>
+                <select class="form-select" name="pembelian_maksimum" required>
+                    <option value="" selected>Open this select menu</option>
+                    <option value="5" {{ old('pembelian_maksimum') == 5 ? 'selected' : '' }}>5 tiket</option>
+                    <option value="4" {{ old('pembelian_maksimum') == 4 ? 'selected' : '' }}>4 tiket</option>
+                    <option value="3" {{ old('pembelian_maksimum') == 3 ? 'selected' : '' }}>3 tiket</option>
+                    <option value="2" {{ old('pembelian_maksimum') == 2 ? 'selected' : '' }}>2 tiket</option>
+                    <option value="1" {{ old('pembelian_maksimum') == 1 ? 'selected' : '' }}>1 tiket</option>
                 </select>
             </div>
 
@@ -334,13 +298,15 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Create Event</button>
+        <button type="submit" class="btn btn-primary" id="submitTiket">Create Event</button>
     </form>
 @endsection
 
 
 @section('js-tambahan')
+    <script src="{{ asset('assets/js/tiket.js') }}"></script>
     <script>
+        
         document.getElementById('uploadButton').addEventListener('click', function() {
             document.getElementById('fileInput').click();
         });
@@ -361,7 +327,7 @@
             buat validasi tanggal_mulai dan tanggal_selesai
         */
         const tanggalMulai = document.getElementById('tanggal_mulai');
-        const tanggalSelesai = document.getElementById('tanggal_selesai');
+        const tanggalSelesai = document.getElementById('tanggal_akhir');
 
         // Set minimum date and time for tanggal_mulai
         const now = new Date();

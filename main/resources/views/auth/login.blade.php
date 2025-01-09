@@ -25,8 +25,17 @@
     </div>
 
     <div class="bg-white shadow-lg rounded-lg max-w-4xl w-full p-8 border-2 border-black">
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <h2 class="text-xl font-semibold text-center">Hai selamat datang kembali!</h2>
-        <p class="text-center text-gray-600 mb-8">Belum punya akun? <a href="register.html"
+        <p class="text-center text-gray-600 mb-8">Belum punya akun? <a href="{{route('register')}}"
                 class="text-blue-500 font-semibold">Daftar di sini</a></p>
 
         <div class="flex flex-col md:flex-row">
@@ -35,15 +44,16 @@
             </div>
 
             <div class="md:w-1/2 p-8">
-                <form>
+                <form action="{{ route('login') }}" method="POST">
+                    @csrf
                     <div class="mb-4">
-                        <label for="username" class="block text-gray-700 font-semibold mb-2">Username</label>
-                        <input type="text" id="username" placeholder="Masukkan alamat email / username Anda"
+                        <label for="email" class="block text-gray-700 font-semibold mb-2">Email/Username</label>
+                        <input type="text" id="email" placeholder="Masukkan alamat email / username Anda" name="email" value="{{old('email')}}"
                             class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
                     <div class="mb-6">
                         <label for="password" class="block text-gray-700 font-semibold mb-2">Password</label>
-                        <input type="password" id="password" placeholder="Masukkan password Anda"
+                        <input type="password" id="password" placeholder="Masukkan password Anda" name="password"
                             class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
                     <button type="submit"

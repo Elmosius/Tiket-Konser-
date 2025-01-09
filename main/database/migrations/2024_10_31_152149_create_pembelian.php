@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('pembelian', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->string('id_pemesanan');
-            $table->foreign('id_pemesanan')->references('id')->on('detail_pembelian');
+            $table->string('id_user');
+            $table->foreign('id_user')->references('id')->on('users');
             $table->integer('total');
-            $table->string('tipe_pembayaran');
-            $table->string('kode_pembayaran');
-            $table->binary('status');
+            $table->string('tipe_pembayaran')->nullable();
+            $table->string('kode_pembayaran')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }
