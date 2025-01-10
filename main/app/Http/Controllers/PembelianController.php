@@ -87,7 +87,8 @@ class PembelianController extends Controller
     
 
     public function create (Event $event){
-        $tiket = Tiket::where('id_event', $event->id)->get();
+        $tiket = Tiket::where('id_event', $event->id)
+        ->where('tanggal_selesai','>',today())->get();
         return view('pembeli.upcoming.detail', [
             'event' => $event,
             'tikets'=> $tiket,

@@ -81,7 +81,7 @@
                             <li><a class="dropdown-item" href="{{ route('dashboard') }}">Beralih ke role Penjual ></a></li>
                             <hr>
                             <li><a class="dropdown-item" href="{{ route('pemesanan-index') }}">Pemesanan</a></li>
-                            <li><a class="dropdown-item" href="{{ route('pemesanan-index') }}">History</a></li>
+                            <li><a class="dropdown-item" href="{{ route('history') }}">History</a></li>
                             <li>
                                 <form action="{{ route('logout') }}" method="post">
                                     @csrf

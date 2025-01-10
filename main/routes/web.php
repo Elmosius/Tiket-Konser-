@@ -64,35 +64,36 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/events', [EventController::class, 'index'])->name('events');
     Route::get('/dashboard/events/create', [EventController::class, 'create'])->name('event-create');
     Route::post('/dashboard/events/store', [EventController::class, 'store'])->name('event-store');
-// nanti tmbhin id ->          /edit/{id} untuk edit
-Route::get('/dashboard/events/edit/{event}', [EventController::class, 'edit'])->name('event-edit');
-Route::post('/dashboard/events/edit/{event}', [EventController::class, 'update'])->name('event-update');
-// delete kalau misalnay tidak berikatan
-Route::get('/dashboard/events/{event}', [EventController::class, 'destroy'])->name('event-delete');
-// nanti tmbhin id ->                   /{id} untuk detail
-Route::get('/dashboard/event/{event}/detail', [EventController::class, 'show'])->name('event-detail');
-Route::get('/dashboard/events/{id}/status/update',[EventController::class,'statusUpdated'])->name('event-status-update');
+    // nanti tmbhin id ->          /edit/{id} untuk edit
+    Route::get('/dashboard/events/edit/{event}', [EventController::class, 'edit'])->name('event-edit');
+    Route::post('/dashboard/events/edit/{event}', [EventController::class, 'update'])->name('event-update');
+    // delete kalau misalnay tidak berikatan
+    Route::get('/dashboard/events/{event}', [EventController::class, 'destroy'])->name('event-delete');
+    // nanti tmbhin id ->                   /{id} untuk detail
+    Route::get('/dashboard/event/{event}/detail', [EventController::class, 'show'])->name('event-detail');
+    Route::get('/dashboard/events/{id}/status/update',[EventController::class,'statusUpdated'])->name('event-status-update');
 
-// REKENING
-Route::get('/dashboard/rekening', [RekeningController::class, 'index'])->name('rekening');
-Route::get('/dashboard/rekening/create', [RekeningController::class, 'create'])->name('rekening-add');
-Route::post('/dashboard/rekening/create', [RekeningController::class, 'store'])->name('rekening-store');
-// nanti tmbhin id ->          /edit/{id} untuk edit
-Route::get('/dashboard/rekening/edit/{rekening}', [RekeningController::class, 'edit'])->name('rekening-edit');
-Route::post('/dashboard/rekening/edit/{rekening}', [RekeningController::class, 'update'])->name('rekening-update');
-Route::get('/dashboard/rekening/{rekening}', [RekeningController::class, 'destroy'])->name('rekening-delete');
-Route::get('/dashboard/rekening/{id}/status/update',[RekeningController::class,'statusUpdated'])->name('rekening-status-update');
-/*
-    PEMBELI
-*/
-// Master 2
-Route::get('/pembeli/upcoming/detail/{event}',[PembelianController::class, 'create'])->name('upcoming.detail');
-// master 3
-Route::post('/pembeli/upcoming/detail/store',[PembelianController::class, 'store'])->name('simpan-pembelian');
+    // REKENING
+    Route::get('/dashboard/rekening', [RekeningController::class, 'index'])->name('rekening');
+    Route::get('/dashboard/rekening/create', [RekeningController::class, 'create'])->name('rekening-add');
+    Route::post('/dashboard/rekening/create', [RekeningController::class, 'store'])->name('rekening-store');
+    // nanti tmbhin id ->          /edit/{id} untuk edit
+    Route::get('/dashboard/rekening/edit/{rekening}', [RekeningController::class, 'edit'])->name('rekening-edit');
+    Route::post('/dashboard/rekening/edit/{rekening}', [RekeningController::class, 'update'])->name('rekening-update');
+    Route::get('/dashboard/rekening/{rekening}', [RekeningController::class, 'destroy'])->name('rekening-delete');
+    Route::get('/dashboard/rekening/{id}/status/update',[RekeningController::class,'statusUpdated'])->name('rekening-status-update');
+    /*
+        PEMBELI
+    */
+    // Master 2
+    Route::get('/pembeli/upcoming/detail/{event}',[PembelianController::class, 'create'])->name('upcoming.detail');
+    // master 3
+    Route::post('/pembeli/upcoming/detail/store',[PembelianController::class, 'store'])->name('simpan-pembelian');
 
-Route::get('pembeli/pemesanan',[PembayaranController::class, 'index'])->name('pemesanan-index');
-Route::get('/pembeli/pemesanan/{pembelian}',[PembayaranController::class, 'create'])->name('pemesanan-create');
-Route::post('/pembeli/pemesanan/{pembelian}',[PembayaranController::class, 'update'])->name('pemesanan-update');
+    Route::get('pembeli/pemesanan',[PembayaranController::class, 'indexPembayaran'])->name('pemesanan-index');
+    Route::get('history',[PembayaranController::class, 'index'])->name('history');
+    Route::get('/pembeli/pemesanan/{pembelian}',[PembayaranController::class, 'create'])->name('pemesanan-create');
+    Route::post('/pembeli/pemesanan/{pembelian}',[PembayaranController::class, 'update'])->name('pemesanan-update');
 });
 
 // Route::get('/dashboard', function () {
