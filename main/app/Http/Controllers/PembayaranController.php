@@ -17,13 +17,26 @@ class PembayaranController extends Controller
     {
         $data = Pembelian::with([
             'details.tiket.event' 
-        ])->where('id_user', Auth::id())->get();
-
-        return view('pembeli.element.pembayaran', [
+        ])->where('id_user', Auth::id())->where('status',1)->get();
+        
+        // dd($data);
+        return view('pembeli.element.history', [
             'pembelians' => $data,
         ]);
     }
 
+    public function indexPembayaran()
+    {
+        $data = Pembelian::with([
+            'details.tiket.event' 
+        ])->where('id_user', Auth::id())->where('status',0)->get();
+
+        // dd($data);
+        // dd($lunas,$pembayarans);
+        return view('pembeli.element.pembayaran', [
+            'pembayarans'=> $data,
+        ]);
+    }
 
     public function create(Pembelian $pembelian){
         $dataDetail = DetailPembelian::where('id_pembelian', $pembelian->id)->get();

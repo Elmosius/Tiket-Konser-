@@ -11,6 +11,6 @@
 
     <div class="text-center">
         <!-- Button with rounded-full -->
-        <button class="btn btn-primary px-4 py-2 shadow">Lainnya</button>
+        <a href="{{route('pembeli-listTiket')}}" class="btn btn-primary px-4 py-2 shadow">Lainnya</a>
     </div>
 </section>
