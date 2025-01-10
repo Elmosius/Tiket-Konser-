@@ -23,7 +23,7 @@ class DashboardController extends Controller
             ->orderByRaw("FIELD(day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')")
             ->get();
 
-        // Data jumlah user
+        // Data jumlah user (total terdaftar)
         $registeredUsersCount = User::count();
 
         // -------------------------------
@@ -44,17 +44,16 @@ class DashboardController extends Controller
             ->orderBy('tanggal', 'ASC')
             ->get();
 
-        // Olah data agar menampilkan dayName berurutan
+        // Olah data agar menampilkan dayName berurutan Monday->Sunday
         $salesChart = collect();
         foreach ($salesData as $item) {
-            $dayName = Carbon::parse($item->tanggal)->format('l'); 
+            $dayName = Carbon::parse($item->tanggal)->format('l');
             $salesChart->push([
-                'day' => $dayName,
+                'day'                 => $dayName,
                 'total_tiket_terjual' => $item->total_tiket_terjual,
-                'total_pendapatan' => $item->total_pendapatan,
+                'total_pendapatan'    => $item->total_pendapatan,
             ]);
         }
-
         // Urutkan Monday->Sunday
         $orderMap = [
             'Monday'    => 1,
@@ -95,7 +94,7 @@ class DashboardController extends Controller
                 DB::raw('SUM(detail_pembelian.jumlah) as total_tiket_terjual')
             )
             ->where('event.id_penjual', Auth::id())
-            ->where('pembelian.status', '1') 
+            ->where('pembelian.status', '1')
             ->groupBy('event.id', 'event.nama_event')
             ->orderByDesc('total_tiket_terjual')
             ->limit(5)
@@ -123,43 +122,91 @@ class DashboardController extends Controller
             )
             ->where('event.id_penjual', Auth::id())
             ->where('pembelian.status', '1')
-            ->whereIn('event.id', $topEventIds) // hanya event yang masuk top 5
+            ->whereIn('event.id', $topEventIds)
             ->groupBy('event.id', 'event.nama_event', 'tiket.nama_tiket')
             ->orderBy('event.id')
             ->get();
 
-        
-        $allEventNames = $topEvents->pluck('event_name'); 
+        $allEventNames = $topEvents->pluck('event_name');
         $allTicketTypes = $eventTicketData->pluck('ticket_type')->unique()->values();
 
         $series = [];
         foreach ($allTicketTypes as $tType) {
             $dataPerEvent = [];
             foreach ($allEventNames as $evName) {
-                $found = $eventTicketData->first(function($item) use($tType, $evName) {
+                $found = $eventTicketData->first(function ($item) use ($tType, $evName) {
                     return $item->ticket_type === $tType && $item->event_name === $evName;
                 });
                 $dataPerEvent[] = $found ? (int) $found->total_terjual : 0;
             }
 
             $series[] = [
-                'name' => $tType,  
+                'name' => $tType,
                 'data' => $dataPerEvent,
             ];
         }
 
         $topEventsWithTicketTypesChart = [
-            'event_names' => $allEventNames,   // X-axis
-            'series'      => $series,          // Series stacked
+            'event_names' => $allEventNames,
+            'series'      => $series,
         ];
 
-       
+        // ----------------------------------
+        // [USER ONLINE] dari tabel 'sessions'
+        // ----------------------------------
+        // Kita asumsikan user "online" = user yang last_activity masih <= 15 menit terakhir
+        $activeSessions = DB::table('sessions')
+            ->select(
+                DB::raw("DATE(FROM_UNIXTIME(last_activity)) as date_aktif"), 
+                DB::raw("COUNT(DISTINCT user_id) as total_user_online")
+            )
+            ->whereNotNull('user_id')
+            ->where('last_activity', '>=', Carbon::now()->subDays(6)->timestamp)
+            ->groupBy('date_aktif')
+            ->orderBy('date_aktif', 'ASC')
+            ->get();
+
+        // Olah data agar dayName -> total
+        // (Monday, Tuesday, dll.) atau format 'd M'
+        // Tergantung selera
+        $onlineChart = collect();
+        foreach ($activeSessions as $row) {
+            $tanggal = Carbon::parse($row->date_aktif);
+            $dayName = $tanggal->format('l'); 
+            // atau ->format('d M')
+            $onlineChart->push([
+                'day'   => $dayName,
+                'count' => $row->total_user_online,
+            ]);
+        }
+
+        // Urutkan Monday->Sunday (opsional)
+        $orderMap = [
+            'Monday'    => 1,
+            'Tuesday'   => 2,
+            'Wednesday' => 3,
+            'Thursday'  => 4,
+            'Friday'    => 5,
+            'Saturday'  => 6,
+            'Sunday'    => 7,
+        ];
+        $onlineChart = $onlineChart->sortBy(function($item) use ($orderMap) {
+            return $orderMap[$item['day']] ?? 999;
+        })->values();
+
+        // Bentuk data Apex
+        $onlineUsersChartData = [
+            'days'   => $onlineChart->pluck('day'),  
+            'counts' => $onlineChart->pluck('count'),
+        ];
+
         return view('admin.dashboard.index', [
-            'chartData'                  => $chartData,
-            'registeredUsersCount'       => $registeredUsersCount,
-            'salesChartData'             => $salesChartData,
-            'topEventChart'              => $topEventChart,
+            'chartData'                     => $chartData,
+            'registeredUsersCount'          => $registeredUsersCount,
+            'salesChartData'                => $salesChartData,
+            'topEventChart'                 => $topEventChart,
             'topEventsWithTicketTypesChart' => $topEventsWithTicketTypesChart,
+            'onlineUsersChartData' => $onlineUsersChartData,
         ]);
     }
 }

@@ -1,6 +1,5 @@
 @extends('layouts.admin.master')
 
-
 @section('isi-konten-dashboard')
     @auth
         <p>Selamat Datang, {{ Auth::user()->nama }}!</p>
@@ -18,20 +17,10 @@
                     <h5 class="card-title d-flex align-items-center gap-2">
                         Home
                     </h5>
-
                     <a type="button" class="btn btn-primary p-2 rounded-1" href="{{ route('event-create') }}">
                         <span class="me-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
-                                <path d="M16 3l0 4" />
-                                <path d="M8 3l0 4" />
-                                <path d="M4 11l16 0" />
-                                <path d="M8 15h2v2h-2z" />
-                            </svg>
+                            <!-- ikon -->
+                            <svg ...> ... </svg>
                         </span>
                         Buat Event
                     </a>
@@ -40,6 +29,7 @@
         </div>
     </div>
 
+    <!-- Bagian Grafik Penjualan -->
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
@@ -51,12 +41,13 @@
                             data-bs-title="Penjualan Mingguan"></iconify-icon>
                     </span>
                 </h5>
-                <!-- Container utk chart -->
+                <!-- Container utk chart Penjualan -->
                 <div id="grafikPenjualan"></div>
             </div>
         </div>
     </div>
 
+    <!-- Bagian Top 5 Event + Tipe Tiket Terlaris -->
     <div class="col-lg-12 mt-3">
         <div class="card">
             <div class="card-body">
@@ -73,23 +64,16 @@
         </div>
     </div>
 
-
-
-
     @if (strtoupper(auth()->user()->cariRole->nama_role) === 'ADMIN')
-        {{-- Role Admin --}}
-        <div class="col-lg-12">
+        {{-- Bagian khusus ADMIN --}}
+        <div class="col-lg-12 mt-3">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title d-flex align-items-center gap-2 mb-4">
-                        Jumlah user yang aktif
-                        <span>
-                            <iconify-icon icon="solar:question-circle-bold" class="fs-7 d-flex text-muted"
-                                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-success"
-                                data-bs-title="Traffic Overview"></iconify-icon>
-                        </span>
+                    <h5 class="card-title mb-3">
+                        Jumlah User Online
                     </h5>
-                    <div id="grafik"></div>
+                    <hr>
+                    <div id="onlineChart"></div>
                 </div>
             </div>
         </div>
@@ -99,14 +83,14 @@
 @section('js-tambahan')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // 1. CHART USER BARU (Jika role Admin)
+            const onlineUsersChartData = @json($onlineUsersChartData);
 
-            // ---------------- [ User Aktif ] ---------------
-            const chartData = @json($chartData);
-
-            let options = {
+            // Setup ApexCharts
+            let optionsOnline = {
                 series: [{
-                    name: 'user',
-                    data: chartData.counts
+                    name: 'User Online (Unique)',
+                    data: onlineUsersChartData.counts
                 }],
                 chart: {
                     type: 'line',
@@ -117,41 +101,44 @@
                 },
                 stroke: {
                     curve: 'smooth',
-                    width: 3,
+                    width: 3
                 },
                 xaxis: {
-                    categories: chartData.days,
+                    categories: onlineUsersChartData.days,
                     labels: {
                         style: {
-                            fontSize: '12px',
+                            fontSize: '12px'
                         }
                     }
                 },
                 yaxis: {
                     labels: {
                         style: {
-                            fontSize: '12px',
+                            fontSize: '12px'
                         }
                     }
                 },
-                colors: ['#007bff'],
                 markers: {
                     size: 5
                 },
+                colors: ['#007bff'], // warna garis
                 tooltip: {
                     shared: true,
-                    intersect: false,
+                    intersect: false
                 },
                 grid: {
-                    borderColor: '#e7e7e7',
+                    borderColor: '#e7e7e7'
                 },
-
+                legend: {
+                    position: 'top'
+                }
             };
 
-            let chart = new ApexCharts(document.querySelector("#grafik"), options);
-            chart.render();
+            let chartOnline = new ApexCharts(document.querySelector("#onlineChart"), optionsOnline);
+            chartOnline.render();
 
-            // ================= [ Chart Penjualan ] =================
+
+            // 2. CHART PENJUALAN
             const salesChartData = @json($salesChartData);
 
             let optionsPenjualan = {
@@ -165,7 +152,7 @@
                     },
                 ],
                 chart: {
-                    type: 'bar', // misal bar chart
+                    type: 'bar',
                     height: 350,
                     toolbar: {
                         show: false
@@ -180,14 +167,14 @@
                     categories: salesChartData.days,
                     labels: {
                         style: {
-                            fontSize: '12px',
+                            fontSize: '12px'
                         }
                     }
                 },
                 yaxis: {
                     labels: {
                         style: {
-                            fontSize: '12px',
+                            fontSize: '12px'
                         }
                     }
                 },
@@ -203,7 +190,7 @@
                     intersect: false,
                     y: {
                         formatter: function(val, opts) {
-
+                            // Series ke-2 = pendapatan
                             if (opts.seriesIndex === 1) {
                                 return "Rp" + val.toLocaleString('id-ID');
                             }
@@ -217,14 +204,14 @@
                 legend: {
                     position: 'top'
                 },
-
             };
+
 
             let chartPenjualan = new ApexCharts(document.querySelector("#grafikPenjualan"), optionsPenjualan);
             chartPenjualan.render();
 
 
-            // ---------------- [ Top 5 Event Terlaris ] ---------------
+            // 3. CHART TOP 5 EVENT + Tipe Tiket
             const combinedData = @json($topEventsWithTicketTypesChart);
 
             let optionsCombined = {
@@ -253,7 +240,6 @@
                     }
                 },
                 colors: ['#0077b6', '#00b4d8', '#48cae4', '#90e0ef', '#ade8f4', '#caf0f8'],
-
                 dataLabels: {
                     enabled: false
                 },
@@ -270,15 +256,18 @@
                 legend: {
                     position: 'bottom'
                 },
-
             };
-
 
             let chartCombined = new ApexCharts(
                 document.querySelector("#topEventsWithTicketTypesChart"),
                 optionsCombined
             );
             chartCombined.render();
+
+
+
+
+
         });
     </script>
 @endsection
