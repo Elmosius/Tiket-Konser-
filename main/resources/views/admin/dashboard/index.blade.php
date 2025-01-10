@@ -18,10 +18,6 @@
                         Home
                     </h5>
                     <a type="button" class="btn btn-primary p-2 rounded-1" href="{{ route('event-create') }}">
-                        <span class="me-2">
-                            <!-- ikon -->
-                            <svg ...> ... </svg>
-                        </span>
                         Buat Event
                     </a>
                 </div>
