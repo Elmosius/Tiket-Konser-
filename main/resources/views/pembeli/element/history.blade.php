@@ -2,7 +2,7 @@
 
 @section('element')
     <div class="container my-5 px-5">
-        <h1 class="w-full text-2xl font-bold mb-3">Pembayaran Tiket</h1>
+        <h1 class="w-full text-2xl font-bold mb-3">Riwayat Pembelian</h1>
         <div class="row mt-4">
             @if (count($pembelians) > 0)
                 @foreach ($pembelians as $pembelian)
@@ -47,7 +47,7 @@
                         <h5 class="alert-heading">Belum Ada Pembelian</h5>
                         <p>Anda belum memiliki riwayat pembelian tiket. Klik tombol di bawah untuk melakukan pembelian
                             tiket.</p>
-                        <a href="{{ route('pembeli-index') }}" class="btn btn-primary">
+                        <a href="{{ route('pembeli-index') }}" class="btn btn-primary mt-3">
                             Beli Tiket Sekarang
                         </a>
                     </div>

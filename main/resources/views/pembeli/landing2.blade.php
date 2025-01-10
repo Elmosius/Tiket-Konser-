@@ -3,13 +3,13 @@
 
 @include('layouts.pembeli-penjual-guess.header')
 
-<body class="bg-gray-100 ">
+<body class="bg-gray-100">
     @include('layouts.pembeli-penjual-guess.navbar')
 
 
     <!-- Event Cards -->
     <!-- Event Cards Container -->
-    <section class="container my-5 px-24">
+    <section class="container my-5 px-24" style="min-height: 55vh;>
         @yield('element')
     </section>
 
