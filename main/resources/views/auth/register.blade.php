@@ -26,10 +26,10 @@
 
     <div class="bg-white shadow-lg rounded-lg max-w-4xl w-full p-8 border-2 border-black">
         <h2 class="text-xl font-semibold text-center">Buat akun YukNonton mu!</h2>
-        <p class="text-center text-gray-600 mb-8">Sudah punya akun? <a href="{{route('login')}}"
+        <p class="text-center text-gray-600 mb-8">Sudah punya akun? <a href="{{ route('login') }}"
                 class="text-blue-500 font-semibold">Login</a></p>
-        
-        @if($errors->any())
+
+        @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
                     @foreach ($errors->all() as $error)
@@ -38,7 +38,7 @@
                 </ul>
             </div>
         @endif
-        <form method="POST" action="{{route('user-store-register')}}">
+        <form method="POST" action="{{ route('user-store-register') }}">
             @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -46,14 +46,14 @@
                             class="text-red-500">*</span></label>
                     <input type="text" name="username" id="username" placeholder="Masukkan Username Anda"
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required value="{{old('username')}}">
+                        required value="{{ old('username') }}">
                 </div>
                 <div>
                     <label for="nama" class="block text-gray-700 font-semibold mb-2">Nama<span
                             class="text-red-500">*</span></label>
                     <input type="text" name="nama" id="name" placeholder="Masukkan Nama Anda"
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required value="{{old('nama')}}">
+                        required value="{{ old('nama') }}">
                 </div>
 
                 <div>
@@ -61,7 +61,7 @@
                             class="text-red-500">*</span></label>
                     <input type="email" name="email" id="email" placeholder="Masukkan Email Anda"
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required value="{{old('email')}}">
+                        required value="{{ old('email') }}">
                 </div>
 
                 <div>
@@ -69,7 +69,7 @@
                             class="text-red-500">*</span></label>
                     <input type="date" name="tanggal_lahir" id="tanggal_lahir"
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required value="{{old('tanggal_lahir')}}">
+                        required value="{{ old('tanggal_lahir') }}">
                 </div>
 
                 <div>
@@ -77,13 +77,15 @@
                             class="text-red-500">*</span></label>
                     <input type="text" name="telepon" id="telepon" placeholder="Masukkan Email Anda"
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required value="{{old('telepon')}}">
+                        required value="{{ old('telepon') }}">
                 </div>
 
                 <div>
                     <label for="jenis_kelamin" class="block text-gray-700 font-semibold mb-2">Gender<span
-                        class="text-red-500">*</span></label>
-                    <select class="form-select" name="jenis_kelamin" required>
+                            class="text-red-500">*</span></label>
+                    <select
+                        class="px-4 pe-1 py-2 border border-gray-300 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 "
+                        name="jenis_kelamin" required>
                         <option class="text-secondary">Pick Gender</option>
                         <option value="0">Pria</option>
                         <option value="1">Wanita</option>

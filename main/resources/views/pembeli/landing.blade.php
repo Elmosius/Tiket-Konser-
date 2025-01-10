@@ -3,7 +3,6 @@
 
     @include('layouts.pembeli-penjual-guess.header')
     
-    
 <body class="bg-gray-100 ">
     @include('layouts.pembeli-penjual-guess.navbar')
 

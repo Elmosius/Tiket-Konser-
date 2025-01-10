@@ -31,7 +31,7 @@ class AuthenticatedSessionController extends Controller
 
         // dd(session());
         
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->intended(route('pembeli-index', absolute: false));
     }
 
     /**

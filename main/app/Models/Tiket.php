@@ -37,10 +37,10 @@ class Tiket extends Model
       return $this->hasManyThrough(
           Pembelian::class,
           DetailPembelian::class,
-          'id_tiket',  // Foreign key pada DetailPembelian
-          'id',         // Foreign key pada Pembelian
-          'id',         // Local key pada Tiket
-          'id_pembelian' // Local key pada DetailPembelian
+          'id_tiket',  
+          'id',        
+          'id',         
+          'id_pembelian' 
       );
   }
 

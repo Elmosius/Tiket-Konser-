@@ -8,7 +8,7 @@
             <!-- Article 1 -->
             <div class="col-sm-6 col-lg-4 mb-4">
                 <div class="h-100">
-                    <img src="https://via.placeholder.com/400x200" width="400" alt="Article Image" class="rounded-5">
+                    <img src="{{ asset('assets/images/blog/1.jpg') }}" width="400" alt="Article Image" class="rounded-5">
                     <div class="pt-3 mx-1 mt-1">
                         <h5 class="fw-bold h5">6 Strategies to Find Your Conference Keynote</h5>
                         <p>Sekarang, kamu bisa produksi tiket fisik untuk eventmu bersama Bostikbox...</p>
@@ -19,7 +19,8 @@
             <!-- Article 2 -->
             <div class="col-sm-6 col-lg-4 mb-4">
                 <div class="h-100">
-                    <img src="https://via.placeholder.com/400x200" width="400" alt="Article Image" class="rounded-5">
+                    <img src="{{ asset('assets/images/blog/2.jpg') }}" width="400" alt="Article Image"
+                        class="rounded-5">
                     <div class="pt-3 mx-1 mt-1">
                         <h5 class="fw-bold h5">How Successfully Used Paid Marketing</h5>
                         <p>Sekarang, kamu bisa produksi tiket fisik untuk eventmu bersama Bostikbox...</p>
@@ -30,7 +31,8 @@
             <!-- Article 3 -->
             <div class="col-sm-6 col-lg-4 ">
                 <div class="h-100">
-                    <img src="https://via.placeholder.com/400x200" width="400" alt="Article Image" class="rounded-5">
+                    <img src="{{ asset('assets/images/blog/3.jpg') }}" width="400" alt="Article Image"
+                        class="rounded-5">
                     <div class="pt-3 mx-1 mt-1">
                         <h5 class="fw-bold h5">Introducing Workspaces</h5>
                         <p>Sekarang, kamu bisa produksi tiket fisik untuk eventmu bersama Bostikbox...</p>
