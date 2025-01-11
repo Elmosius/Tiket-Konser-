@@ -9,13 +9,19 @@ Membuat proyek tim pemesanan & penjualan tiket online menggunakan Laravel yang t
 Tujuan dari proyek ini adalah untuk mengembangkan website pemesanan tiket konser yang memudahkan pembeli untuk membeli dan menjual tiket, serta bagi penjual untuk mengelola pemesanan dan tempat duduk.
 
 ## 📋 Fungsi Pengguna
-- Coming Soon
+- User : bisa menjadi pembeli maupun penjual sehingga pembeli bisa melihat events apa saja yang tersedia (bisa diatur juga
+dari tanggal maupun jenis event baik berbayar atau gratis. Bisa juga memilih jenis tiket pada event tertentu dan melihat detail event tersebut. Setelah itu bisa konfirmasi untuk membayar tiket (memilih mau pembayaran apa yang dipakai). Sebagai penjual tentunya bisa membuat events mengatur eventnya sebagaimananya. Bisa menambah rekening untuk pendapatan, bisa melihat grafik statistik dari event terlaris lalu tiket terlaris dll.
+- Admin : bisa melakukan hal yang dilakukan user, namun ada tambahan bisa mengatur / memanage user lalu bisa melihat sebearapa aktif user.
 
 ## 📚 Daftar Branch
-- Coming Soon
+- Main
+- Elmo
+- Joseph
+- Valen
 
 ## ⚙️ Teknologi yang dipakai
-- Coming Soon
+- Php
+- Laravel 11x
   
 ## 💻 Demo
 - Coming Soon
