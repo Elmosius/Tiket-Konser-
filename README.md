@@ -20,11 +20,9 @@ dari tanggal maupun jenis event baik berbayar atau gratis. Bisa juga memilih jen
 - Valen
 
 ## ⚙️ Teknologi yang dipakai
-- Php
 - Laravel 11x
+- Boostrap
   
 ## 💻 Demo
 - Coming Soon
 
-## ⚠️ Instalasi
-- Coming Soon
